@@ -5,11 +5,18 @@
 /* You might want to change the above name. */
 
 #include "Stella/Absyn.H"
+#include "Stella/Printer.H"
+#include <unordered_map>
 
 namespace Stella
 {
   class VisitTypeCheck : public Visitor
   {
+  private:
+      std::unordered_map<std::string, Type*> context;
+      Type* expectedType;
+      Type* lastVisitedType;
+      PrintAbsyn printer;
   public:
     void visitProgram(Program *p);
     void visitLanguageDecl(LanguageDecl *p);

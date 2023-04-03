@@ -55,7 +55,7 @@
 #define YYSKELETON_NAME "yacc.c"
 
 /* Pure parsers.  */
-#define YYPURE 1
+#define YYPURE 0
 
 /* Push parsers.  */
 #define YYPUSH 0
@@ -63,45 +63,1721 @@
 /* Pull parsers.  */
 #define YYPULL 1
 
-
+/* Substitute the type names.  */
+#define YYSTYPE         STELLAYYSTYPE
 /* Substitute the variable and function names.  */
-#define yyparse         Stellaparse
-#define yylex           Stellalex
-#define yyerror         Stellaerror
-#define yydebug         Stelladebug
-#define yynerrs         Stellanerrs
+#define yyparse         Stellayyparse
+#define yylex           Stellayylex
+#define yyerror         Stellayyerror
+#define yydebug         Stellayydebug
+#define yynerrs         Stellayynerrs
+#define yylval          Stellayylval
+#define yychar          Stellayychar
 
 /* First part of user prologue.  */
-#line 22 "Stella.y"
+#line 2 "Stella.y"
 
-/* Begin C preamble code */
-
-#include <algorithm> /* for std::reverse */
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
+#include <algorithm>
 #include "Absyn.H"
-
-#define YYMAXDEPTH 10000000
-
-/* The type yyscan_t is defined by flex, but we need it in the parser already. */
-#ifndef YY_TYPEDEF_YY_SCANNER_T
-#define YY_TYPEDEF_YY_SCANNER_T
-typedef void* yyscan_t;
-#endif
-
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
-extern YY_BUFFER_STATE Stella_scan_string(const char *str, yyscan_t scanner);
-extern void Stella_delete_buffer(YY_BUFFER_STATE buf, yyscan_t scanner);
+int yyparse(void);
+int yylex(void);
+YY_BUFFER_STATE Stellayy_scan_string(const char *str);
+void Stellayy_delete_buffer(YY_BUFFER_STATE buf);
+int Stellayy_mylinenumber;
+int Stellainitialize_lexer(FILE * inp);
+int Stellayywrap(void)
+{
+  return 1;
+}
+void Stellayyerror(const char *str)
+{
+  extern char *Stellayytext;
+  fprintf(stderr,"error: line %d: %s at %s\n",
+    Stellayy_mylinenumber, str, Stellayytext);
+}
 
-extern void Stellalex_destroy(yyscan_t scanner);
-extern char* Stellaget_text(yyscan_t scanner);
 
-extern yyscan_t Stella_initialize_lexer(FILE * inp);
+namespace Stella
+{
+static Program* YY_RESULT_Program_ = 0;
+static ListStellaIdent* YY_RESULT_ListStellaIdent_ = 0;
+static LanguageDecl* YY_RESULT_LanguageDecl_ = 0;
+static Extension* YY_RESULT_Extension_ = 0;
+static ListExtensionName* YY_RESULT_ListExtensionName_ = 0;
+static ListExtension* YY_RESULT_ListExtension_ = 0;
+static Decl* YY_RESULT_Decl_ = 0;
+static ListDecl* YY_RESULT_ListDecl_ = 0;
+static LocalDecl* YY_RESULT_LocalDecl_ = 0;
+static ListLocalDecl* YY_RESULT_ListLocalDecl_ = 0;
+static Annotation* YY_RESULT_Annotation_ = 0;
+static ListAnnotation* YY_RESULT_ListAnnotation_ = 0;
+static ParamDecl* YY_RESULT_ParamDecl_ = 0;
+static ListParamDecl* YY_RESULT_ListParamDecl_ = 0;
+static ReturnType* YY_RESULT_ReturnType_ = 0;
+static ThrowType* YY_RESULT_ThrowType_ = 0;
+static Type* YY_RESULT_Type_ = 0;
+static ListType* YY_RESULT_ListType_ = 0;
+static MatchCase* YY_RESULT_MatchCase_ = 0;
+static ListMatchCase* YY_RESULT_ListMatchCase_ = 0;
+static OptionalTyping* YY_RESULT_OptionalTyping_ = 0;
+static PatternData* YY_RESULT_PatternData_ = 0;
+static ExprData* YY_RESULT_ExprData_ = 0;
+static Pattern* YY_RESULT_Pattern_ = 0;
+static ListPattern* YY_RESULT_ListPattern_ = 0;
+static LabelledPattern* YY_RESULT_LabelledPattern_ = 0;
+static ListLabelledPattern* YY_RESULT_ListLabelledPattern_ = 0;
+static Binding* YY_RESULT_Binding_ = 0;
+static ListBinding* YY_RESULT_ListBinding_ = 0;
+static Expr* YY_RESULT_Expr_ = 0;
+static ListExpr* YY_RESULT_ListExpr_ = 0;
+static PatternBinding* YY_RESULT_PatternBinding_ = 0;
+static ListPatternBinding* YY_RESULT_ListPatternBinding_ = 0;
+static VariantFieldType* YY_RESULT_VariantFieldType_ = 0;
+static ListVariantFieldType* YY_RESULT_ListVariantFieldType_ = 0;
+static RecordFieldType* YY_RESULT_RecordFieldType_ = 0;
+static ListRecordFieldType* YY_RESULT_ListRecordFieldType_ = 0;
+static Typing* YY_RESULT_Typing_ = 0;
 
-/* End C preamble code */
+Program* pProgram(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Program_;
+  }
+}
+Program* pProgram(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Program_;
+  }
+}
 
-#line 105 "Parser.C"
+ListStellaIdent* pListStellaIdent(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListStellaIdent_;
+  }
+}
+ListStellaIdent* pListStellaIdent(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListStellaIdent_;
+  }
+}
+
+LanguageDecl* pLanguageDecl(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_LanguageDecl_;
+  }
+}
+LanguageDecl* pLanguageDecl(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_LanguageDecl_;
+  }
+}
+
+Extension* pExtension(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Extension_;
+  }
+}
+Extension* pExtension(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Extension_;
+  }
+}
+
+ListExtensionName* pListExtensionName(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListExtensionName_;
+  }
+}
+ListExtensionName* pListExtensionName(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListExtensionName_;
+  }
+}
+
+ListExtension* pListExtension(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListExtension_;
+  }
+}
+ListExtension* pListExtension(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListExtension_;
+  }
+}
+
+Decl* pDecl(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Decl_;
+  }
+}
+Decl* pDecl(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Decl_;
+  }
+}
+
+ListDecl* pListDecl(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListDecl_;
+  }
+}
+ListDecl* pListDecl(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListDecl_;
+  }
+}
+
+LocalDecl* pLocalDecl(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_LocalDecl_;
+  }
+}
+LocalDecl* pLocalDecl(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_LocalDecl_;
+  }
+}
+
+ListLocalDecl* pListLocalDecl(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListLocalDecl_;
+  }
+}
+ListLocalDecl* pListLocalDecl(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListLocalDecl_;
+  }
+}
+
+Annotation* pAnnotation(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Annotation_;
+  }
+}
+Annotation* pAnnotation(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Annotation_;
+  }
+}
+
+ListAnnotation* pListAnnotation(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListAnnotation_;
+  }
+}
+ListAnnotation* pListAnnotation(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListAnnotation_;
+  }
+}
+
+ParamDecl* pParamDecl(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ParamDecl_;
+  }
+}
+ParamDecl* pParamDecl(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ParamDecl_;
+  }
+}
+
+ListParamDecl* pListParamDecl(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListParamDecl_;
+  }
+}
+ListParamDecl* pListParamDecl(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListParamDecl_;
+  }
+}
+
+ReturnType* pReturnType(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ReturnType_;
+  }
+}
+ReturnType* pReturnType(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ReturnType_;
+  }
+}
+
+ThrowType* pThrowType(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ThrowType_;
+  }
+}
+ThrowType* pThrowType(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ThrowType_;
+  }
+}
+
+Type* pType9(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Type_;
+  }
+}
+Type* pType9(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Type_;
+  }
+}
+
+ListType* pListType9(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListType_;
+  }
+}
+ListType* pListType9(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListType_;
+  }
+}
+
+MatchCase* pMatchCase(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_MatchCase_;
+  }
+}
+MatchCase* pMatchCase(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_MatchCase_;
+  }
+}
+
+ListMatchCase* pListMatchCase(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListMatchCase_;
+  }
+}
+ListMatchCase* pListMatchCase(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListMatchCase_;
+  }
+}
+
+OptionalTyping* pOptionalTyping(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_OptionalTyping_;
+  }
+}
+OptionalTyping* pOptionalTyping(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_OptionalTyping_;
+  }
+}
+
+PatternData* pPatternData(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_PatternData_;
+  }
+}
+PatternData* pPatternData(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_PatternData_;
+  }
+}
+
+ExprData* pExprData(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ExprData_;
+  }
+}
+ExprData* pExprData(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ExprData_;
+  }
+}
+
+Pattern* pPattern(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Pattern_;
+  }
+}
+Pattern* pPattern(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Pattern_;
+  }
+}
+
+ListPattern* pListPattern(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListPattern_;
+  }
+}
+ListPattern* pListPattern(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListPattern_;
+  }
+}
+
+LabelledPattern* pLabelledPattern(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_LabelledPattern_;
+  }
+}
+LabelledPattern* pLabelledPattern(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_LabelledPattern_;
+  }
+}
+
+ListLabelledPattern* pListLabelledPattern(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListLabelledPattern_;
+  }
+}
+ListLabelledPattern* pListLabelledPattern(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListLabelledPattern_;
+  }
+}
+
+Binding* pBinding(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Binding_;
+  }
+}
+Binding* pBinding(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Binding_;
+  }
+}
+
+ListBinding* pListBinding(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListBinding_;
+  }
+}
+ListBinding* pListBinding(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListBinding_;
+  }
+}
+
+Expr* pExpr(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+Expr* pExpr(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+
+ListExpr* pListExpr(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListExpr_;
+  }
+}
+ListExpr* pListExpr(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListExpr_;
+  }
+}
+
+Expr* pExpr1(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+Expr* pExpr1(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+
+PatternBinding* pPatternBinding(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_PatternBinding_;
+  }
+}
+PatternBinding* pPatternBinding(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_PatternBinding_;
+  }
+}
+
+ListPatternBinding* pListPatternBinding(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListPatternBinding_;
+  }
+}
+ListPatternBinding* pListPatternBinding(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListPatternBinding_;
+  }
+}
+
+Expr* pExpr2(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+Expr* pExpr2(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+
+ListExpr* pListExpr2(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListExpr_;
+  }
+}
+ListExpr* pListExpr2(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListExpr_;
+  }
+}
+
+Expr* pExpr3(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+Expr* pExpr3(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+
+Expr* pExpr4(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+Expr* pExpr4(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+
+Expr* pExpr6(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+Expr* pExpr6(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+
+Expr* pExpr7(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+Expr* pExpr7(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+
+Type* pType(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Type_;
+  }
+}
+Type* pType(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Type_;
+  }
+}
+
+Type* pType1(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Type_;
+  }
+}
+Type* pType1(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Type_;
+  }
+}
+
+Type* pType2(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Type_;
+  }
+}
+Type* pType2(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Type_;
+  }
+}
+
+Type* pType3(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Type_;
+  }
+}
+Type* pType3(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Type_;
+  }
+}
+
+ListType* pListType(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListType_;
+  }
+}
+ListType* pListType(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListType_;
+  }
+}
+
+Expr* pExpr5(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+Expr* pExpr5(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Expr_;
+  }
+}
+
+VariantFieldType* pVariantFieldType(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_VariantFieldType_;
+  }
+}
+VariantFieldType* pVariantFieldType(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_VariantFieldType_;
+  }
+}
+
+ListVariantFieldType* pListVariantFieldType(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListVariantFieldType_;
+  }
+}
+ListVariantFieldType* pListVariantFieldType(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListVariantFieldType_;
+  }
+}
+
+RecordFieldType* pRecordFieldType(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_RecordFieldType_;
+  }
+}
+RecordFieldType* pRecordFieldType(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_RecordFieldType_;
+  }
+}
+
+ListRecordFieldType* pListRecordFieldType(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListRecordFieldType_;
+  }
+}
+ListRecordFieldType* pListRecordFieldType(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_ListRecordFieldType_;
+  }
+}
+
+Typing* pTyping(FILE *inp)
+{
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(inp);
+  if (yyparse())
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Typing_;
+  }
+}
+Typing* pTyping(const char *str)
+{
+  YY_BUFFER_STATE buf;
+  int result;
+  Stellayy_mylinenumber = 1;
+  Stellainitialize_lexer(0);
+  buf = Stellayy_scan_string(str);
+  result = yyparse();
+  Stellayy_delete_buffer(buf);
+  if (result)
+  { /* Failure */
+    return 0;
+  }
+  else
+  { /* Success */
+    return YY_RESULT_Typing_;
+  }
+}
+
+
+}
+
+#line 1781 "Parser.C"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -124,7 +1800,171 @@ extern yyscan_t Stella_initialize_lexer(FILE * inp);
 #  endif
 # endif
 
-#include "Bison.H"
+
+/* Debug traces.  */
+#ifndef STELLAYYDEBUG
+# if defined YYDEBUG
+#if YYDEBUG
+#   define STELLAYYDEBUG 1
+#  else
+#   define STELLAYYDEBUG 0
+#  endif
+# else /* ! defined YYDEBUG */
+#  define STELLAYYDEBUG 0
+# endif /* ! defined YYDEBUG */
+#endif  /* ! defined STELLAYYDEBUG */
+#if STELLAYYDEBUG
+extern int Stellayydebug;
+#endif
+
+/* Token kinds.  */
+#ifndef STELLAYYTOKENTYPE
+# define STELLAYYTOKENTYPE
+  enum Stellayytokentype
+  {
+    STELLAYYEMPTY = -2,
+    STELLAYYEOF = 0,               /* "end of file"  */
+    STELLAYYerror = 256,           /* error  */
+    STELLAYYUNDEF = 257,           /* "invalid token"  */
+    _ERROR_ = 258,                 /* _ERROR_  */
+    STELLA__SYMB_0 = 259,          /* STELLA__SYMB_0  */
+    STELLA__SYMB_1 = 260,          /* STELLA__SYMB_1  */
+    STELLA__SYMB_2 = 261,          /* STELLA__SYMB_2  */
+    STELLA__SYMB_3 = 262,          /* STELLA__SYMB_3  */
+    STELLA__SYMB_4 = 263,          /* STELLA__SYMB_4  */
+    STELLA__SYMB_5 = 264,          /* STELLA__SYMB_5  */
+    STELLA__SYMB_6 = 265,          /* STELLA__SYMB_6  */
+    STELLA__SYMB_7 = 266,          /* STELLA__SYMB_7  */
+    STELLA__SYMB_8 = 267,          /* STELLA__SYMB_8  */
+    STELLA__SYMB_9 = 268,          /* STELLA__SYMB_9  */
+    STELLA__SYMB_10 = 269,         /* STELLA__SYMB_10  */
+    STELLA__SYMB_11 = 270,         /* STELLA__SYMB_11  */
+    STELLA__SYMB_12 = 271,         /* STELLA__SYMB_12  */
+    STELLA__SYMB_13 = 272,         /* STELLA__SYMB_13  */
+    STELLA__SYMB_14 = 273,         /* STELLA__SYMB_14  */
+    STELLA__SYMB_15 = 274,         /* STELLA__SYMB_15  */
+    STELLA__SYMB_16 = 275,         /* STELLA__SYMB_16  */
+    STELLA__SYMB_17 = 276,         /* STELLA__SYMB_17  */
+    STELLA__SYMB_18 = 277,         /* STELLA__SYMB_18  */
+    STELLA__SYMB_19 = 278,         /* STELLA__SYMB_19  */
+    STELLA__SYMB_20 = 279,         /* STELLA__SYMB_20  */
+    STELLA__SYMB_21 = 280,         /* STELLA__SYMB_21  */
+    STELLA__SYMB_22 = 281,         /* STELLA__SYMB_22  */
+    STELLA__SYMB_23 = 282,         /* STELLA__SYMB_23  */
+    STELLA__SYMB_24 = 283,         /* STELLA__SYMB_24  */
+    STELLA__SYMB_25 = 284,         /* STELLA__SYMB_25  */
+    STELLA__SYMB_26 = 285,         /* STELLA__SYMB_26  */
+    STELLA__SYMB_27 = 286,         /* STELLA__SYMB_27  */
+    STELLA__SYMB_28 = 287,         /* STELLA__SYMB_28  */
+    STELLA__SYMB_29 = 288,         /* STELLA__SYMB_29  */
+    STELLA__SYMB_30 = 289,         /* STELLA__SYMB_30  */
+    STELLA__SYMB_31 = 290,         /* STELLA__SYMB_31  */
+    STELLA__SYMB_32 = 291,         /* STELLA__SYMB_32  */
+    STELLA__SYMB_33 = 292,         /* STELLA__SYMB_33  */
+    STELLA__SYMB_34 = 293,         /* STELLA__SYMB_34  */
+    STELLA__SYMB_35 = 294,         /* STELLA__SYMB_35  */
+    STELLA__SYMB_36 = 295,         /* STELLA__SYMB_36  */
+    STELLA__SYMB_37 = 296,         /* STELLA__SYMB_37  */
+    STELLA__SYMB_38 = 297,         /* STELLA__SYMB_38  */
+    STELLA__SYMB_39 = 298,         /* STELLA__SYMB_39  */
+    STELLA__SYMB_40 = 299,         /* STELLA__SYMB_40  */
+    STELLA__SYMB_41 = 300,         /* STELLA__SYMB_41  */
+    STELLA__SYMB_42 = 301,         /* STELLA__SYMB_42  */
+    STELLA__SYMB_43 = 302,         /* STELLA__SYMB_43  */
+    STELLA__SYMB_44 = 303,         /* STELLA__SYMB_44  */
+    STELLA__SYMB_45 = 304,         /* STELLA__SYMB_45  */
+    STELLA__SYMB_46 = 305,         /* STELLA__SYMB_46  */
+    STELLA__SYMB_47 = 306,         /* STELLA__SYMB_47  */
+    STELLA__SYMB_48 = 307,         /* STELLA__SYMB_48  */
+    STELLA__SYMB_49 = 308,         /* STELLA__SYMB_49  */
+    STELLA__SYMB_50 = 309,         /* STELLA__SYMB_50  */
+    STELLA__SYMB_51 = 310,         /* STELLA__SYMB_51  */
+    STELLA__SYMB_52 = 311,         /* STELLA__SYMB_52  */
+    STELLA__SYMB_53 = 312,         /* STELLA__SYMB_53  */
+    STELLA__SYMB_54 = 313,         /* STELLA__SYMB_54  */
+    STELLA__SYMB_55 = 314,         /* STELLA__SYMB_55  */
+    STELLA__SYMB_56 = 315,         /* STELLA__SYMB_56  */
+    STELLA__SYMB_57 = 316,         /* STELLA__SYMB_57  */
+    STELLA__SYMB_58 = 317,         /* STELLA__SYMB_58  */
+    STELLA__SYMB_59 = 318,         /* STELLA__SYMB_59  */
+    STELLA__SYMB_60 = 319,         /* STELLA__SYMB_60  */
+    STELLA__SYMB_61 = 320,         /* STELLA__SYMB_61  */
+    STELLA__SYMB_62 = 321,         /* STELLA__SYMB_62  */
+    STELLA__SYMB_63 = 322,         /* STELLA__SYMB_63  */
+    STELLA__SYMB_64 = 323,         /* STELLA__SYMB_64  */
+    STELLA__SYMB_65 = 324,         /* STELLA__SYMB_65  */
+    STELLA__SYMB_66 = 325,         /* STELLA__SYMB_66  */
+    STELLA__SYMB_67 = 326,         /* STELLA__SYMB_67  */
+    _INTEGER_ = 327                /* _INTEGER_  */
+  };
+  typedef enum Stellayytokentype Stellayytoken_kind_t;
+#endif
+
+/* Value type.  */
+#if ! defined STELLAYYSTYPE && ! defined STELLAYYSTYPE_IS_DECLARED
+union STELLAYYSTYPE
+{
+#line 1705 "Stella.y"
+
+  int int_;
+  char char_;
+  double double_;
+  char* string_;
+  Stella::Program* program_;
+  Stella::ListStellaIdent* liststellaident_;
+  Stella::LanguageDecl* languagedecl_;
+  Stella::Extension* extension_;
+  Stella::ListExtensionName* listextensionname_;
+  Stella::ListExtension* listextension_;
+  Stella::Decl* decl_;
+  Stella::ListDecl* listdecl_;
+  Stella::LocalDecl* localdecl_;
+  Stella::ListLocalDecl* listlocaldecl_;
+  Stella::Annotation* annotation_;
+  Stella::ListAnnotation* listannotation_;
+  Stella::ParamDecl* paramdecl_;
+  Stella::ListParamDecl* listparamdecl_;
+  Stella::ReturnType* returntype_;
+  Stella::ThrowType* throwtype_;
+  Stella::Type* type_;
+  Stella::ListType* listtype_;
+  Stella::MatchCase* matchcase_;
+  Stella::ListMatchCase* listmatchcase_;
+  Stella::OptionalTyping* optionaltyping_;
+  Stella::PatternData* patterndata_;
+  Stella::ExprData* exprdata_;
+  Stella::Pattern* pattern_;
+  Stella::ListPattern* listpattern_;
+  Stella::LabelledPattern* labelledpattern_;
+  Stella::ListLabelledPattern* listlabelledpattern_;
+  Stella::Binding* binding_;
+  Stella::ListBinding* listbinding_;
+  Stella::Expr* expr_;
+  Stella::ListExpr* listexpr_;
+  Stella::PatternBinding* patternbinding_;
+  Stella::ListPatternBinding* listpatternbinding_;
+  Stella::VariantFieldType* variantfieldtype_;
+  Stella::ListVariantFieldType* listvariantfieldtype_;
+  Stella::RecordFieldType* recordfieldtype_;
+  Stella::ListRecordFieldType* listrecordfieldtype_;
+  Stella::Typing* typing_;
+
+#line 1953 "Parser.C"
+
+};
+typedef union STELLAYYSTYPE STELLAYYSTYPE;
+# define STELLAYYSTYPE_IS_TRIVIAL 1
+# define STELLAYYSTYPE_IS_DECLARED 1
+#endif
+
+
+extern STELLAYYSTYPE Stellayylval;
+
+
+int Stellayyparse (void);
+
+
+
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -133,74 +1973,74 @@ enum yysymbol_kind_t
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
   YYSYMBOL__ERROR_ = 3,                    /* _ERROR_  */
-  YYSYMBOL__BANGEQ = 4,                    /* _BANGEQ  */
-  YYSYMBOL__LPAREN = 5,                    /* _LPAREN  */
-  YYSYMBOL__RPAREN = 6,                    /* _RPAREN  */
-  YYSYMBOL__STAR = 7,                      /* _STAR  */
-  YYSYMBOL__PLUS = 8,                      /* _PLUS  */
-  YYSYMBOL__COMMA = 9,                     /* _COMMA  */
-  YYSYMBOL__MINUS = 10,                    /* _MINUS  */
-  YYSYMBOL__RARROW = 11,                   /* _RARROW  */
-  YYSYMBOL__DOT = 12,                      /* _DOT  */
-  YYSYMBOL__SLASH = 13,                    /* _SLASH  */
-  YYSYMBOL__COLON = 14,                    /* _COLON  */
-  YYSYMBOL__SEMI = 15,                     /* _SEMI  */
-  YYSYMBOL__LT = 16,                       /* _LT  */
-  YYSYMBOL__LDARROW = 17,                  /* _LDARROW  */
-  YYSYMBOL__SYMB_11 = 18,                  /* _SYMB_11  */
-  YYSYMBOL__EQ = 19,                       /* _EQ  */
-  YYSYMBOL__DEQ = 20,                      /* _DEQ  */
-  YYSYMBOL__RDARROW = 21,                  /* _RDARROW  */
-  YYSYMBOL__GT = 22,                       /* _GT  */
-  YYSYMBOL__GTEQ = 23,                     /* _GTEQ  */
-  YYSYMBOL__KW_Bool = 24,                  /* _KW_Bool  */
-  YYSYMBOL__SYMB_26 = 25,                  /* _SYMB_26  */
-  YYSYMBOL__SYMB_27 = 26,                  /* _SYMB_27  */
-  YYSYMBOL__SYMB_28 = 27,                  /* _SYMB_28  */
-  YYSYMBOL__KW_Nat = 28,                   /* _KW_Nat  */
-  YYSYMBOL__SYMB_30 = 29,                  /* _SYMB_30  */
-  YYSYMBOL__SYMB_29 = 30,                  /* _SYMB_29  */
-  YYSYMBOL__SYMB_31 = 31,                  /* _SYMB_31  */
-  YYSYMBOL__KW_Unit = 32,                  /* _KW_Unit  */
-  YYSYMBOL__LBRACK = 33,                   /* _LBRACK  */
-  YYSYMBOL__RBRACK = 34,                   /* _RBRACK  */
-  YYSYMBOL__KW_and = 35,                   /* _KW_and  */
-  YYSYMBOL__KW_as = 36,                    /* _KW_as  */
-  YYSYMBOL__KW_cons = 37,                  /* _KW_cons  */
-  YYSYMBOL__KW_core = 38,                  /* _KW_core  */
-  YYSYMBOL__KW_else = 39,                  /* _KW_else  */
-  YYSYMBOL__KW_extend = 40,                /* _KW_extend  */
-  YYSYMBOL__KW_false = 41,                 /* _KW_false  */
-  YYSYMBOL__KW_fix = 42,                   /* _KW_fix  */
-  YYSYMBOL__KW_fn = 43,                    /* _KW_fn  */
-  YYSYMBOL__KW_fold = 44,                  /* _KW_fold  */
-  YYSYMBOL__KW_if = 45,                    /* _KW_if  */
-  YYSYMBOL__KW_in = 46,                    /* _KW_in  */
-  YYSYMBOL__KW_inl = 47,                   /* _KW_inl  */
-  YYSYMBOL__KW_inline = 48,                /* _KW_inline  */
-  YYSYMBOL__KW_inr = 49,                   /* _KW_inr  */
-  YYSYMBOL__KW_language = 50,              /* _KW_language  */
-  YYSYMBOL__KW_let = 51,                   /* _KW_let  */
-  YYSYMBOL__KW_letrec = 52,                /* _KW_letrec  */
-  YYSYMBOL__KW_match = 53,                 /* _KW_match  */
-  YYSYMBOL__KW_not = 54,                   /* _KW_not  */
-  YYSYMBOL__KW_or = 55,                    /* _KW_or  */
-  YYSYMBOL__KW_return = 56,                /* _KW_return  */
-  YYSYMBOL__KW_succ = 57,                  /* _KW_succ  */
-  YYSYMBOL__KW_then = 58,                  /* _KW_then  */
-  YYSYMBOL__KW_throws = 59,                /* _KW_throws  */
-  YYSYMBOL__KW_true = 60,                  /* _KW_true  */
-  YYSYMBOL__KW_type = 61,                  /* _KW_type  */
-  YYSYMBOL__KW_unfold = 62,                /* _KW_unfold  */
-  YYSYMBOL__KW_unit = 63,                  /* _KW_unit  */
-  YYSYMBOL__KW_with = 64,                  /* _KW_with  */
-  YYSYMBOL__LBRACE = 65,                   /* _LBRACE  */
-  YYSYMBOL__BAR = 66,                      /* _BAR  */
-  YYSYMBOL__SYMB_12 = 67,                  /* _SYMB_12  */
-  YYSYMBOL__RBRACE = 68,                   /* _RBRACE  */
-  YYSYMBOL__KW_65 = 69,                    /* _KW_65  */
-  YYSYMBOL_T_ExtensionName = 70,           /* T_ExtensionName  */
-  YYSYMBOL_T_StellaIdent = 71,             /* T_StellaIdent  */
+  YYSYMBOL_STELLA__SYMB_0 = 4,             /* STELLA__SYMB_0  */
+  YYSYMBOL_STELLA__SYMB_1 = 5,             /* STELLA__SYMB_1  */
+  YYSYMBOL_STELLA__SYMB_2 = 6,             /* STELLA__SYMB_2  */
+  YYSYMBOL_STELLA__SYMB_3 = 7,             /* STELLA__SYMB_3  */
+  YYSYMBOL_STELLA__SYMB_4 = 8,             /* STELLA__SYMB_4  */
+  YYSYMBOL_STELLA__SYMB_5 = 9,             /* STELLA__SYMB_5  */
+  YYSYMBOL_STELLA__SYMB_6 = 10,            /* STELLA__SYMB_6  */
+  YYSYMBOL_STELLA__SYMB_7 = 11,            /* STELLA__SYMB_7  */
+  YYSYMBOL_STELLA__SYMB_8 = 12,            /* STELLA__SYMB_8  */
+  YYSYMBOL_STELLA__SYMB_9 = 13,            /* STELLA__SYMB_9  */
+  YYSYMBOL_STELLA__SYMB_10 = 14,           /* STELLA__SYMB_10  */
+  YYSYMBOL_STELLA__SYMB_11 = 15,           /* STELLA__SYMB_11  */
+  YYSYMBOL_STELLA__SYMB_12 = 16,           /* STELLA__SYMB_12  */
+  YYSYMBOL_STELLA__SYMB_13 = 17,           /* STELLA__SYMB_13  */
+  YYSYMBOL_STELLA__SYMB_14 = 18,           /* STELLA__SYMB_14  */
+  YYSYMBOL_STELLA__SYMB_15 = 19,           /* STELLA__SYMB_15  */
+  YYSYMBOL_STELLA__SYMB_16 = 20,           /* STELLA__SYMB_16  */
+  YYSYMBOL_STELLA__SYMB_17 = 21,           /* STELLA__SYMB_17  */
+  YYSYMBOL_STELLA__SYMB_18 = 22,           /* STELLA__SYMB_18  */
+  YYSYMBOL_STELLA__SYMB_19 = 23,           /* STELLA__SYMB_19  */
+  YYSYMBOL_STELLA__SYMB_20 = 24,           /* STELLA__SYMB_20  */
+  YYSYMBOL_STELLA__SYMB_21 = 25,           /* STELLA__SYMB_21  */
+  YYSYMBOL_STELLA__SYMB_22 = 26,           /* STELLA__SYMB_22  */
+  YYSYMBOL_STELLA__SYMB_23 = 27,           /* STELLA__SYMB_23  */
+  YYSYMBOL_STELLA__SYMB_24 = 28,           /* STELLA__SYMB_24  */
+  YYSYMBOL_STELLA__SYMB_25 = 29,           /* STELLA__SYMB_25  */
+  YYSYMBOL_STELLA__SYMB_26 = 30,           /* STELLA__SYMB_26  */
+  YYSYMBOL_STELLA__SYMB_27 = 31,           /* STELLA__SYMB_27  */
+  YYSYMBOL_STELLA__SYMB_28 = 32,           /* STELLA__SYMB_28  */
+  YYSYMBOL_STELLA__SYMB_29 = 33,           /* STELLA__SYMB_29  */
+  YYSYMBOL_STELLA__SYMB_30 = 34,           /* STELLA__SYMB_30  */
+  YYSYMBOL_STELLA__SYMB_31 = 35,           /* STELLA__SYMB_31  */
+  YYSYMBOL_STELLA__SYMB_32 = 36,           /* STELLA__SYMB_32  */
+  YYSYMBOL_STELLA__SYMB_33 = 37,           /* STELLA__SYMB_33  */
+  YYSYMBOL_STELLA__SYMB_34 = 38,           /* STELLA__SYMB_34  */
+  YYSYMBOL_STELLA__SYMB_35 = 39,           /* STELLA__SYMB_35  */
+  YYSYMBOL_STELLA__SYMB_36 = 40,           /* STELLA__SYMB_36  */
+  YYSYMBOL_STELLA__SYMB_37 = 41,           /* STELLA__SYMB_37  */
+  YYSYMBOL_STELLA__SYMB_38 = 42,           /* STELLA__SYMB_38  */
+  YYSYMBOL_STELLA__SYMB_39 = 43,           /* STELLA__SYMB_39  */
+  YYSYMBOL_STELLA__SYMB_40 = 44,           /* STELLA__SYMB_40  */
+  YYSYMBOL_STELLA__SYMB_41 = 45,           /* STELLA__SYMB_41  */
+  YYSYMBOL_STELLA__SYMB_42 = 46,           /* STELLA__SYMB_42  */
+  YYSYMBOL_STELLA__SYMB_43 = 47,           /* STELLA__SYMB_43  */
+  YYSYMBOL_STELLA__SYMB_44 = 48,           /* STELLA__SYMB_44  */
+  YYSYMBOL_STELLA__SYMB_45 = 49,           /* STELLA__SYMB_45  */
+  YYSYMBOL_STELLA__SYMB_46 = 50,           /* STELLA__SYMB_46  */
+  YYSYMBOL_STELLA__SYMB_47 = 51,           /* STELLA__SYMB_47  */
+  YYSYMBOL_STELLA__SYMB_48 = 52,           /* STELLA__SYMB_48  */
+  YYSYMBOL_STELLA__SYMB_49 = 53,           /* STELLA__SYMB_49  */
+  YYSYMBOL_STELLA__SYMB_50 = 54,           /* STELLA__SYMB_50  */
+  YYSYMBOL_STELLA__SYMB_51 = 55,           /* STELLA__SYMB_51  */
+  YYSYMBOL_STELLA__SYMB_52 = 56,           /* STELLA__SYMB_52  */
+  YYSYMBOL_STELLA__SYMB_53 = 57,           /* STELLA__SYMB_53  */
+  YYSYMBOL_STELLA__SYMB_54 = 58,           /* STELLA__SYMB_54  */
+  YYSYMBOL_STELLA__SYMB_55 = 59,           /* STELLA__SYMB_55  */
+  YYSYMBOL_STELLA__SYMB_56 = 60,           /* STELLA__SYMB_56  */
+  YYSYMBOL_STELLA__SYMB_57 = 61,           /* STELLA__SYMB_57  */
+  YYSYMBOL_STELLA__SYMB_58 = 62,           /* STELLA__SYMB_58  */
+  YYSYMBOL_STELLA__SYMB_59 = 63,           /* STELLA__SYMB_59  */
+  YYSYMBOL_STELLA__SYMB_60 = 64,           /* STELLA__SYMB_60  */
+  YYSYMBOL_STELLA__SYMB_61 = 65,           /* STELLA__SYMB_61  */
+  YYSYMBOL_STELLA__SYMB_62 = 66,           /* STELLA__SYMB_62  */
+  YYSYMBOL_STELLA__SYMB_63 = 67,           /* STELLA__SYMB_63  */
+  YYSYMBOL_STELLA__SYMB_64 = 68,           /* STELLA__SYMB_64  */
+  YYSYMBOL_STELLA__SYMB_65 = 69,           /* STELLA__SYMB_65  */
+  YYSYMBOL_STELLA__SYMB_66 = 70,           /* STELLA__SYMB_66  */
+  YYSYMBOL_STELLA__SYMB_67 = 71,           /* STELLA__SYMB_67  */
   YYSYMBOL__INTEGER_ = 72,                 /* _INTEGER_  */
   YYSYMBOL_YYACCEPT = 73,                  /* $accept  */
   YYSYMBOL_Program = 74,                   /* Program  */
@@ -253,20 +2093,6 @@ enum yysymbol_kind_t
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
 
-/* Second part of user prologue.  */
-#line 97 "Stella.y"
-
-void yyerror(YYLTYPE *loc, yyscan_t scanner, YYSTYPE *result, const char *msg)
-{
-  fprintf(stderr, "error: %d,%d: %s at %s\n",
-    loc->first_line, loc->first_column, msg, Stellaget_text(scanner));
-}
-
-int yyparse(yyscan_t scanner, YYSTYPE *result);
-
-extern int yylex(YYSTYPE *lvalp, YYLTYPE *llocp, yyscan_t scanner);
-
-#line 270 "Parser.C"
 
 
 #ifdef short
@@ -529,15 +2355,13 @@ void free (void *); /* INFRINGES ON USER NAME SPACE */
 
 #if (! defined yyoverflow \
      && (! defined __cplusplus \
-         || (defined YYLTYPE_IS_TRIVIAL && YYLTYPE_IS_TRIVIAL \
-             && defined YYSTYPE_IS_TRIVIAL && YYSTYPE_IS_TRIVIAL)))
+         || (defined STELLAYYSTYPE_IS_TRIVIAL && STELLAYYSTYPE_IS_TRIVIAL)))
 
 /* A type that is properly aligned for any stack member.  */
 union yyalloc
 {
   yy_state_t yyss_alloc;
   YYSTYPE yyvs_alloc;
-  YYLTYPE yyls_alloc;
 };
 
 /* The size of the maximum gap between one aligned stack and the next.  */
@@ -546,9 +2370,8 @@ union yyalloc
 /* The size of an array large to enough to hold all stacks, each with
    N elements.  */
 # define YYSTACK_BYTES(N) \
-     ((N) * (YYSIZEOF (yy_state_t) + YYSIZEOF (YYSTYPE) \
-             + YYSIZEOF (YYLTYPE)) \
-      + 2 * YYSTACK_GAP_MAXIMUM)
+     ((N) * (YYSIZEOF (yy_state_t) + YYSIZEOF (YYSTYPE)) \
+      + YYSTACK_GAP_MAXIMUM)
 
 # define YYCOPY_NEEDED 1
 
@@ -593,7 +2416,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  5
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   443
+#define YYLAST   452
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  73
@@ -654,32 +2477,32 @@ static const yytype_int8 yytranslate[] =
       65,    66,    67,    68,    69,    70,    71,    72
 };
 
-#if YYDEBUG
+#if STELLAYYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   236,   236,   242,   244,   246,   247,   248,   250,   251,
-     253,   254,   256,   257,   264,   266,   267,   269,   271,   272,
-     273,   275,   276,   278,   279,   281,   283,   284,   286,   288,
-     289,   290,   292,   293,   295,   296,   298,   299,   301,   302,
-     303,   304,   305,   306,   307,   308,   309,   310,   311,   312,
-     313,   314,   316,   317,   318,   320,   322,   323,   325,   327,
-     328,   330,   331,   332,   334,   335,   336,   338,   339,   340,
-     341,   343,   345,   346,   348,   349,   350,   351,   352,   353,
-     354,   359,   360,   361,   362,   363,   364,   365,   366,   367,
-     369,   370,   371,   372,   374,   375,   376,   377,   378,   379,
-     380,   381,   382,   383,   384,   385,   386,   387,   388,   389,
-     390,   391,   392,   393,   395,   396,   397,   398,   399,   400,
-     402,   403,   404,   406,   407,   409,   410,   411,   412,   413,
-     415,   416,   417,   418,   419,   421,   422,   423,   425,   427,
-     429,   430,   431,   433,   435,   436
+       0,  1876,  1876,  1882,  1884,  1886,  1887,  1888,  1890,  1891,
+    1893,  1894,  1896,  1897,  1904,  1906,  1907,  1909,  1911,  1912,
+    1913,  1915,  1916,  1918,  1919,  1921,  1923,  1924,  1926,  1928,
+    1929,  1930,  1932,  1933,  1935,  1936,  1938,  1939,  1941,  1942,
+    1943,  1944,  1945,  1946,  1947,  1948,  1949,  1950,  1951,  1952,
+    1953,  1954,  1956,  1957,  1958,  1960,  1962,  1963,  1965,  1967,
+    1968,  1970,  1971,  1972,  1974,  1975,  1976,  1978,  1979,  1980,
+    1981,  1983,  1985,  1986,  1988,  1989,  1990,  1991,  1992,  1993,
+    1994,  1999,  2000,  2001,  2002,  2003,  2004,  2005,  2006,  2007,
+    2009,  2010,  2011,  2012,  2014,  2015,  2016,  2017,  2018,  2019,
+    2020,  2021,  2022,  2023,  2024,  2025,  2026,  2027,  2028,  2029,
+    2030,  2031,  2032,  2033,  2035,  2036,  2037,  2038,  2039,  2040,
+    2042,  2043,  2044,  2046,  2047,  2049,  2050,  2051,  2052,  2053,
+    2055,  2056,  2057,  2058,  2059,  2061,  2062,  2063,  2065,  2067,
+    2069,  2070,  2071,  2073,  2075,  2076
 };
 #endif
 
 /** Accessing symbol of state STATE.  */
 #define YY_ACCESSING_SYMBOL(State) YY_CAST (yysymbol_kind_t, yystos[State])
 
-#if YYDEBUG || 0
+#if STELLAYYDEBUG || 0
 /* The user-facing name of the symbol whose (internal) number is
    YYSYMBOL.  No bounds checking.  */
 static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
@@ -688,28 +2511,39 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "_ERROR_", "_BANGEQ",
-  "_LPAREN", "_RPAREN", "_STAR", "_PLUS", "_COMMA", "_MINUS", "_RARROW",
-  "_DOT", "_SLASH", "_COLON", "_SEMI", "_LT", "_LDARROW", "_SYMB_11",
-  "_EQ", "_DEQ", "_RDARROW", "_GT", "_GTEQ", "_KW_Bool", "_SYMB_26",
-  "_SYMB_27", "_SYMB_28", "_KW_Nat", "_SYMB_30", "_SYMB_29", "_SYMB_31",
-  "_KW_Unit", "_LBRACK", "_RBRACK", "_KW_and", "_KW_as", "_KW_cons",
-  "_KW_core", "_KW_else", "_KW_extend", "_KW_false", "_KW_fix", "_KW_fn",
-  "_KW_fold", "_KW_if", "_KW_in", "_KW_inl", "_KW_inline", "_KW_inr",
-  "_KW_language", "_KW_let", "_KW_letrec", "_KW_match", "_KW_not",
-  "_KW_or", "_KW_return", "_KW_succ", "_KW_then", "_KW_throws", "_KW_true",
-  "_KW_type", "_KW_unfold", "_KW_unit", "_KW_with", "_LBRACE", "_BAR",
-  "_SYMB_12", "_RBRACE", "_KW_65", "T_ExtensionName", "T_StellaIdent",
-  "_INTEGER_", "$accept", "Program", "LanguageDecl", "Extension",
-  "ListExtensionName", "ListExtension", "Decl", "ListDecl", "Annotation",
-  "ListAnnotation", "ParamDecl", "ListParamDecl", "ReturnType",
-  "ThrowType", "Type9", "ListType9", "MatchCase", "ListMatchCase",
-  "OptionalTyping", "PatternData", "ExprData", "Pattern", "ListPattern",
-  "LabelledPattern", "ListLabelledPattern", "Binding", "ListBinding",
-  "Expr", "ListExpr", "Expr1", "PatternBinding", "ListPatternBinding",
-  "Expr2", "Expr3", "Expr4", "Expr6", "Expr7", "Type", "Type1", "Type2",
-  "Type3", "ListType", "Expr5", "VariantFieldType", "ListVariantFieldType",
-  "RecordFieldType", "ListRecordFieldType", YY_NULLPTR
+  "\"end of file\"", "error", "\"invalid token\"", "_ERROR_",
+  "STELLA__SYMB_0", "STELLA__SYMB_1", "STELLA__SYMB_2", "STELLA__SYMB_3",
+  "STELLA__SYMB_4", "STELLA__SYMB_5", "STELLA__SYMB_6", "STELLA__SYMB_7",
+  "STELLA__SYMB_8", "STELLA__SYMB_9", "STELLA__SYMB_10", "STELLA__SYMB_11",
+  "STELLA__SYMB_12", "STELLA__SYMB_13", "STELLA__SYMB_14",
+  "STELLA__SYMB_15", "STELLA__SYMB_16", "STELLA__SYMB_17",
+  "STELLA__SYMB_18", "STELLA__SYMB_19", "STELLA__SYMB_20",
+  "STELLA__SYMB_21", "STELLA__SYMB_22", "STELLA__SYMB_23",
+  "STELLA__SYMB_24", "STELLA__SYMB_25", "STELLA__SYMB_26",
+  "STELLA__SYMB_27", "STELLA__SYMB_28", "STELLA__SYMB_29",
+  "STELLA__SYMB_30", "STELLA__SYMB_31", "STELLA__SYMB_32",
+  "STELLA__SYMB_33", "STELLA__SYMB_34", "STELLA__SYMB_35",
+  "STELLA__SYMB_36", "STELLA__SYMB_37", "STELLA__SYMB_38",
+  "STELLA__SYMB_39", "STELLA__SYMB_40", "STELLA__SYMB_41",
+  "STELLA__SYMB_42", "STELLA__SYMB_43", "STELLA__SYMB_44",
+  "STELLA__SYMB_45", "STELLA__SYMB_46", "STELLA__SYMB_47",
+  "STELLA__SYMB_48", "STELLA__SYMB_49", "STELLA__SYMB_50",
+  "STELLA__SYMB_51", "STELLA__SYMB_52", "STELLA__SYMB_53",
+  "STELLA__SYMB_54", "STELLA__SYMB_55", "STELLA__SYMB_56",
+  "STELLA__SYMB_57", "STELLA__SYMB_58", "STELLA__SYMB_59",
+  "STELLA__SYMB_60", "STELLA__SYMB_61", "STELLA__SYMB_62",
+  "STELLA__SYMB_63", "STELLA__SYMB_64", "STELLA__SYMB_65",
+  "STELLA__SYMB_66", "STELLA__SYMB_67", "_INTEGER_", "$accept", "Program",
+  "LanguageDecl", "Extension", "ListExtensionName", "ListExtension",
+  "Decl", "ListDecl", "Annotation", "ListAnnotation", "ParamDecl",
+  "ListParamDecl", "ReturnType", "ThrowType", "Type9", "ListType9",
+  "MatchCase", "ListMatchCase", "OptionalTyping", "PatternData",
+  "ExprData", "Pattern", "ListPattern", "LabelledPattern",
+  "ListLabelledPattern", "Binding", "ListBinding", "Expr", "ListExpr",
+  "Expr1", "PatternBinding", "ListPatternBinding", "Expr2", "Expr3",
+  "Expr4", "Expr6", "Expr7", "Type", "Type1", "Type2", "Type3", "ListType",
+  "Expr5", "VariantFieldType", "ListVariantFieldType", "RecordFieldType",
+  "ListRecordFieldType", YY_NULLPTR
 };
 
 static const char *
@@ -719,7 +2553,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-255)
+#define YYPACT_NINF (-256)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -733,39 +2567,39 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-     -33,   -15,    27,  -255,    21,  -255,     9,  -255,   -14,    44,
-      12,    -8,  -255,    13,  -255,   -27,    54,  -255,    61,    16,
-    -255,  -255,    -8,    33,    77,  -255,    33,    17,  -255,  -255,
-    -255,    33,    84,   372,    20,  -255,  -255,  -255,    85,  -255,
-      24,    93,    92,    98,    41,    75,    33,    96,   108,    51,
-     109,    57,   110,   348,   112,   120,   124,  -255,    33,  -255,
-      17,  -255,  -255,   128,    33,    33,  -255,    64,  -255,    33,
-    -255,    33,    24,   126,  -255,  -255,   127,  -255,  -255,    96,
-    -255,  -255,  -255,  -255,    33,    82,    33,  -255,    33,    83,
-    -255,   133,  -255,  -255,  -255,    33,   -36,  -255,   139,   139,
-      76,   144,   145,   146,   147,   148,   150,   139,   151,  -255,
-     153,   158,   134,   139,   166,   168,   326,   326,   248,   169,
-     170,  -255,   152,  -255,   198,  -255,  -255,   111,   174,  -255,
-     123,    11,    14,  -255,  -255,   188,   176,   139,   139,   139,
-     139,   139,   139,   189,   163,   139,   139,    24,    33,   142,
-     139,   139,   326,   135,   326,  -255,   200,   202,   203,  -255,
-    -255,   346,  -255,  -255,   190,   205,   172,   173,   155,   139,
-     139,    33,   193,   212,   154,   162,  -255,   139,   248,   298,
-     298,   248,   248,   248,   248,   248,   348,   298,   298,   298,
-     298,   139,   -38,  -255,   139,   159,   226,   227,   228,   230,
-     231,   229,   139,  -255,   235,   240,   250,   214,   139,   251,
-     253,    22,   243,   245,   233,   326,   326,   326,   246,   196,
-     259,   204,   139,   326,   139,   139,   326,   265,   270,   249,
-     139,   209,  -255,  -255,  -255,    50,    11,    11,    50,    50,
-      50,    50,    50,  -255,    11,  -255,  -255,  -255,   276,  -255,
-    -255,  -255,  -255,  -255,  -255,  -255,  -255,  -255,   139,  -255,
-     139,  -255,   219,    40,   247,  -255,  -255,  -255,   326,   326,
-     220,   326,  -255,   282,   287,   288,   326,  -255,   225,  -255,
-    -255,  -255,  -255,  -255,   232,   236,   278,  -255,  -255,    40,
-    -255,   193,  -255,  -255,   291,   300,   256,  -255,   139,   301,
-    -255,  -255,  -255,  -255,  -255,  -255,  -255,   246,  -255,   326,
-    -255,   139,  -255,   139,  -255,   139,  -255,  -255,  -255,  -255,
-     303,   254,  -255,  -255
+     -33,   -15,    31,  -256,    29,  -256,    -9,  -256,   -30,    35,
+      12,    -2,  -256,   -12,  -256,   -29,    66,  -256,    64,    11,
+    -256,  -256,    -2,    97,    77,  -256,    97,   382,    16,    97,
+    -256,  -256,  -256,    82,    19,  -256,  -256,  -256,    67,  -256,
+      27,    92,    91,   102,    98,   106,   104,   100,   111,   108,
+     109,    97,   101,    24,   115,   125,   124,  -256,    97,    97,
+    -256,    62,  -256,    97,  -256,    16,  -256,  -256,   130,    97,
+    -256,    97,    27,   126,  -256,  -256,    91,  -256,  -256,  -256,
+     127,  -256,  -256,  -256,    97,    78,    97,  -256,    97,   132,
+    -256,   139,  -256,  -256,  -256,    97,   -32,  -256,   144,   144,
+     212,    75,   144,   140,   141,   143,   145,   147,   148,   149,
+    -256,   150,   152,   146,   144,   154,   156,   314,   314,   266,
+     162,   163,  -256,   153,  -256,  -256,  -256,   164,   167,  -256,
+     269,   -13,     7,  -256,  -256,   173,   171,   178,   174,   180,
+     179,   177,   176,   144,   144,   144,   144,   144,   144,   144,
+     144,    27,    97,   134,   144,   144,   314,   377,   128,   314,
+    -256,   197,   198,   200,  -256,  -256,  -256,  -256,   199,   203,
+     169,   181,   204,   144,   144,    97,  -256,   144,   266,   266,
+     266,   266,   266,   266,   310,   310,    24,   310,   310,   310,
+     310,   144,   -17,  -256,   144,   158,  -256,   144,  -256,   144,
+     214,  -256,   225,   226,   227,   228,   229,   233,   234,   232,
+     241,   222,   144,   242,   243,    13,   231,   247,   245,   248,
+     246,   252,   238,   314,   314,   314,   144,   314,   144,   144,
+     314,   257,   259,   253,  -256,    83,    83,    83,    83,    83,
+      83,   -13,   -13,  -256,   -13,  -256,  -256,  -256,   268,  -256,
+    -256,  -256,   171,  -256,  -256,  -256,  -256,  -256,  -256,  -256,
+    -256,  -256,   144,   144,  -256,   272,    23,   244,  -256,  -256,
+     314,  -256,   314,   314,  -256,   207,  -256,   314,   270,  -256,
+     278,   295,   296,  -256,  -256,  -256,  -256,   290,   297,   292,
+    -256,  -256,    23,  -256,   304,   303,   255,  -256,   144,   318,
+    -256,  -256,   231,  -256,  -256,  -256,  -256,  -256,  -256,   314,
+    -256,   144,  -256,   144,  -256,   144,  -256,  -256,  -256,  -256,
+     319,   312,  -256,  -256
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -775,35 +2609,35 @@ static const yytype_uint8 yydefact[] =
 {
        0,     0,     0,     8,     0,     1,    12,     3,     0,     0,
       15,     5,     9,     0,    13,     0,     6,     4,     0,     0,
-      14,    16,     5,     0,     0,     7,     0,   140,   130,   131,
-     132,     0,     0,   135,     0,   133,    11,   122,   124,   129,
-      18,     0,    32,   141,     0,     0,   135,   133,   136,     0,
-     144,     0,     0,     0,     0,    19,     0,   134,     0,   139,
-     140,   127,   128,     0,     0,   135,   125,     0,   126,     0,
-     123,     0,    18,    21,    33,   142,     0,   143,   137,     0,
-     145,   121,    17,    20,     0,    23,     0,    22,     0,     0,
+      14,    16,     5,     0,     0,     7,     0,   135,   140,     0,
+     130,   131,   132,     0,     0,   133,    11,   122,   124,   129,
+      18,     0,   133,   136,     0,   144,     0,    32,   141,     0,
+       0,   135,     0,     0,     0,    19,     0,   134,     0,   135,
+     125,     0,   126,     0,   139,   140,   127,   128,     0,     0,
+     123,     0,    18,    21,   143,   137,     0,   145,    33,   142,
+       0,   121,    17,    20,     0,    23,     0,    22,     0,     0,
      120,    26,    24,    25,    12,     0,    15,    27,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    64,     0,   115,
+      64,     0,    64,     0,     0,     0,     0,     0,     0,     0,
+     115,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,   114,     0,   116,   118,   117,     0,    63,    70,
+      80,    89,   138,   113,    93,     0,   118,    59,     0,    65,
+       0,    36,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,    18,     0,     0,     0,     0,     0,    52,     0,    52,
+      45,     0,     0,     0,    46,    47,    50,    48,     0,    72,
+       0,     0,     0,     0,     0,     0,    10,    62,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,   114,     0,   116,    64,   118,   117,     0,    63,    70,
-      80,    89,   138,   113,    93,     0,    36,     0,     0,     0,
-       0,     0,     0,    65,     0,     0,     0,    18,     0,     0,
-       0,     0,     0,     0,    52,    45,     0,     0,     0,    46,
-      47,    52,    50,    48,     0,    72,     0,     0,     0,     0,
-       0,     0,   118,    59,     0,     0,    10,    62,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,    64,     0,   119,     0,     0,     0,     0,     0,     0,
-       0,     0,    64,    85,     0,     0,     0,     0,     0,     0,
-       0,     0,    34,    53,     0,     0,     0,     0,    50,     0,
-      56,     0,     0,     0,     0,     0,    29,     0,     0,     0,
-       0,     0,    98,    97,    61,    79,    86,    87,    74,    75,
-      78,    76,    77,    81,    88,    90,    91,    92,     0,    95,
-      96,    37,    83,   100,   101,   102,   108,   107,     0,    66,
-       0,   109,     0,     0,     0,   103,   104,    51,     0,     0,
-       0,    52,    43,     0,     0,     0,     0,    41,     0,    42,
-      71,    73,    68,    69,    30,     0,     0,   106,   105,     0,
-      58,     0,    60,    94,     0,     0,     0,   111,     0,     0,
-      35,    38,    54,    39,    40,    49,    55,     0,    57,    29,
+       0,    64,     0,   119,     0,     0,    98,    64,    97,     0,
+       0,    85,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,    50,    53,     0,    56,
+       0,    34,     0,     0,     0,     0,     0,     0,     0,     0,
+      29,     0,     0,     0,    61,    74,    75,    76,    77,    78,
+      79,    86,    87,    81,    88,    90,    91,    92,     0,    95,
+      96,    58,     0,    60,    66,    37,    83,   100,   101,   102,
+     107,   108,     0,     0,   109,     0,     0,     0,   103,   104,
+       0,    51,     0,    52,    41,     0,    42,     0,     0,    43,
+       0,     0,     0,    71,    73,    68,    69,    30,     0,     0,
+     106,   105,     0,    94,     0,     0,     0,   111,     0,     0,
+      55,    54,     0,    57,    35,    38,    39,    40,    49,    29,
       84,     0,   112,     0,    99,     0,    67,    44,    31,    28,
        0,     0,   110,    82
 };
@@ -811,21 +2645,21 @@ static const yytype_uint8 yydefact[] =
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-    -255,  -255,  -255,  -255,   292,  -255,  -255,   221,  -255,  -255,
-    -255,   -64,  -255,  -255,  -255,   222,  -255,     7,  -255,  -255,
-    -255,  -148,  -156,  -255,    43,  -255,    87,   -98,  -117,  -111,
-    -255,  -107,   208,   242,  -165,  -255,  -254,     6,  -255,   -50,
-    -255,   -35,  -134,  -255,   272,  -255,   263
+    -256,  -256,  -256,  -256,   313,  -256,  -256,   240,  -256,  -256,
+    -256,   -66,  -256,  -256,  -256,   251,  -256,    28,  -256,  -256,
+    -256,  -152,  -151,  -256,    72,  -256,   155,   -98,   -93,  -112,
+    -256,  -108,   220,    43,  -121,  -256,  -255,    -4,  -256,   -50,
+    -256,   -35,  -146,  -256,   283,  -256,   288
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int16 yydefgoto[] =
 {
        0,     2,     3,     9,    17,     6,    14,    10,    21,    15,
-      55,    56,    85,    89,    91,    92,   284,   285,    59,   270,
-     195,   164,   214,   220,   221,   173,   174,   143,   144,   128,
-     165,   166,   129,   130,   131,   132,   133,    48,    37,    38,
-      39,    49,   134,    43,    44,    50,    51
+      55,    56,    85,    89,    91,    92,   287,   288,    64,   278,
+     200,   168,   218,   219,   220,   137,   138,   139,   140,   128,
+     169,   170,   129,   130,   131,   132,   133,    43,    37,    38,
+      39,    44,   134,    48,    49,    45,    46
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -833,139 +2667,141 @@ static const yytype_int16 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
-     127,   135,   149,    70,   211,   219,   213,   175,    83,   297,
-     167,    63,    -2,   213,   236,   237,    19,     1,   188,   191,
-      98,    20,   244,     4,   189,    13,   192,     5,   267,    36,
-      78,   268,    41,   249,   250,   312,     7,    45,    26,   196,
-     197,   198,   199,   200,   201,    99,   190,   204,   205,     8,
-      11,    27,   209,   210,   245,   246,   247,    28,   179,    12,
-     180,    29,    16,    22,    74,    30,    31,   273,   274,   275,
-      77,   227,   228,    13,   248,    81,    32,    82,   286,   234,
-      23,   109,    40,   206,    18,   259,   186,    24,    42,    46,
-      87,    52,    90,    53,    93,    54,   251,   264,    33,    57,
-     121,    93,    34,   123,    35,   187,    58,    60,    61,    62,
-      64,   125,   126,   282,   283,   302,   281,    65,    67,    66,
-     299,   300,    69,   213,   280,    68,    71,   178,   306,    72,
-      73,   179,   290,   180,    76,    79,   243,    84,    86,   181,
-     182,    88,    95,   183,    99,   184,   185,   136,    94,   137,
-     138,   139,   140,   141,   207,   142,   145,   100,   146,   186,
-     294,   286,   295,   147,   101,   102,   103,   148,   104,   105,
-     106,   150,   107,   151,   169,   170,   108,   229,   187,   176,
-     109,   110,   111,   112,   113,   171,   114,   316,   115,   177,
-     116,   117,   118,   119,   193,   194,   120,   203,   202,   121,
-     208,   122,   123,    99,   124,   215,   212,   216,   217,   222,
-     125,   126,   230,   319,   223,   320,   100,   321,   224,   225,
-     226,   231,   232,   101,   102,   103,   252,   104,   105,   106,
-     233,   107,   253,   254,   255,   108,   256,   257,   258,   109,
-     110,   111,   112,   113,   260,   114,   261,   115,   263,   116,
-     117,   118,   119,    99,   271,   120,   262,   265,   121,   266,
-     122,   123,   269,   124,   277,   276,   100,   272,   278,   172,
-     126,   287,   279,   101,   102,   103,   288,   104,   105,   106,
-     291,   107,   293,   289,   296,   108,   298,   301,   303,   109,
-     110,   111,   112,   304,   305,   114,   307,   115,   309,   311,
-     313,   118,   119,    99,   310,   120,   314,   317,   121,   322,
-     122,   123,   315,   124,    25,    96,   318,    97,   292,   125,
-     126,   308,   323,   101,   102,   103,   168,   104,   105,   106,
-      80,   152,    75,     0,     0,   108,     0,     0,     0,   109,
-     110,     0,   112,     0,   153,   114,     0,   115,     0,     0,
-       0,   152,   119,    26,     0,   120,     0,     0,   121,   154,
-     122,   123,     0,   124,   153,     0,    27,   155,     0,   125,
-     126,     0,    28,   156,     0,   157,    29,    26,     0,   154,
-      30,    31,     0,   158,     0,     0,   159,   155,     0,   160,
-      27,   161,     0,   156,     0,   157,    28,   162,   163,     0,
-      29,     0,     0,   158,    30,    31,   159,     0,     0,   160,
-       0,   161,     0,    33,     0,    32,     0,   218,   163,    35,
-     235,     0,     0,   238,   239,   240,   241,   242,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    33,     0,     0,
-       0,    34,     0,    47
+     127,   135,   153,    70,   215,   217,    83,   217,   222,   142,
+     171,   297,    -2,   191,   188,   189,    68,   270,    19,    36,
+     271,     1,    41,    20,    75,    50,   190,     4,    98,    99,
+      26,     5,    27,    13,     7,     8,   192,   312,    11,    28,
+      12,    29,   245,   246,   247,   202,   203,   204,   205,   206,
+     207,   208,   209,   249,    74,   250,   213,   214,    18,    78,
+      30,    31,    32,   241,   242,    81,   244,    82,   110,    16,
+      22,   280,   281,   282,    23,   231,   232,    13,   289,   234,
+      87,    24,    90,    40,    93,   210,    47,   122,    51,    52,
+     124,    93,    53,   125,    35,   126,   251,    54,   248,    57,
+     267,   255,    58,    26,   254,    27,    59,    60,   184,   185,
+      61,    63,    28,    62,    29,    65,   285,   286,   299,   284,
+     300,   217,   301,   186,    66,   304,    71,    67,   283,    72,
+      69,    73,    76,    30,    31,    32,   243,    80,    84,    86,
+      94,    88,   187,    95,    33,   141,   143,   144,   211,   145,
+      99,   146,   100,   147,   148,   149,   150,   289,   151,   101,
+     154,   102,   155,   152,   294,   295,    34,    35,   173,   174,
+     175,   233,   177,   176,   103,   104,   105,   106,   107,   108,
+     193,   194,   195,   196,   197,   109,   316,   199,   198,   110,
+     111,   112,   113,   114,   201,   115,   212,   116,   221,   117,
+     118,   119,   120,   223,   224,   121,   225,   227,   122,   226,
+     123,   124,   230,   319,   125,   320,   126,   321,    99,   228,
+     100,   235,   236,   237,   238,   239,   240,   101,   252,   102,
+     256,   229,   257,   258,   259,   260,   261,   262,   263,   264,
+     266,   272,   103,   104,   105,   106,   107,   108,   265,   268,
+     269,   273,   275,   109,   274,   276,   279,   110,   111,   112,
+     113,   114,   277,   115,   290,   116,   291,   117,   118,   119,
+     120,   292,    99,   121,   100,   293,   122,   302,   123,   124,
+     296,   101,   136,   102,   126,   306,   305,   298,   178,   179,
+     180,   181,   182,   183,   184,   185,   103,   104,   105,   106,
+     107,   108,   307,   308,   309,   311,   310,   109,   313,   186,
+     314,   110,   111,   112,   113,   315,    99,   115,   100,   116,
+     156,   323,   157,   119,   120,   317,   322,   121,   187,   158,
+     122,   159,   123,   124,    96,    25,   125,   318,   126,   172,
+     103,   104,   105,   106,   107,   108,    97,   303,    79,    77,
+     253,   109,     0,     0,     0,   110,   111,     0,   113,   160,
+       0,   115,     0,   116,     0,   161,     0,   162,   120,     0,
+       0,   121,     0,     0,   122,   163,   123,   124,   164,     0,
+     125,   165,   126,   156,   166,   157,   167,     0,    26,     0,
+      27,     0,   158,     0,   159,     0,     0,    28,     0,    29,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,    30,    31,
+      32,     0,   160,     0,     0,     0,     0,     0,   161,    33,
+     162,     0,     0,     0,     0,     0,     0,     0,   163,     0,
+       0,   164,     0,     0,   165,     0,     0,   216,     0,   167,
+       0,    34,    42
 };
 
 static const yytype_int16 yycheck[] =
 {
-      98,    99,   113,    53,   152,   161,   154,   124,    72,   263,
-     117,    46,     0,   161,   179,   180,    43,    50,     7,     5,
-      56,    48,   187,    38,    13,    61,    12,     0,     6,    23,
-      65,     9,    26,    71,    72,   289,    15,    31,     5,   137,
-     138,   139,   140,   141,   142,     5,    35,   145,   146,    40,
-      64,    18,   150,   151,   188,   189,   190,    24,     8,    15,
-      10,    28,    70,     9,    58,    32,    33,   215,   216,   217,
-      64,   169,   170,    61,   191,    69,    43,    71,   226,   177,
-      19,    41,     5,   147,    71,   202,    36,    71,    71,     5,
-      84,    71,    86,     8,    88,    71,   194,   208,    65,     6,
-      60,    95,    69,    63,    71,    55,    14,     9,    67,    34,
-      14,    71,    72,   224,   225,   271,   223,     9,     9,    68,
-     268,   269,    12,   271,   222,    68,    14,     4,   276,     9,
-       6,     8,   230,    10,     6,    71,   186,    11,    11,    16,
-      17,    59,     9,    20,     5,    22,    23,    71,    65,     5,
-       5,     5,     5,     5,   148,     5,     5,    18,     5,    36,
-     258,   309,   260,     5,    25,    26,    27,    33,    29,    30,
-      31,     5,    33,     5,     5,     5,    37,   171,    55,    68,
-      41,    42,    43,    44,    45,    33,    47,   298,    49,    15,
-      51,    52,    53,    54,     6,    19,    57,    34,     9,    60,
-      58,    62,    63,     5,    65,     5,    71,     5,     5,    19,
-      71,    72,    19,   311,     9,   313,    18,   315,    46,    46,
-      65,     9,    68,    25,    26,    27,    67,    29,    30,    31,
-      68,    33,     6,     6,     6,    37,     6,     6,     9,    41,
-      42,    43,    44,    45,     9,    47,     6,    49,    34,    51,
-      52,    53,    54,     5,     9,    57,     6,     6,    60,     6,
-      62,    63,    19,    65,    68,    19,    18,    34,     9,    71,
-      72,     6,    68,    25,    26,    27,     6,    29,    30,    31,
-      71,    33,     6,    34,    65,    37,    39,    67,     6,    41,
-      42,    43,    44,     6,     6,    47,    71,    49,    66,    21,
-       9,    53,    54,     5,    68,    57,     6,     6,    60,     6,
-      62,    63,    56,    65,    22,    94,   309,    95,   231,    71,
-      72,   278,    68,    25,    26,    27,   118,    29,    30,    31,
-      67,     5,    60,    -1,    -1,    37,    -1,    -1,    -1,    41,
-      42,    -1,    44,    -1,    18,    47,    -1,    49,    -1,    -1,
-      -1,     5,    54,     5,    -1,    57,    -1,    -1,    60,    33,
-      62,    63,    -1,    65,    18,    -1,    18,    41,    -1,    71,
-      72,    -1,    24,    47,    -1,    49,    28,     5,    -1,    33,
-      32,    33,    -1,    57,    -1,    -1,    60,    41,    -1,    63,
-      18,    65,    -1,    47,    -1,    49,    24,    71,    72,    -1,
-      28,    -1,    -1,    57,    32,    33,    60,    -1,    -1,    63,
-      -1,    65,    -1,    65,    -1,    43,    -1,    71,    72,    71,
-     178,    -1,    -1,   181,   182,   183,   184,   185,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    65,    -1,    -1,
-      -1,    69,    -1,    71
+      98,    99,   114,    53,   156,   157,    72,   159,   159,   102,
+     118,   266,     0,     6,    27,    28,    51,     4,    47,    23,
+       7,    54,    26,    52,    59,    29,    39,    42,    60,     6,
+       6,     0,     8,    65,     5,    44,    29,   292,    68,    15,
+       5,    17,   188,   189,   190,   143,   144,   145,   146,   147,
+     148,   149,   150,    70,    58,    72,   154,   155,    70,    63,
+      36,    37,    38,   184,   185,    69,   187,    71,    45,    71,
+       4,   223,   224,   225,    10,   173,   174,    65,   230,   177,
+      84,    70,    86,     6,    88,   151,    70,    64,     6,    70,
+      67,    95,    25,    70,    70,    72,   194,    70,   191,     7,
+     212,   199,    11,     6,   197,     8,     4,     9,    25,    26,
+       4,    11,    15,     9,    17,     4,   228,   229,   270,   227,
+     272,   273,   273,    40,    16,   277,    11,    18,   226,     4,
+      29,     7,    70,    36,    37,    38,   186,     7,    12,    12,
+       8,    63,    59,     4,    47,    70,     6,     6,   152,     6,
+       6,     6,     8,     6,     6,     6,     6,   309,     6,    15,
+       6,    17,     6,    17,   262,   263,    69,    70,     6,     6,
+      17,   175,     5,     9,    30,    31,    32,    33,    34,    35,
+       7,    10,     4,     9,     4,    41,   298,    10,     9,    45,
+      46,    47,    48,    49,    18,    51,    62,    53,    70,    55,
+      56,    57,    58,     6,     6,    61,     6,     4,    64,    10,
+      66,    67,     8,   311,    70,   313,    72,   315,     6,    50,
+       8,   178,   179,   180,   181,   182,   183,    15,    70,    17,
+      16,    50,     7,     7,     7,     7,     7,     4,     4,     7,
+      18,    10,    30,    31,    32,    33,    34,    35,     7,     7,
+       7,     4,     4,    41,     9,     9,    18,    45,    46,    47,
+      48,    49,    10,    51,     7,    53,     7,    55,    56,    57,
+      58,    18,     6,    61,     8,     7,    64,    70,    66,    67,
+       8,    15,    70,    17,    72,     7,    16,    43,    19,    20,
+      21,    22,    23,    24,    25,    26,    30,    31,    32,    33,
+      34,    35,     7,     7,    14,    13,     9,    41,     4,    40,
+       7,    45,    46,    47,    48,    60,     6,    51,     8,    53,
+       6,     9,     8,    57,    58,     7,     7,    61,    59,    15,
+      64,    17,    66,    67,    94,    22,    70,   309,    72,   119,
+      30,    31,    32,    33,    34,    35,    95,   275,    65,    61,
+     195,    41,    -1,    -1,    -1,    45,    46,    -1,    48,    45,
+      -1,    51,    -1,    53,    -1,    51,    -1,    53,    58,    -1,
+      -1,    61,    -1,    -1,    64,    61,    66,    67,    64,    -1,
+      70,    67,    72,     6,    70,     8,    72,    -1,     6,    -1,
+       8,    -1,    15,    -1,    17,    -1,    -1,    15,    -1,    17,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    36,    37,
+      38,    -1,    45,    -1,    -1,    -1,    -1,    -1,    51,    47,
+      53,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    61,    -1,
+      -1,    64,    -1,    -1,    67,    -1,    -1,    70,    -1,    72,
+      -1,    69,    70
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    50,    74,    75,    38,     0,    78,    15,    40,    76,
-      80,    64,    15,    61,    79,    82,    70,    77,    71,    43,
-      48,    81,     9,    19,    71,    77,     5,    18,    24,    28,
-      32,    33,    43,    65,    69,    71,   110,   111,   112,   113,
-       5,   110,    71,   116,   117,   110,     5,    71,   110,   114,
-     118,   119,    71,     8,    71,    83,    84,     6,    14,    91,
-       9,    67,    34,   114,    14,     9,    68,     9,    68,    12,
-     112,    14,     9,     6,   110,   117,     6,   110,   114,    71,
-     119,   110,   110,    84,    11,    85,    11,   110,    59,    86,
-     110,    87,    88,   110,    65,     9,    80,    88,    56,     5,
-      18,    25,    26,    27,    29,    30,    31,    33,    37,    41,
-      42,    43,    44,    45,    47,    49,    51,    52,    53,    54,
-      57,    60,    62,    63,    65,    71,    72,   100,   102,   105,
-     106,   107,   108,   109,   115,   100,    71,     5,     5,     5,
-       5,     5,     5,   100,   101,     5,     5,     5,    33,   102,
-       5,     5,     5,    18,    33,    41,    47,    49,    57,    60,
-      63,    65,    71,    72,    94,   103,   104,   104,   105,     5,
-       5,    33,    71,    98,    99,   101,    68,    15,     4,     8,
-      10,    16,    17,    20,    22,    23,    36,    55,     7,    13,
-      35,     5,    12,     6,    19,    93,   100,   100,   100,   100,
-     100,   100,     9,    34,   100,   100,    84,   110,    58,   100,
-     100,    94,    71,    94,    95,     5,     5,     5,    71,    95,
-      96,    97,    19,     9,    46,    46,    65,   100,   100,   110,
-      19,     9,    68,    68,   100,   106,   107,   107,   106,   106,
-     106,   106,   106,   112,   107,   115,   115,   115,   101,    71,
-      72,   100,    67,     6,     6,     6,     6,     6,     9,   101,
-       9,     6,     6,    34,   102,     6,     6,     6,     9,    19,
-      92,     9,    34,    94,    94,    94,    19,    68,     9,    68,
-     100,   104,   102,   102,    89,    90,    94,     6,     6,    34,
-     100,    71,    99,     6,   100,   100,    65,   109,    39,    94,
-      94,    67,    95,     6,     6,     6,    94,    71,    97,    66,
-      68,    21,   109,     9,     6,    56,   102,     6,    90,   100,
-     100,   100,     6,    68
+       0,    54,    74,    75,    42,     0,    78,     5,    44,    76,
+      80,    68,     5,    65,    79,    82,    71,    77,    70,    47,
+      52,    81,     4,    10,    70,    77,     6,     8,    15,    17,
+      36,    37,    38,    47,    69,    70,   110,   111,   112,   113,
+       6,   110,    70,   110,   114,   118,   119,    70,   116,   117,
+     110,     6,    70,    25,    70,    83,    84,     7,    11,     4,
+       9,     4,     9,    11,    91,     4,    16,    18,   114,    29,
+     112,    11,     4,     7,   110,   114,    70,   119,   110,   117,
+       7,   110,   110,    84,    12,    85,    12,   110,    63,    86,
+     110,    87,    88,   110,     8,     4,    80,    88,    60,     6,
+       8,    15,    17,    30,    31,    32,    33,    34,    35,    41,
+      45,    46,    47,    48,    49,    51,    53,    55,    56,    57,
+      58,    61,    64,    66,    67,    70,    72,   100,   102,   105,
+     106,   107,   108,   109,   115,   100,    70,    98,    99,   100,
+     101,    70,   101,     6,     6,     6,     6,     6,     6,     6,
+       6,     6,    17,   102,     6,     6,     6,     8,    15,    17,
+      45,    51,    53,    61,    64,    67,    70,    72,    94,   103,
+     104,   104,   105,     6,     6,    17,     9,     5,    19,    20,
+      21,    22,    23,    24,    25,    26,    40,    59,    27,    28,
+      39,     6,    29,     7,    10,     4,     9,     4,     9,    10,
+      93,    18,   100,   100,   100,   100,   100,   100,   100,   100,
+      84,   110,    62,   100,   100,    94,    70,    94,    95,    96,
+      97,    70,    95,     6,     6,     6,    10,     4,    50,    50,
+       8,   100,   100,   110,   100,   106,   106,   106,   106,   106,
+     106,   107,   107,   112,   107,   115,   115,   115,   101,    70,
+      72,   100,    70,    99,   101,   100,    16,     7,     7,     7,
+       7,     7,     4,     4,     7,     7,    18,   102,     7,     7,
+       4,     7,    10,     4,     9,     4,     9,    10,    92,    18,
+      94,    94,    94,   100,   104,   102,   102,    89,    90,    94,
+       7,     7,    18,     7,   100,   100,     8,   109,    43,    94,
+      94,    95,    70,    97,    94,    16,     7,     7,     7,    14,
+       9,    13,   109,     4,     7,    60,   102,     7,    90,   100,
+     100,   100,     7,     9
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
@@ -1012,7 +2848,7 @@ static const yytype_int8 yyr2[] =
 enum { YYENOMEM = -2 };
 
 #define yyerrok         (yyerrstatus = 0)
-#define yyclearin       (yychar = YYEMPTY)
+#define yyclearin       (yychar = STELLAYYEMPTY)
 
 #define YYACCEPT        goto yyacceptlab
 #define YYABORT         goto yyabortlab
@@ -1024,7 +2860,7 @@ enum { YYENOMEM = -2 };
 
 #define YYBACKUP(Token, Value)                                    \
   do                                                              \
-    if (yychar == YYEMPTY)                                        \
+    if (yychar == STELLAYYEMPTY)                                        \
       {                                                           \
         yychar = (Token);                                         \
         yylval = (Value);                                         \
@@ -1034,44 +2870,18 @@ enum { YYENOMEM = -2 };
       }                                                           \
     else                                                          \
       {                                                           \
-        yyerror (&yylloc, scanner, result, YY_("syntax error: cannot back up")); \
+        yyerror (YY_("syntax error: cannot back up")); \
         YYERROR;                                                  \
       }                                                           \
   while (0)
 
 /* Backward compatibility with an undocumented macro.
-   Use YYerror or YYUNDEF. */
-#define YYERRCODE YYUNDEF
-
-/* YYLLOC_DEFAULT -- Set CURRENT to span from RHS[1] to RHS[N].
-   If N is 0, then set CURRENT to the empty location which ends
-   the previous symbol: RHS[0] (always defined).  */
-
-#ifndef YYLLOC_DEFAULT
-# define YYLLOC_DEFAULT(Current, Rhs, N)                                \
-    do                                                                  \
-      if (N)                                                            \
-        {                                                               \
-          (Current).first_line   = YYRHSLOC (Rhs, 1).first_line;        \
-          (Current).first_column = YYRHSLOC (Rhs, 1).first_column;      \
-          (Current).last_line    = YYRHSLOC (Rhs, N).last_line;         \
-          (Current).last_column  = YYRHSLOC (Rhs, N).last_column;       \
-        }                                                               \
-      else                                                              \
-        {                                                               \
-          (Current).first_line   = (Current).last_line   =              \
-            YYRHSLOC (Rhs, 0).last_line;                                \
-          (Current).first_column = (Current).last_column =              \
-            YYRHSLOC (Rhs, 0).last_column;                              \
-        }                                                               \
-    while (0)
-#endif
-
-#define YYRHSLOC(Rhs, K) ((Rhs)[K])
+   Use STELLAYYerror or STELLAYYUNDEF. */
+#define YYERRCODE STELLAYYUNDEF
 
 
 /* Enable debugging if requested.  */
-#if YYDEBUG
+#if STELLAYYDEBUG
 
 # ifndef YYFPRINTF
 #  include <stdio.h> /* INFRINGES ON USER NAME SPACE */
@@ -1085,63 +2895,6 @@ do {                                            \
 } while (0)
 
 
-/* YYLOCATION_PRINT -- Print the location on the stream.
-   This macro was not mandated originally: define only if we know
-   we won't break user code: when these are the locations we know.  */
-
-# ifndef YYLOCATION_PRINT
-
-#  if defined YY_LOCATION_PRINT
-
-   /* Temporary convenience wrapper in case some people defined the
-      undocumented and private YY_LOCATION_PRINT macros.  */
-#   define YYLOCATION_PRINT(File, Loc)  YY_LOCATION_PRINT(File, *(Loc))
-
-#  elif defined YYLTYPE_IS_TRIVIAL && YYLTYPE_IS_TRIVIAL
-
-/* Print *YYLOCP on YYO.  Private, do not rely on its existence. */
-
-YY_ATTRIBUTE_UNUSED
-static int
-yy_location_print_ (FILE *yyo, YYLTYPE const * const yylocp)
-{
-  int res = 0;
-  int end_col = 0 != yylocp->last_column ? yylocp->last_column - 1 : 0;
-  if (0 <= yylocp->first_line)
-    {
-      res += YYFPRINTF (yyo, "%d", yylocp->first_line);
-      if (0 <= yylocp->first_column)
-        res += YYFPRINTF (yyo, ".%d", yylocp->first_column);
-    }
-  if (0 <= yylocp->last_line)
-    {
-      if (yylocp->first_line < yylocp->last_line)
-        {
-          res += YYFPRINTF (yyo, "-%d", yylocp->last_line);
-          if (0 <= end_col)
-            res += YYFPRINTF (yyo, ".%d", end_col);
-        }
-      else if (0 <= end_col && yylocp->first_column < end_col)
-        res += YYFPRINTF (yyo, "-%d", end_col);
-    }
-  return res;
-}
-
-#   define YYLOCATION_PRINT  yy_location_print_
-
-    /* Temporary convenience wrapper in case some people defined the
-       undocumented and private YY_LOCATION_PRINT macros.  */
-#   define YY_LOCATION_PRINT(File, Loc)  YYLOCATION_PRINT(File, &(Loc))
-
-#  else
-
-#   define YYLOCATION_PRINT(File, Loc) ((void) 0)
-    /* Temporary convenience wrapper in case some people defined the
-       undocumented and private YY_LOCATION_PRINT macros.  */
-#   define YY_LOCATION_PRINT  YYLOCATION_PRINT
-
-#  endif
-# endif /* !defined YYLOCATION_PRINT */
 
 
 # define YY_SYMBOL_PRINT(Title, Kind, Value, Location)                    \
@@ -1150,7 +2903,7 @@ do {                                                                      \
     {                                                                     \
       YYFPRINTF (stderr, "%s ", Title);                                   \
       yy_symbol_print (stderr,                                            \
-                  Kind, Value, Location, scanner, result); \
+                  Kind, Value); \
       YYFPRINTF (stderr, "\n");                                           \
     }                                                                     \
 } while (0)
@@ -1162,13 +2915,10 @@ do {                                                                      \
 
 static void
 yy_symbol_value_print (FILE *yyo,
-                       yysymbol_kind_t yykind, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp, yyscan_t scanner, YYSTYPE *result)
+                       yysymbol_kind_t yykind, YYSTYPE const * const yyvaluep)
 {
   FILE *yyoutput = yyo;
   YY_USE (yyoutput);
-  YY_USE (yylocationp);
-  YY_USE (scanner);
-  YY_USE (result);
   if (!yyvaluep)
     return;
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
@@ -1183,14 +2933,12 @@ yy_symbol_value_print (FILE *yyo,
 
 static void
 yy_symbol_print (FILE *yyo,
-                 yysymbol_kind_t yykind, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp, yyscan_t scanner, YYSTYPE *result)
+                 yysymbol_kind_t yykind, YYSTYPE const * const yyvaluep)
 {
   YYFPRINTF (yyo, "%s %s (",
              yykind < YYNTOKENS ? "token" : "nterm", yysymbol_name (yykind));
 
-  YYLOCATION_PRINT (yyo, yylocationp);
-  YYFPRINTF (yyo, ": ");
-  yy_symbol_value_print (yyo, yykind, yyvaluep, yylocationp, scanner, result);
+  yy_symbol_value_print (yyo, yykind, yyvaluep);
   YYFPRINTF (yyo, ")");
 }
 
@@ -1223,8 +2971,8 @@ do {                                                            \
 `------------------------------------------------*/
 
 static void
-yy_reduce_print (yy_state_t *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp,
-                 int yyrule, yyscan_t scanner, YYSTYPE *result)
+yy_reduce_print (yy_state_t *yyssp, YYSTYPE *yyvsp,
+                 int yyrule)
 {
   int yylno = yyrline[yyrule];
   int yynrhs = yyr2[yyrule];
@@ -1237,8 +2985,7 @@ yy_reduce_print (yy_state_t *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp,
       YYFPRINTF (stderr, "   $%d = ", yyi + 1);
       yy_symbol_print (stderr,
                        YY_ACCESSING_SYMBOL (+yyssp[yyi + 1 - yynrhs]),
-                       &yyvsp[(yyi + 1) - (yynrhs)],
-                       &(yylsp[(yyi + 1) - (yynrhs)]), scanner, result);
+                       &yyvsp[(yyi + 1) - (yynrhs)]);
       YYFPRINTF (stderr, "\n");
     }
 }
@@ -1246,18 +2993,18 @@ yy_reduce_print (yy_state_t *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp,
 # define YY_REDUCE_PRINT(Rule)          \
 do {                                    \
   if (yydebug)                          \
-    yy_reduce_print (yyssp, yyvsp, yylsp, Rule, scanner, result); \
+    yy_reduce_print (yyssp, yyvsp, Rule); \
 } while (0)
 
 /* Nonzero means print parse trace.  It is left uninitialized so that
    multiple parsers can coexist.  */
 int yydebug;
-#else /* !YYDEBUG */
+#else /* !STELLAYYDEBUG */
 # define YYDPRINTF(Args) ((void) 0)
 # define YY_SYMBOL_PRINT(Title, Kind, Value, Location)
 # define YY_STACK_PRINT(Bottom, Top)
 # define YY_REDUCE_PRINT(Rule)
-#endif /* !YYDEBUG */
+#endif /* !STELLAYYDEBUG */
 
 
 /* YYINITDEPTH -- initial size of the parser's stacks.  */
@@ -1287,12 +3034,9 @@ int yydebug;
 
 static void
 yydestruct (const char *yymsg,
-            yysymbol_kind_t yykind, YYSTYPE *yyvaluep, YYLTYPE *yylocationp, yyscan_t scanner, YYSTYPE *result)
+            yysymbol_kind_t yykind, YYSTYPE *yyvaluep)
 {
   YY_USE (yyvaluep);
-  YY_USE (yylocationp);
-  YY_USE (scanner);
-  YY_USE (result);
   if (!yymsg)
     yymsg = "Deleting";
   YY_SYMBOL_PRINT (yymsg, yykind, yyvaluep, yylocationp);
@@ -1303,6 +3047,13 @@ yydestruct (const char *yymsg,
 }
 
 
+/* Lookahead token kind.  */
+int yychar;
+
+/* The semantic value of the lookahead symbol.  */
+YYSTYPE yylval;
+/* Number of syntax errors so far.  */
+int yynerrs;
 
 
 
@@ -1312,29 +3063,8 @@ yydestruct (const char *yymsg,
 `----------*/
 
 int
-yyparse (yyscan_t scanner, YYSTYPE *result)
+yyparse (void)
 {
-/* Lookahead token kind.  */
-int yychar;
-
-
-/* The semantic value of the lookahead symbol.  */
-/* Default value used for initialization, for pacifying older GCCs
-   or non-GCC compilers.  */
-YY_INITIAL_VALUE (static YYSTYPE yyval_default;)
-YYSTYPE yylval YY_INITIAL_VALUE (= yyval_default);
-
-/* Location data for the lookahead symbol.  */
-static YYLTYPE yyloc_default
-# if defined YYLTYPE_IS_TRIVIAL && YYLTYPE_IS_TRIVIAL
-  = { 1, 1, 1, 1 }
-# endif
-;
-YYLTYPE yylloc = yyloc_default;
-
-    /* Number of syntax errors so far.  */
-    int yynerrs = 0;
-
     yy_state_fast_t yystate = 0;
     /* Number of tokens to shift before error messages enabled.  */
     int yyerrstatus = 0;
@@ -1355,11 +3085,6 @@ YYLTYPE yylloc = yyloc_default;
     YYSTYPE *yyvs = yyvsa;
     YYSTYPE *yyvsp = yyvs;
 
-    /* The location stack: array, bottom, top.  */
-    YYLTYPE yylsa[YYINITDEPTH];
-    YYLTYPE *yyls = yylsa;
-    YYLTYPE *yylsp = yyls;
-
   int yyn;
   /* The return value of yyparse.  */
   int yyresult;
@@ -1368,14 +3093,10 @@ YYLTYPE yylloc = yyloc_default;
   /* The variables used to return semantic value and location from the
      action routines.  */
   YYSTYPE yyval;
-  YYLTYPE yyloc;
-
-  /* The locations where the error started and ended.  */
-  YYLTYPE yyerror_range[3];
 
 
 
-#define YYPOPSTACK(N)   (yyvsp -= (N), yyssp -= (N), yylsp -= (N))
+#define YYPOPSTACK(N)   (yyvsp -= (N), yyssp -= (N))
 
   /* The number of symbols on the RHS of the reduced rule.
      Keep to zero when no symbol should be popped.  */
@@ -1383,9 +3104,8 @@ YYLTYPE yylloc = yyloc_default;
 
   YYDPRINTF ((stderr, "Starting parse\n"));
 
-  yychar = YYEMPTY; /* Cause a token to be read.  */
+  yychar = STELLAYYEMPTY; /* Cause a token to be read.  */
 
-  yylsp[0] = yylloc;
   goto yysetstate;
 
 
@@ -1424,7 +3144,6 @@ yysetstate:
            memory.  */
         yy_state_t *yyss1 = yyss;
         YYSTYPE *yyvs1 = yyvs;
-        YYLTYPE *yyls1 = yyls;
 
         /* Each stack pointer address is followed by the size of the
            data in use in that stack, in bytes.  This used to be a
@@ -1433,11 +3152,9 @@ yysetstate:
         yyoverflow (YY_("memory exhausted"),
                     &yyss1, yysize * YYSIZEOF (*yyssp),
                     &yyvs1, yysize * YYSIZEOF (*yyvsp),
-                    &yyls1, yysize * YYSIZEOF (*yylsp),
                     &yystacksize);
         yyss = yyss1;
         yyvs = yyvs1;
-        yyls = yyls1;
       }
 # else /* defined YYSTACK_RELOCATE */
       /* Extend the stack our own way.  */
@@ -1456,7 +3173,6 @@ yysetstate:
           YYNOMEM;
         YYSTACK_RELOCATE (yyss_alloc, yyss);
         YYSTACK_RELOCATE (yyvs_alloc, yyvs);
-        YYSTACK_RELOCATE (yyls_alloc, yyls);
 #  undef YYSTACK_RELOCATE
         if (yyss1 != yyssa)
           YYSTACK_FREE (yyss1);
@@ -1465,7 +3181,6 @@ yysetstate:
 
       yyssp = yyss + yysize - 1;
       yyvsp = yyvs + yysize - 1;
-      yylsp = yyls + yysize - 1;
 
       YY_IGNORE_USELESS_CAST_BEGIN
       YYDPRINTF ((stderr, "Stack size increased to %ld\n",
@@ -1499,27 +3214,26 @@ yybackup:
   /* Not known => get a lookahead token if don't already have one.  */
 
   /* YYCHAR is either empty, or end-of-input, or a valid lookahead.  */
-  if (yychar == YYEMPTY)
+  if (yychar == STELLAYYEMPTY)
     {
       YYDPRINTF ((stderr, "Reading a token\n"));
-      yychar = yylex (&yylval, &yylloc, scanner);
+      yychar = yylex ();
     }
 
-  if (yychar <= YYEOF)
+  if (yychar <= STELLAYYEOF)
     {
-      yychar = YYEOF;
+      yychar = STELLAYYEOF;
       yytoken = YYSYMBOL_YYEOF;
       YYDPRINTF ((stderr, "Now at end of input.\n"));
     }
-  else if (yychar == YYerror)
+  else if (yychar == STELLAYYerror)
     {
       /* The scanner already issued an error message, process directly
          to error recovery.  But do not keep the error token as
          lookahead, it is too special and may lead us to an endless
          loop in error recovery. */
-      yychar = YYUNDEF;
+      yychar = STELLAYYUNDEF;
       yytoken = YYSYMBOL_YYerror;
-      yyerror_range[1] = yylloc;
       goto yyerrlab1;
     }
   else
@@ -1553,10 +3267,9 @@ yybackup:
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
   *++yyvsp = yylval;
   YY_IGNORE_MAYBE_UNINITIALIZED_END
-  *++yylsp = yylloc;
 
   /* Discard the shifted token.  */
-  yychar = YYEMPTY;
+  yychar = STELLAYYEMPTY;
   goto yynewstate;
 
 
@@ -1587,878 +3300,876 @@ yyreduce:
      GCC warning that YYVAL may be used uninitialized.  */
   yyval = yyvsp[1-yylen];
 
-  /* Default location. */
-  YYLLOC_DEFAULT (yyloc, (yylsp - yylen), yylen);
-  yyerror_range[1] = yyloc;
+
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
   case 2: /* Program: LanguageDecl ListExtension ListDecl  */
-#line 236 "Stella.y"
-                                              { (yyval.program_) = new Stella::AProgram((yyvsp[-2].languagedecl_), (yyvsp[-1].listextension_), (yyvsp[0].listdecl_)); (yyval.program_)->line_number = (yyloc).first_line; (yyval.program_)->char_number = (yyloc).first_column; result->program_ = (yyval.program_); }
-#line 1600 "Parser.C"
+#line 1876 "Stella.y"
+                                              {  (yyval.program_) = new Stella::AProgram((yyvsp[-2].languagedecl_), (yyvsp[-1].listextension_), (yyvsp[0].listdecl_)); (yyval.program_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Program_= (yyval.program_); }
+#line 3311 "Parser.C"
     break;
 
-  case 3: /* LanguageDecl: _KW_language _KW_core _SEMI  */
-#line 242 "Stella.y"
-                                           { (yyval.languagedecl_) = new Stella::LanguageCore(); (yyval.languagedecl_)->line_number = (yyloc).first_line; (yyval.languagedecl_)->char_number = (yyloc).first_column; result->languagedecl_ = (yyval.languagedecl_); }
-#line 1606 "Parser.C"
+  case 3: /* LanguageDecl: STELLA__SYMB_50 STELLA__SYMB_38 STELLA__SYMB_1  */
+#line 1882 "Stella.y"
+                                                              {  (yyval.languagedecl_) = new Stella::LanguageCore(); (yyval.languagedecl_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_LanguageDecl_= (yyval.languagedecl_); }
+#line 3317 "Parser.C"
     break;
 
-  case 4: /* Extension: _KW_extend _KW_with ListExtensionName  */
-#line 244 "Stella.y"
-                                                  { std::reverse((yyvsp[0].listextensionname_)->begin(),(yyvsp[0].listextensionname_)->end()) ;(yyval.extension_) = new Stella::AnExtension((yyvsp[0].listextensionname_)); (yyval.extension_)->line_number = (yyloc).first_line; (yyval.extension_)->char_number = (yyloc).first_column; result->extension_ = (yyval.extension_); }
-#line 1612 "Parser.C"
+  case 4: /* Extension: STELLA__SYMB_40 STELLA__SYMB_64 ListExtensionName  */
+#line 1884 "Stella.y"
+                                                              {  std::reverse((yyvsp[0].listextensionname_)->begin(),(yyvsp[0].listextensionname_)->end()) ;(yyval.extension_) = new Stella::AnExtension((yyvsp[0].listextensionname_)); (yyval.extension_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Extension_= (yyval.extension_); }
+#line 3323 "Parser.C"
     break;
 
   case 5: /* ListExtensionName: %empty  */
-#line 246 "Stella.y"
-                                { (yyval.listextensionname_) = new Stella::ListExtensionName(); result->listextensionname_ = (yyval.listextensionname_); }
-#line 1618 "Parser.C"
+#line 1886 "Stella.y"
+                                {  (yyval.listextensionname_) = new Stella::ListExtensionName(); Stella::YY_RESULT_ListExtensionName_= (yyval.listextensionname_); }
+#line 3329 "Parser.C"
     break;
 
-  case 6: /* ListExtensionName: T_ExtensionName  */
-#line 247 "Stella.y"
-                    { (yyval.listextensionname_) = new Stella::ListExtensionName(); (yyval.listextensionname_)->push_back((yyvsp[0]._string)); result->listextensionname_ = (yyval.listextensionname_); }
-#line 1624 "Parser.C"
+  case 6: /* ListExtensionName: STELLA__SYMB_67  */
+#line 1887 "Stella.y"
+                    {  (yyval.listextensionname_) = new Stella::ListExtensionName() ; (yyval.listextensionname_)->push_back((yyvsp[0].string_)); Stella::YY_RESULT_ListExtensionName_= (yyval.listextensionname_); }
+#line 3335 "Parser.C"
     break;
 
-  case 7: /* ListExtensionName: T_ExtensionName _COMMA ListExtensionName  */
-#line 248 "Stella.y"
-                                             { (yyvsp[0].listextensionname_)->push_back((yyvsp[-2]._string)); (yyval.listextensionname_) = (yyvsp[0].listextensionname_); result->listextensionname_ = (yyval.listextensionname_); }
-#line 1630 "Parser.C"
+  case 7: /* ListExtensionName: STELLA__SYMB_67 STELLA__SYMB_0 ListExtensionName  */
+#line 1888 "Stella.y"
+                                                     {  (yyvsp[0].listextensionname_)->push_back((yyvsp[-2].string_)) ; (yyval.listextensionname_) = (yyvsp[0].listextensionname_) ; Stella::YY_RESULT_ListExtensionName_= (yyval.listextensionname_); }
+#line 3341 "Parser.C"
     break;
 
   case 8: /* ListExtension: %empty  */
-#line 250 "Stella.y"
-                            { (yyval.listextension_) = new Stella::ListExtension(); result->listextension_ = (yyval.listextension_); }
-#line 1636 "Parser.C"
+#line 1890 "Stella.y"
+                            {  (yyval.listextension_) = new Stella::ListExtension(); Stella::YY_RESULT_ListExtension_= (yyval.listextension_); }
+#line 3347 "Parser.C"
     break;
 
-  case 9: /* ListExtension: ListExtension Extension _SEMI  */
-#line 251 "Stella.y"
-                                  { (yyvsp[-2].listextension_)->push_back((yyvsp[-1].extension_)); (yyval.listextension_) = (yyvsp[-2].listextension_); result->listextension_ = (yyval.listextension_); }
-#line 1642 "Parser.C"
+  case 9: /* ListExtension: ListExtension Extension STELLA__SYMB_1  */
+#line 1891 "Stella.y"
+                                           {  (yyvsp[-2].listextension_)->push_back((yyvsp[-1].extension_)) ; (yyval.listextension_) = (yyvsp[-2].listextension_) ; Stella::YY_RESULT_ListExtension_= (yyval.listextension_); }
+#line 3353 "Parser.C"
     break;
 
-  case 10: /* Decl: ListAnnotation _KW_fn T_StellaIdent _LPAREN ListParamDecl _RPAREN ReturnType ThrowType _LBRACE ListDecl _KW_return Expr _RBRACE  */
-#line 253 "Stella.y"
-                                                                                                                                       { std::reverse((yyvsp[-8].listparamdecl_)->begin(),(yyvsp[-8].listparamdecl_)->end()) ;(yyval.decl_) = new Stella::DeclFun((yyvsp[-12].listannotation_), (yyvsp[-10]._string), (yyvsp[-8].listparamdecl_), (yyvsp[-6].returntype_), (yyvsp[-5].throwtype_), (yyvsp[-3].listdecl_), (yyvsp[-1].expr_)); (yyval.decl_)->line_number = (yyloc).first_line; (yyval.decl_)->char_number = (yyloc).first_column; result->decl_ = (yyval.decl_); }
-#line 1648 "Parser.C"
+  case 10: /* Decl: ListAnnotation STELLA__SYMB_43 STELLA__SYMB_66 STELLA__SYMB_2 ListParamDecl STELLA__SYMB_3 ReturnType ThrowType STELLA__SYMB_4 ListDecl STELLA__SYMB_56 Expr STELLA__SYMB_5  */
+#line 1893 "Stella.y"
+                                                                                                                                                                                   {  std::reverse((yyvsp[-8].listparamdecl_)->begin(),(yyvsp[-8].listparamdecl_)->end()) ;(yyval.decl_) = new Stella::DeclFun((yyvsp[-12].listannotation_), (yyvsp[-10].string_), (yyvsp[-8].listparamdecl_), (yyvsp[-6].returntype_), (yyvsp[-5].throwtype_), (yyvsp[-3].listdecl_), (yyvsp[-1].expr_)); (yyval.decl_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Decl_= (yyval.decl_); }
+#line 3359 "Parser.C"
     break;
 
-  case 11: /* Decl: _KW_type T_StellaIdent _EQ Type  */
-#line 254 "Stella.y"
-                                    { (yyval.decl_) = new Stella::DeclTypeAlias((yyvsp[-2]._string), (yyvsp[0].type_)); (yyval.decl_)->line_number = (yyloc).first_line; (yyval.decl_)->char_number = (yyloc).first_column; result->decl_ = (yyval.decl_); }
-#line 1654 "Parser.C"
+  case 11: /* Decl: STELLA__SYMB_61 STELLA__SYMB_66 STELLA__SYMB_6 Type  */
+#line 1894 "Stella.y"
+                                                        {  (yyval.decl_) = new Stella::DeclTypeAlias((yyvsp[-2].string_), (yyvsp[0].type_)); (yyval.decl_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Decl_= (yyval.decl_); }
+#line 3365 "Parser.C"
     break;
 
   case 12: /* ListDecl: %empty  */
-#line 256 "Stella.y"
-                       { (yyval.listdecl_) = new Stella::ListDecl(); result->listdecl_ = (yyval.listdecl_); }
-#line 1660 "Parser.C"
+#line 1896 "Stella.y"
+                       {  (yyval.listdecl_) = new Stella::ListDecl(); Stella::YY_RESULT_ListDecl_= (yyval.listdecl_); }
+#line 3371 "Parser.C"
     break;
 
   case 13: /* ListDecl: ListDecl Decl  */
-#line 257 "Stella.y"
-                  { (yyvsp[-1].listdecl_)->push_back((yyvsp[0].decl_)); (yyval.listdecl_) = (yyvsp[-1].listdecl_); result->listdecl_ = (yyval.listdecl_); }
-#line 1666 "Parser.C"
+#line 1897 "Stella.y"
+                  {  (yyvsp[-1].listdecl_)->push_back((yyvsp[0].decl_)) ; (yyval.listdecl_) = (yyvsp[-1].listdecl_) ; Stella::YY_RESULT_ListDecl_= (yyval.listdecl_); }
+#line 3377 "Parser.C"
     break;
 
-  case 14: /* Annotation: _KW_inline  */
-#line 264 "Stella.y"
-                        { (yyval.annotation_) = new Stella::InlineAnnotation(); (yyval.annotation_)->line_number = (yyloc).first_line; (yyval.annotation_)->char_number = (yyloc).first_column; result->annotation_ = (yyval.annotation_); }
-#line 1672 "Parser.C"
+  case 14: /* Annotation: STELLA__SYMB_48  */
+#line 1904 "Stella.y"
+                             {  (yyval.annotation_) = new Stella::InlineAnnotation(); (yyval.annotation_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Annotation_= (yyval.annotation_); }
+#line 3383 "Parser.C"
     break;
 
   case 15: /* ListAnnotation: %empty  */
-#line 266 "Stella.y"
-                             { (yyval.listannotation_) = new Stella::ListAnnotation(); result->listannotation_ = (yyval.listannotation_); }
-#line 1678 "Parser.C"
+#line 1906 "Stella.y"
+                             {  (yyval.listannotation_) = new Stella::ListAnnotation(); Stella::YY_RESULT_ListAnnotation_= (yyval.listannotation_); }
+#line 3389 "Parser.C"
     break;
 
   case 16: /* ListAnnotation: ListAnnotation Annotation  */
-#line 267 "Stella.y"
-                              { (yyvsp[-1].listannotation_)->push_back((yyvsp[0].annotation_)); (yyval.listannotation_) = (yyvsp[-1].listannotation_); result->listannotation_ = (yyval.listannotation_); }
-#line 1684 "Parser.C"
+#line 1907 "Stella.y"
+                              {  (yyvsp[-1].listannotation_)->push_back((yyvsp[0].annotation_)) ; (yyval.listannotation_) = (yyvsp[-1].listannotation_) ; Stella::YY_RESULT_ListAnnotation_= (yyval.listannotation_); }
+#line 3395 "Parser.C"
     break;
 
-  case 17: /* ParamDecl: T_StellaIdent _COLON Type  */
-#line 269 "Stella.y"
-                                      { (yyval.paramdecl_) = new Stella::AParamDecl((yyvsp[-2]._string), (yyvsp[0].type_)); (yyval.paramdecl_)->line_number = (yyloc).first_line; (yyval.paramdecl_)->char_number = (yyloc).first_column; result->paramdecl_ = (yyval.paramdecl_); }
-#line 1690 "Parser.C"
+  case 17: /* ParamDecl: STELLA__SYMB_66 STELLA__SYMB_7 Type  */
+#line 1909 "Stella.y"
+                                                {  (yyval.paramdecl_) = new Stella::AParamDecl((yyvsp[-2].string_), (yyvsp[0].type_)); (yyval.paramdecl_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_ParamDecl_= (yyval.paramdecl_); }
+#line 3401 "Parser.C"
     break;
 
   case 18: /* ListParamDecl: %empty  */
-#line 271 "Stella.y"
-                            { (yyval.listparamdecl_) = new Stella::ListParamDecl(); result->listparamdecl_ = (yyval.listparamdecl_); }
-#line 1696 "Parser.C"
+#line 1911 "Stella.y"
+                            {  (yyval.listparamdecl_) = new Stella::ListParamDecl(); Stella::YY_RESULT_ListParamDecl_= (yyval.listparamdecl_); }
+#line 3407 "Parser.C"
     break;
 
   case 19: /* ListParamDecl: ParamDecl  */
-#line 272 "Stella.y"
-              { (yyval.listparamdecl_) = new Stella::ListParamDecl(); (yyval.listparamdecl_)->push_back((yyvsp[0].paramdecl_)); result->listparamdecl_ = (yyval.listparamdecl_); }
-#line 1702 "Parser.C"
+#line 1912 "Stella.y"
+              {  (yyval.listparamdecl_) = new Stella::ListParamDecl() ; (yyval.listparamdecl_)->push_back((yyvsp[0].paramdecl_)); Stella::YY_RESULT_ListParamDecl_= (yyval.listparamdecl_); }
+#line 3413 "Parser.C"
     break;
 
-  case 20: /* ListParamDecl: ParamDecl _COMMA ListParamDecl  */
-#line 273 "Stella.y"
-                                   { (yyvsp[0].listparamdecl_)->push_back((yyvsp[-2].paramdecl_)); (yyval.listparamdecl_) = (yyvsp[0].listparamdecl_); result->listparamdecl_ = (yyval.listparamdecl_); }
-#line 1708 "Parser.C"
+  case 20: /* ListParamDecl: ParamDecl STELLA__SYMB_0 ListParamDecl  */
+#line 1913 "Stella.y"
+                                           {  (yyvsp[0].listparamdecl_)->push_back((yyvsp[-2].paramdecl_)) ; (yyval.listparamdecl_) = (yyvsp[0].listparamdecl_) ; Stella::YY_RESULT_ListParamDecl_= (yyval.listparamdecl_); }
+#line 3419 "Parser.C"
     break;
 
   case 21: /* ReturnType: %empty  */
-#line 275 "Stella.y"
-                         { (yyval.returntype_) = new Stella::NoReturnType(); (yyval.returntype_)->line_number = (yyloc).first_line; (yyval.returntype_)->char_number = (yyloc).first_column; result->returntype_ = (yyval.returntype_); }
-#line 1714 "Parser.C"
+#line 1915 "Stella.y"
+                         {  (yyval.returntype_) = new Stella::NoReturnType(); (yyval.returntype_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_ReturnType_= (yyval.returntype_); }
+#line 3425 "Parser.C"
     break;
 
-  case 22: /* ReturnType: _RARROW Type  */
-#line 276 "Stella.y"
-                 { (yyval.returntype_) = new Stella::SomeReturnType((yyvsp[0].type_)); (yyval.returntype_)->line_number = (yyloc).first_line; (yyval.returntype_)->char_number = (yyloc).first_column; result->returntype_ = (yyval.returntype_); }
-#line 1720 "Parser.C"
+  case 22: /* ReturnType: STELLA__SYMB_8 Type  */
+#line 1916 "Stella.y"
+                        {  (yyval.returntype_) = new Stella::SomeReturnType((yyvsp[0].type_)); (yyval.returntype_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_ReturnType_= (yyval.returntype_); }
+#line 3431 "Parser.C"
     break;
 
   case 23: /* ThrowType: %empty  */
-#line 278 "Stella.y"
-                        { (yyval.throwtype_) = new Stella::NoThrowType(); (yyval.throwtype_)->line_number = (yyloc).first_line; (yyval.throwtype_)->char_number = (yyloc).first_column; result->throwtype_ = (yyval.throwtype_); }
-#line 1726 "Parser.C"
+#line 1918 "Stella.y"
+                        {  (yyval.throwtype_) = new Stella::NoThrowType(); (yyval.throwtype_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_ThrowType_= (yyval.throwtype_); }
+#line 3437 "Parser.C"
     break;
 
-  case 24: /* ThrowType: _KW_throws ListType9  */
-#line 279 "Stella.y"
-                         { std::reverse((yyvsp[0].listtype_)->begin(),(yyvsp[0].listtype_)->end()) ;(yyval.throwtype_) = new Stella::SomeThrowType((yyvsp[0].listtype_)); (yyval.throwtype_)->line_number = (yyloc).first_line; (yyval.throwtype_)->char_number = (yyloc).first_column; result->throwtype_ = (yyval.throwtype_); }
-#line 1732 "Parser.C"
+  case 24: /* ThrowType: STELLA__SYMB_59 ListType9  */
+#line 1919 "Stella.y"
+                              {  std::reverse((yyvsp[0].listtype_)->begin(),(yyvsp[0].listtype_)->end()) ;(yyval.throwtype_) = new Stella::SomeThrowType((yyvsp[0].listtype_)); (yyval.throwtype_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_ThrowType_= (yyval.throwtype_); }
+#line 3443 "Parser.C"
     break;
 
   case 25: /* Type9: Type  */
-#line 281 "Stella.y"
-             { (yyval.type_) = (yyvsp[0].type_); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 1738 "Parser.C"
+#line 1921 "Stella.y"
+             {  (yyval.type_) = (yyvsp[0].type_); Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 3449 "Parser.C"
     break;
 
   case 26: /* ListType9: Type9  */
-#line 283 "Stella.y"
-                  { (yyval.listtype_) = new Stella::ListType(); (yyval.listtype_)->push_back((yyvsp[0].type_)); result->listtype_ = (yyval.listtype_); }
-#line 1744 "Parser.C"
+#line 1923 "Stella.y"
+                  {  (yyval.listtype_) = new Stella::ListType() ; (yyval.listtype_)->push_back((yyvsp[0].type_)); Stella::YY_RESULT_ListType_= (yyval.listtype_); }
+#line 3455 "Parser.C"
     break;
 
-  case 27: /* ListType9: Type9 _COMMA ListType9  */
-#line 284 "Stella.y"
-                           { (yyvsp[0].listtype_)->push_back((yyvsp[-2].type_)); (yyval.listtype_) = (yyvsp[0].listtype_); result->listtype_ = (yyval.listtype_); }
-#line 1750 "Parser.C"
+  case 27: /* ListType9: Type9 STELLA__SYMB_0 ListType9  */
+#line 1924 "Stella.y"
+                                   {  (yyvsp[0].listtype_)->push_back((yyvsp[-2].type_)) ; (yyval.listtype_) = (yyvsp[0].listtype_) ; Stella::YY_RESULT_ListType_= (yyval.listtype_); }
+#line 3461 "Parser.C"
     break;
 
-  case 28: /* MatchCase: Pattern _RDARROW Expr  */
-#line 286 "Stella.y"
-                                  { (yyval.matchcase_) = new Stella::AMatchCase((yyvsp[-2].pattern_), (yyvsp[0].expr_)); (yyval.matchcase_)->line_number = (yyloc).first_line; (yyval.matchcase_)->char_number = (yyloc).first_column; result->matchcase_ = (yyval.matchcase_); }
-#line 1756 "Parser.C"
+  case 28: /* MatchCase: Pattern STELLA__SYMB_9 Expr  */
+#line 1926 "Stella.y"
+                                        {  (yyval.matchcase_) = new Stella::AMatchCase((yyvsp[-2].pattern_), (yyvsp[0].expr_)); (yyval.matchcase_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_MatchCase_= (yyval.matchcase_); }
+#line 3467 "Parser.C"
     break;
 
   case 29: /* ListMatchCase: %empty  */
-#line 288 "Stella.y"
-                            { (yyval.listmatchcase_) = new Stella::ListMatchCase(); result->listmatchcase_ = (yyval.listmatchcase_); }
-#line 1762 "Parser.C"
+#line 1928 "Stella.y"
+                            {  (yyval.listmatchcase_) = new Stella::ListMatchCase(); Stella::YY_RESULT_ListMatchCase_= (yyval.listmatchcase_); }
+#line 3473 "Parser.C"
     break;
 
   case 30: /* ListMatchCase: MatchCase  */
-#line 289 "Stella.y"
-              { (yyval.listmatchcase_) = new Stella::ListMatchCase(); (yyval.listmatchcase_)->push_back((yyvsp[0].matchcase_)); result->listmatchcase_ = (yyval.listmatchcase_); }
-#line 1768 "Parser.C"
+#line 1929 "Stella.y"
+              {  (yyval.listmatchcase_) = new Stella::ListMatchCase() ; (yyval.listmatchcase_)->push_back((yyvsp[0].matchcase_)); Stella::YY_RESULT_ListMatchCase_= (yyval.listmatchcase_); }
+#line 3479 "Parser.C"
     break;
 
-  case 31: /* ListMatchCase: MatchCase _BAR ListMatchCase  */
-#line 290 "Stella.y"
-                                 { (yyvsp[0].listmatchcase_)->push_back((yyvsp[-2].matchcase_)); (yyval.listmatchcase_) = (yyvsp[0].listmatchcase_); result->listmatchcase_ = (yyval.listmatchcase_); }
-#line 1774 "Parser.C"
+  case 31: /* ListMatchCase: MatchCase STELLA__SYMB_10 ListMatchCase  */
+#line 1930 "Stella.y"
+                                            {  (yyvsp[0].listmatchcase_)->push_back((yyvsp[-2].matchcase_)) ; (yyval.listmatchcase_) = (yyvsp[0].listmatchcase_) ; Stella::YY_RESULT_ListMatchCase_= (yyval.listmatchcase_); }
+#line 3485 "Parser.C"
     break;
 
   case 32: /* OptionalTyping: %empty  */
-#line 292 "Stella.y"
-                             { (yyval.optionaltyping_) = new Stella::NoTyping(); (yyval.optionaltyping_)->line_number = (yyloc).first_line; (yyval.optionaltyping_)->char_number = (yyloc).first_column; result->optionaltyping_ = (yyval.optionaltyping_); }
-#line 1780 "Parser.C"
+#line 1932 "Stella.y"
+                             {  (yyval.optionaltyping_) = new Stella::NoTyping(); (yyval.optionaltyping_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_OptionalTyping_= (yyval.optionaltyping_); }
+#line 3491 "Parser.C"
     break;
 
-  case 33: /* OptionalTyping: _COLON Type  */
-#line 293 "Stella.y"
-                { (yyval.optionaltyping_) = new Stella::SomeTyping((yyvsp[0].type_)); (yyval.optionaltyping_)->line_number = (yyloc).first_line; (yyval.optionaltyping_)->char_number = (yyloc).first_column; result->optionaltyping_ = (yyval.optionaltyping_); }
-#line 1786 "Parser.C"
+  case 33: /* OptionalTyping: STELLA__SYMB_7 Type  */
+#line 1933 "Stella.y"
+                        {  (yyval.optionaltyping_) = new Stella::SomeTyping((yyvsp[0].type_)); (yyval.optionaltyping_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_OptionalTyping_= (yyval.optionaltyping_); }
+#line 3497 "Parser.C"
     break;
 
   case 34: /* PatternData: %empty  */
-#line 295 "Stella.y"
-                          { (yyval.patterndata_) = new Stella::NoPatternData(); (yyval.patterndata_)->line_number = (yyloc).first_line; (yyval.patterndata_)->char_number = (yyloc).first_column; result->patterndata_ = (yyval.patterndata_); }
-#line 1792 "Parser.C"
+#line 1935 "Stella.y"
+                          {  (yyval.patterndata_) = new Stella::NoPatternData(); (yyval.patterndata_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_PatternData_= (yyval.patterndata_); }
+#line 3503 "Parser.C"
     break;
 
-  case 35: /* PatternData: _EQ Pattern  */
-#line 296 "Stella.y"
-                { (yyval.patterndata_) = new Stella::SomePatternData((yyvsp[0].pattern_)); (yyval.patterndata_)->line_number = (yyloc).first_line; (yyval.patterndata_)->char_number = (yyloc).first_column; result->patterndata_ = (yyval.patterndata_); }
-#line 1798 "Parser.C"
+  case 35: /* PatternData: STELLA__SYMB_6 Pattern  */
+#line 1936 "Stella.y"
+                           {  (yyval.patterndata_) = new Stella::SomePatternData((yyvsp[0].pattern_)); (yyval.patterndata_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_PatternData_= (yyval.patterndata_); }
+#line 3509 "Parser.C"
     break;
 
   case 36: /* ExprData: %empty  */
-#line 298 "Stella.y"
-                       { (yyval.exprdata_) = new Stella::NoExprData(); (yyval.exprdata_)->line_number = (yyloc).first_line; (yyval.exprdata_)->char_number = (yyloc).first_column; result->exprdata_ = (yyval.exprdata_); }
-#line 1804 "Parser.C"
+#line 1938 "Stella.y"
+                       {  (yyval.exprdata_) = new Stella::NoExprData(); (yyval.exprdata_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_ExprData_= (yyval.exprdata_); }
+#line 3515 "Parser.C"
     break;
 
-  case 37: /* ExprData: _EQ Expr  */
-#line 299 "Stella.y"
-             { (yyval.exprdata_) = new Stella::SomeExprData((yyvsp[0].expr_)); (yyval.exprdata_)->line_number = (yyloc).first_line; (yyval.exprdata_)->char_number = (yyloc).first_column; result->exprdata_ = (yyval.exprdata_); }
-#line 1810 "Parser.C"
+  case 37: /* ExprData: STELLA__SYMB_6 Expr  */
+#line 1939 "Stella.y"
+                        {  (yyval.exprdata_) = new Stella::SomeExprData((yyvsp[0].expr_)); (yyval.exprdata_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_ExprData_= (yyval.exprdata_); }
+#line 3521 "Parser.C"
     break;
 
-  case 38: /* Pattern: _SYMB_11 T_StellaIdent PatternData _SYMB_12  */
-#line 301 "Stella.y"
-                                                      { (yyval.pattern_) = new Stella::PatternVariant((yyvsp[-2]._string), (yyvsp[-1].patterndata_)); (yyval.pattern_)->line_number = (yyloc).first_line; (yyval.pattern_)->char_number = (yyloc).first_column; result->pattern_ = (yyval.pattern_); }
-#line 1816 "Parser.C"
+  case 38: /* Pattern: STELLA__SYMB_11 STELLA__SYMB_66 PatternData STELLA__SYMB_12  */
+#line 1941 "Stella.y"
+                                                                      {  (yyval.pattern_) = new Stella::PatternVariant((yyvsp[-2].string_), (yyvsp[-1].patterndata_)); (yyval.pattern_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Pattern_= (yyval.pattern_); }
+#line 3527 "Parser.C"
     break;
 
-  case 39: /* Pattern: _KW_inl _LPAREN Pattern _RPAREN  */
-#line 302 "Stella.y"
-                                    { (yyval.pattern_) = new Stella::PatternInl((yyvsp[-1].pattern_)); (yyval.pattern_)->line_number = (yyloc).first_line; (yyval.pattern_)->char_number = (yyloc).first_column; result->pattern_ = (yyval.pattern_); }
-#line 1822 "Parser.C"
+  case 39: /* Pattern: STELLA__SYMB_47 STELLA__SYMB_2 Pattern STELLA__SYMB_3  */
+#line 1942 "Stella.y"
+                                                          {  (yyval.pattern_) = new Stella::PatternInl((yyvsp[-1].pattern_)); (yyval.pattern_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Pattern_= (yyval.pattern_); }
+#line 3533 "Parser.C"
     break;
 
-  case 40: /* Pattern: _KW_inr _LPAREN Pattern _RPAREN  */
-#line 303 "Stella.y"
-                                    { (yyval.pattern_) = new Stella::PatternInr((yyvsp[-1].pattern_)); (yyval.pattern_)->line_number = (yyloc).first_line; (yyval.pattern_)->char_number = (yyloc).first_column; result->pattern_ = (yyval.pattern_); }
-#line 1828 "Parser.C"
+  case 40: /* Pattern: STELLA__SYMB_49 STELLA__SYMB_2 Pattern STELLA__SYMB_3  */
+#line 1943 "Stella.y"
+                                                          {  (yyval.pattern_) = new Stella::PatternInr((yyvsp[-1].pattern_)); (yyval.pattern_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Pattern_= (yyval.pattern_); }
+#line 3539 "Parser.C"
     break;
 
-  case 41: /* Pattern: _LBRACE ListPattern _RBRACE  */
-#line 304 "Stella.y"
-                                { std::reverse((yyvsp[-1].listpattern_)->begin(),(yyvsp[-1].listpattern_)->end()) ;(yyval.pattern_) = new Stella::PatternTuple((yyvsp[-1].listpattern_)); (yyval.pattern_)->line_number = (yyloc).first_line; (yyval.pattern_)->char_number = (yyloc).first_column; result->pattern_ = (yyval.pattern_); }
-#line 1834 "Parser.C"
+  case 41: /* Pattern: STELLA__SYMB_4 ListPattern STELLA__SYMB_5  */
+#line 1944 "Stella.y"
+                                              {  std::reverse((yyvsp[-1].listpattern_)->begin(),(yyvsp[-1].listpattern_)->end()) ;(yyval.pattern_) = new Stella::PatternTuple((yyvsp[-1].listpattern_)); (yyval.pattern_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Pattern_= (yyval.pattern_); }
+#line 3545 "Parser.C"
     break;
 
-  case 42: /* Pattern: _LBRACE ListLabelledPattern _RBRACE  */
-#line 305 "Stella.y"
-                                        { std::reverse((yyvsp[-1].listlabelledpattern_)->begin(),(yyvsp[-1].listlabelledpattern_)->end()) ;(yyval.pattern_) = new Stella::PatternRecord((yyvsp[-1].listlabelledpattern_)); (yyval.pattern_)->line_number = (yyloc).first_line; (yyval.pattern_)->char_number = (yyloc).first_column; result->pattern_ = (yyval.pattern_); }
-#line 1840 "Parser.C"
+  case 42: /* Pattern: STELLA__SYMB_4 ListLabelledPattern STELLA__SYMB_5  */
+#line 1945 "Stella.y"
+                                                      {  std::reverse((yyvsp[-1].listlabelledpattern_)->begin(),(yyvsp[-1].listlabelledpattern_)->end()) ;(yyval.pattern_) = new Stella::PatternRecord((yyvsp[-1].listlabelledpattern_)); (yyval.pattern_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Pattern_= (yyval.pattern_); }
+#line 3551 "Parser.C"
     break;
 
-  case 43: /* Pattern: _LBRACK ListPattern _RBRACK  */
-#line 306 "Stella.y"
-                                { std::reverse((yyvsp[-1].listpattern_)->begin(),(yyvsp[-1].listpattern_)->end()) ;(yyval.pattern_) = new Stella::PatternList((yyvsp[-1].listpattern_)); (yyval.pattern_)->line_number = (yyloc).first_line; (yyval.pattern_)->char_number = (yyloc).first_column; result->pattern_ = (yyval.pattern_); }
-#line 1846 "Parser.C"
+  case 43: /* Pattern: STELLA__SYMB_13 ListPattern STELLA__SYMB_14  */
+#line 1946 "Stella.y"
+                                                {  std::reverse((yyvsp[-1].listpattern_)->begin(),(yyvsp[-1].listpattern_)->end()) ;(yyval.pattern_) = new Stella::PatternList((yyvsp[-1].listpattern_)); (yyval.pattern_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Pattern_= (yyval.pattern_); }
+#line 3557 "Parser.C"
     break;
 
-  case 44: /* Pattern: _LPAREN Pattern _COMMA Pattern _RPAREN  */
-#line 307 "Stella.y"
-                                           { (yyval.pattern_) = new Stella::PatternCons((yyvsp[-3].pattern_), (yyvsp[-1].pattern_)); (yyval.pattern_)->line_number = (yyloc).first_line; (yyval.pattern_)->char_number = (yyloc).first_column; result->pattern_ = (yyval.pattern_); }
-#line 1852 "Parser.C"
+  case 44: /* Pattern: STELLA__SYMB_2 Pattern STELLA__SYMB_0 Pattern STELLA__SYMB_3  */
+#line 1947 "Stella.y"
+                                                                 {  (yyval.pattern_) = new Stella::PatternCons((yyvsp[-3].pattern_), (yyvsp[-1].pattern_)); (yyval.pattern_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Pattern_= (yyval.pattern_); }
+#line 3563 "Parser.C"
     break;
 
-  case 45: /* Pattern: _KW_false  */
-#line 308 "Stella.y"
-              { (yyval.pattern_) = new Stella::PatternFalse(); (yyval.pattern_)->line_number = (yyloc).first_line; (yyval.pattern_)->char_number = (yyloc).first_column; result->pattern_ = (yyval.pattern_); }
-#line 1858 "Parser.C"
+  case 45: /* Pattern: STELLA__SYMB_41  */
+#line 1948 "Stella.y"
+                    {  (yyval.pattern_) = new Stella::PatternFalse(); (yyval.pattern_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Pattern_= (yyval.pattern_); }
+#line 3569 "Parser.C"
     break;
 
-  case 46: /* Pattern: _KW_true  */
-#line 309 "Stella.y"
-             { (yyval.pattern_) = new Stella::PatternTrue(); (yyval.pattern_)->line_number = (yyloc).first_line; (yyval.pattern_)->char_number = (yyloc).first_column; result->pattern_ = (yyval.pattern_); }
-#line 1864 "Parser.C"
+  case 46: /* Pattern: STELLA__SYMB_60  */
+#line 1949 "Stella.y"
+                    {  (yyval.pattern_) = new Stella::PatternTrue(); (yyval.pattern_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Pattern_= (yyval.pattern_); }
+#line 3575 "Parser.C"
     break;
 
-  case 47: /* Pattern: _KW_unit  */
-#line 310 "Stella.y"
-             { (yyval.pattern_) = new Stella::PatternUnit(); (yyval.pattern_)->line_number = (yyloc).first_line; (yyval.pattern_)->char_number = (yyloc).first_column; result->pattern_ = (yyval.pattern_); }
-#line 1870 "Parser.C"
+  case 47: /* Pattern: STELLA__SYMB_63  */
+#line 1950 "Stella.y"
+                    {  (yyval.pattern_) = new Stella::PatternUnit(); (yyval.pattern_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Pattern_= (yyval.pattern_); }
+#line 3581 "Parser.C"
     break;
 
   case 48: /* Pattern: _INTEGER_  */
-#line 311 "Stella.y"
-              { (yyval.pattern_) = new Stella::PatternInt((yyvsp[0]._int)); (yyval.pattern_)->line_number = (yyloc).first_line; (yyval.pattern_)->char_number = (yyloc).first_column; result->pattern_ = (yyval.pattern_); }
-#line 1876 "Parser.C"
+#line 1951 "Stella.y"
+              {  (yyval.pattern_) = new Stella::PatternInt((yyvsp[0].int_)); (yyval.pattern_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Pattern_= (yyval.pattern_); }
+#line 3587 "Parser.C"
     break;
 
-  case 49: /* Pattern: _KW_succ _LPAREN Pattern _RPAREN  */
-#line 312 "Stella.y"
-                                     { (yyval.pattern_) = new Stella::PatternSucc((yyvsp[-1].pattern_)); (yyval.pattern_)->line_number = (yyloc).first_line; (yyval.pattern_)->char_number = (yyloc).first_column; result->pattern_ = (yyval.pattern_); }
-#line 1882 "Parser.C"
+  case 49: /* Pattern: STELLA__SYMB_57 STELLA__SYMB_2 Pattern STELLA__SYMB_3  */
+#line 1952 "Stella.y"
+                                                          {  (yyval.pattern_) = new Stella::PatternSucc((yyvsp[-1].pattern_)); (yyval.pattern_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Pattern_= (yyval.pattern_); }
+#line 3593 "Parser.C"
     break;
 
-  case 50: /* Pattern: T_StellaIdent  */
-#line 313 "Stella.y"
-                  { (yyval.pattern_) = new Stella::PatternVar((yyvsp[0]._string)); (yyval.pattern_)->line_number = (yyloc).first_line; (yyval.pattern_)->char_number = (yyloc).first_column; result->pattern_ = (yyval.pattern_); }
-#line 1888 "Parser.C"
+  case 50: /* Pattern: STELLA__SYMB_66  */
+#line 1953 "Stella.y"
+                    {  (yyval.pattern_) = new Stella::PatternVar((yyvsp[0].string_)); (yyval.pattern_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Pattern_= (yyval.pattern_); }
+#line 3599 "Parser.C"
     break;
 
-  case 51: /* Pattern: _LPAREN Pattern _RPAREN  */
-#line 314 "Stella.y"
-                            { (yyval.pattern_) = (yyvsp[-1].pattern_); (yyval.pattern_)->line_number = (yyloc).first_line; (yyval.pattern_)->char_number = (yyloc).first_column; result->pattern_ = (yyval.pattern_); }
-#line 1894 "Parser.C"
+  case 51: /* Pattern: STELLA__SYMB_2 Pattern STELLA__SYMB_3  */
+#line 1954 "Stella.y"
+                                          {  (yyval.pattern_) = (yyvsp[-1].pattern_); Stella::YY_RESULT_Pattern_= (yyval.pattern_); }
+#line 3605 "Parser.C"
     break;
 
   case 52: /* ListPattern: %empty  */
-#line 316 "Stella.y"
-                          { (yyval.listpattern_) = new Stella::ListPattern(); result->listpattern_ = (yyval.listpattern_); }
-#line 1900 "Parser.C"
+#line 1956 "Stella.y"
+                          {  (yyval.listpattern_) = new Stella::ListPattern(); Stella::YY_RESULT_ListPattern_= (yyval.listpattern_); }
+#line 3611 "Parser.C"
     break;
 
   case 53: /* ListPattern: Pattern  */
-#line 317 "Stella.y"
-            { (yyval.listpattern_) = new Stella::ListPattern(); (yyval.listpattern_)->push_back((yyvsp[0].pattern_)); result->listpattern_ = (yyval.listpattern_); }
-#line 1906 "Parser.C"
+#line 1957 "Stella.y"
+            {  (yyval.listpattern_) = new Stella::ListPattern() ; (yyval.listpattern_)->push_back((yyvsp[0].pattern_)); Stella::YY_RESULT_ListPattern_= (yyval.listpattern_); }
+#line 3617 "Parser.C"
     break;
 
-  case 54: /* ListPattern: Pattern _COMMA ListPattern  */
-#line 318 "Stella.y"
-                               { (yyvsp[0].listpattern_)->push_back((yyvsp[-2].pattern_)); (yyval.listpattern_) = (yyvsp[0].listpattern_); result->listpattern_ = (yyval.listpattern_); }
-#line 1912 "Parser.C"
+  case 54: /* ListPattern: Pattern STELLA__SYMB_0 ListPattern  */
+#line 1958 "Stella.y"
+                                       {  (yyvsp[0].listpattern_)->push_back((yyvsp[-2].pattern_)) ; (yyval.listpattern_) = (yyvsp[0].listpattern_) ; Stella::YY_RESULT_ListPattern_= (yyval.listpattern_); }
+#line 3623 "Parser.C"
     break;
 
-  case 55: /* LabelledPattern: T_StellaIdent _EQ Pattern  */
-#line 320 "Stella.y"
-                                            { (yyval.labelledpattern_) = new Stella::ALabelledPattern((yyvsp[-2]._string), (yyvsp[0].pattern_)); (yyval.labelledpattern_)->line_number = (yyloc).first_line; (yyval.labelledpattern_)->char_number = (yyloc).first_column; result->labelledpattern_ = (yyval.labelledpattern_); }
-#line 1918 "Parser.C"
+  case 55: /* LabelledPattern: STELLA__SYMB_66 STELLA__SYMB_6 Pattern  */
+#line 1960 "Stella.y"
+                                                         {  (yyval.labelledpattern_) = new Stella::ALabelledPattern((yyvsp[-2].string_), (yyvsp[0].pattern_)); (yyval.labelledpattern_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_LabelledPattern_= (yyval.labelledpattern_); }
+#line 3629 "Parser.C"
     break;
 
   case 56: /* ListLabelledPattern: LabelledPattern  */
-#line 322 "Stella.y"
-                                      { (yyval.listlabelledpattern_) = new Stella::ListLabelledPattern(); (yyval.listlabelledpattern_)->push_back((yyvsp[0].labelledpattern_)); result->listlabelledpattern_ = (yyval.listlabelledpattern_); }
-#line 1924 "Parser.C"
+#line 1962 "Stella.y"
+                                      {  (yyval.listlabelledpattern_) = new Stella::ListLabelledPattern() ; (yyval.listlabelledpattern_)->push_back((yyvsp[0].labelledpattern_)); Stella::YY_RESULT_ListLabelledPattern_= (yyval.listlabelledpattern_); }
+#line 3635 "Parser.C"
     break;
 
-  case 57: /* ListLabelledPattern: LabelledPattern _COMMA ListLabelledPattern  */
-#line 323 "Stella.y"
-                                               { (yyvsp[0].listlabelledpattern_)->push_back((yyvsp[-2].labelledpattern_)); (yyval.listlabelledpattern_) = (yyvsp[0].listlabelledpattern_); result->listlabelledpattern_ = (yyval.listlabelledpattern_); }
-#line 1930 "Parser.C"
+  case 57: /* ListLabelledPattern: LabelledPattern STELLA__SYMB_0 ListLabelledPattern  */
+#line 1963 "Stella.y"
+                                                       {  (yyvsp[0].listlabelledpattern_)->push_back((yyvsp[-2].labelledpattern_)) ; (yyval.listlabelledpattern_) = (yyvsp[0].listlabelledpattern_) ; Stella::YY_RESULT_ListLabelledPattern_= (yyval.listlabelledpattern_); }
+#line 3641 "Parser.C"
     break;
 
-  case 58: /* Binding: T_StellaIdent _EQ Expr  */
-#line 325 "Stella.y"
-                                 { (yyval.binding_) = new Stella::ABinding((yyvsp[-2]._string), (yyvsp[0].expr_)); (yyval.binding_)->line_number = (yyloc).first_line; (yyval.binding_)->char_number = (yyloc).first_column; result->binding_ = (yyval.binding_); }
-#line 1936 "Parser.C"
+  case 58: /* Binding: STELLA__SYMB_66 STELLA__SYMB_6 Expr  */
+#line 1965 "Stella.y"
+                                              {  (yyval.binding_) = new Stella::ABinding((yyvsp[-2].string_), (yyvsp[0].expr_)); (yyval.binding_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Binding_= (yyval.binding_); }
+#line 3647 "Parser.C"
     break;
 
   case 59: /* ListBinding: Binding  */
-#line 327 "Stella.y"
-                      { (yyval.listbinding_) = new Stella::ListBinding(); (yyval.listbinding_)->push_back((yyvsp[0].binding_)); result->listbinding_ = (yyval.listbinding_); }
-#line 1942 "Parser.C"
+#line 1967 "Stella.y"
+                      {  (yyval.listbinding_) = new Stella::ListBinding() ; (yyval.listbinding_)->push_back((yyvsp[0].binding_)); Stella::YY_RESULT_ListBinding_= (yyval.listbinding_); }
+#line 3653 "Parser.C"
     break;
 
-  case 60: /* ListBinding: Binding _COMMA ListBinding  */
-#line 328 "Stella.y"
-                               { (yyvsp[0].listbinding_)->push_back((yyvsp[-2].binding_)); (yyval.listbinding_) = (yyvsp[0].listbinding_); result->listbinding_ = (yyval.listbinding_); }
-#line 1948 "Parser.C"
+  case 60: /* ListBinding: Binding STELLA__SYMB_0 ListBinding  */
+#line 1968 "Stella.y"
+                                       {  (yyvsp[0].listbinding_)->push_back((yyvsp[-2].binding_)) ; (yyval.listbinding_) = (yyvsp[0].listbinding_) ; Stella::YY_RESULT_ListBinding_= (yyval.listbinding_); }
+#line 3659 "Parser.C"
     break;
 
-  case 61: /* Expr: Expr1 _SEMI Expr  */
-#line 330 "Stella.y"
-                        { (yyval.expr_) = new Stella::Sequence((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 1954 "Parser.C"
+  case 61: /* Expr: Expr1 STELLA__SYMB_1 Expr  */
+#line 1970 "Stella.y"
+                                 {  (yyval.expr_) = new Stella::Sequence((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3665 "Parser.C"
     break;
 
-  case 62: /* Expr: Expr1 _SEMI  */
-#line 331 "Stella.y"
-                { (yyval.expr_) = (yyvsp[-1].expr_); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 1960 "Parser.C"
+  case 62: /* Expr: Expr1 STELLA__SYMB_1  */
+#line 1971 "Stella.y"
+                         {  (yyval.expr_) = (yyvsp[-1].expr_); Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3671 "Parser.C"
     break;
 
   case 63: /* Expr: Expr1  */
-#line 332 "Stella.y"
-          { (yyval.expr_) = (yyvsp[0].expr_); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 1966 "Parser.C"
+#line 1972 "Stella.y"
+          {  (yyval.expr_) = (yyvsp[0].expr_); Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3677 "Parser.C"
     break;
 
   case 64: /* ListExpr: %empty  */
-#line 334 "Stella.y"
-                       { (yyval.listexpr_) = new Stella::ListExpr(); result->listexpr_ = (yyval.listexpr_); }
-#line 1972 "Parser.C"
+#line 1974 "Stella.y"
+                       {  (yyval.listexpr_) = new Stella::ListExpr(); Stella::YY_RESULT_ListExpr_= (yyval.listexpr_); }
+#line 3683 "Parser.C"
     break;
 
   case 65: /* ListExpr: Expr  */
-#line 335 "Stella.y"
-         { (yyval.listexpr_) = new Stella::ListExpr(); (yyval.listexpr_)->push_back((yyvsp[0].expr_)); result->listexpr_ = (yyval.listexpr_); }
-#line 1978 "Parser.C"
+#line 1975 "Stella.y"
+         {  (yyval.listexpr_) = new Stella::ListExpr() ; (yyval.listexpr_)->push_back((yyvsp[0].expr_)); Stella::YY_RESULT_ListExpr_= (yyval.listexpr_); }
+#line 3689 "Parser.C"
     break;
 
-  case 66: /* ListExpr: Expr _COMMA ListExpr  */
-#line 336 "Stella.y"
-                         { (yyvsp[0].listexpr_)->push_back((yyvsp[-2].expr_)); (yyval.listexpr_) = (yyvsp[0].listexpr_); result->listexpr_ = (yyval.listexpr_); }
-#line 1984 "Parser.C"
+  case 66: /* ListExpr: Expr STELLA__SYMB_0 ListExpr  */
+#line 1976 "Stella.y"
+                                 {  (yyvsp[0].listexpr_)->push_back((yyvsp[-2].expr_)) ; (yyval.listexpr_) = (yyvsp[0].listexpr_) ; Stella::YY_RESULT_ListExpr_= (yyval.listexpr_); }
+#line 3695 "Parser.C"
     break;
 
-  case 67: /* Expr1: _KW_if Expr1 _KW_then Expr1 _KW_else Expr1  */
-#line 338 "Stella.y"
-                                                   { (yyval.expr_) = new Stella::If((yyvsp[-4].expr_), (yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 1990 "Parser.C"
+  case 67: /* Expr1: STELLA__SYMB_45 Expr1 STELLA__SYMB_58 Expr1 STELLA__SYMB_39 Expr1  */
+#line 1978 "Stella.y"
+                                                                          {  (yyval.expr_) = new Stella::If((yyvsp[-4].expr_), (yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3701 "Parser.C"
     break;
 
-  case 68: /* Expr1: _KW_let ListPatternBinding _KW_in Expr1  */
-#line 339 "Stella.y"
-                                            { std::reverse((yyvsp[-2].listpatternbinding_)->begin(),(yyvsp[-2].listpatternbinding_)->end()) ;(yyval.expr_) = new Stella::Let((yyvsp[-2].listpatternbinding_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 1996 "Parser.C"
+  case 68: /* Expr1: STELLA__SYMB_51 ListPatternBinding STELLA__SYMB_46 Expr1  */
+#line 1979 "Stella.y"
+                                                             {  std::reverse((yyvsp[-2].listpatternbinding_)->begin(),(yyvsp[-2].listpatternbinding_)->end()) ;(yyval.expr_) = new Stella::Let((yyvsp[-2].listpatternbinding_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3707 "Parser.C"
     break;
 
-  case 69: /* Expr1: _KW_letrec ListPatternBinding _KW_in Expr1  */
-#line 340 "Stella.y"
-                                               { std::reverse((yyvsp[-2].listpatternbinding_)->begin(),(yyvsp[-2].listpatternbinding_)->end()) ;(yyval.expr_) = new Stella::LetRec((yyvsp[-2].listpatternbinding_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2002 "Parser.C"
+  case 69: /* Expr1: STELLA__SYMB_52 ListPatternBinding STELLA__SYMB_46 Expr1  */
+#line 1980 "Stella.y"
+                                                             {  std::reverse((yyvsp[-2].listpatternbinding_)->begin(),(yyvsp[-2].listpatternbinding_)->end()) ;(yyval.expr_) = new Stella::LetRec((yyvsp[-2].listpatternbinding_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3713 "Parser.C"
     break;
 
   case 70: /* Expr1: Expr2  */
-#line 341 "Stella.y"
-          { (yyval.expr_) = (yyvsp[0].expr_); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2008 "Parser.C"
+#line 1981 "Stella.y"
+          {  (yyval.expr_) = (yyvsp[0].expr_); Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3719 "Parser.C"
     break;
 
-  case 71: /* PatternBinding: Pattern _EQ Expr  */
-#line 343 "Stella.y"
-                                  { (yyval.patternbinding_) = new Stella::APatternBinding((yyvsp[-2].pattern_), (yyvsp[0].expr_)); (yyval.patternbinding_)->line_number = (yyloc).first_line; (yyval.patternbinding_)->char_number = (yyloc).first_column; result->patternbinding_ = (yyval.patternbinding_); }
-#line 2014 "Parser.C"
+  case 71: /* PatternBinding: Pattern STELLA__SYMB_6 Expr  */
+#line 1983 "Stella.y"
+                                             {  (yyval.patternbinding_) = new Stella::APatternBinding((yyvsp[-2].pattern_), (yyvsp[0].expr_)); (yyval.patternbinding_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_PatternBinding_= (yyval.patternbinding_); }
+#line 3725 "Parser.C"
     break;
 
   case 72: /* ListPatternBinding: PatternBinding  */
-#line 345 "Stella.y"
-                                    { (yyval.listpatternbinding_) = new Stella::ListPatternBinding(); (yyval.listpatternbinding_)->push_back((yyvsp[0].patternbinding_)); result->listpatternbinding_ = (yyval.listpatternbinding_); }
-#line 2020 "Parser.C"
+#line 1985 "Stella.y"
+                                    {  (yyval.listpatternbinding_) = new Stella::ListPatternBinding() ; (yyval.listpatternbinding_)->push_back((yyvsp[0].patternbinding_)); Stella::YY_RESULT_ListPatternBinding_= (yyval.listpatternbinding_); }
+#line 3731 "Parser.C"
     break;
 
-  case 73: /* ListPatternBinding: PatternBinding _COMMA ListPatternBinding  */
-#line 346 "Stella.y"
-                                             { (yyvsp[0].listpatternbinding_)->push_back((yyvsp[-2].patternbinding_)); (yyval.listpatternbinding_) = (yyvsp[0].listpatternbinding_); result->listpatternbinding_ = (yyval.listpatternbinding_); }
-#line 2026 "Parser.C"
+  case 73: /* ListPatternBinding: PatternBinding STELLA__SYMB_0 ListPatternBinding  */
+#line 1986 "Stella.y"
+                                                     {  (yyvsp[0].listpatternbinding_)->push_back((yyvsp[-2].patternbinding_)) ; (yyval.listpatternbinding_) = (yyvsp[0].listpatternbinding_) ; Stella::YY_RESULT_ListPatternBinding_= (yyval.listpatternbinding_); }
+#line 3737 "Parser.C"
     break;
 
-  case 74: /* Expr2: Expr3 _LT Expr3  */
-#line 348 "Stella.y"
-                        { (yyval.expr_) = new Stella::LessThan((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2032 "Parser.C"
+  case 74: /* Expr2: Expr3 STELLA__SYMB_15 Expr3  */
+#line 1988 "Stella.y"
+                                    {  (yyval.expr_) = new Stella::LessThan((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3743 "Parser.C"
     break;
 
-  case 75: /* Expr2: Expr3 _LDARROW Expr3  */
-#line 349 "Stella.y"
-                         { (yyval.expr_) = new Stella::LessThanOrEqual((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2038 "Parser.C"
+  case 75: /* Expr2: Expr3 STELLA__SYMB_16 Expr3  */
+#line 1989 "Stella.y"
+                                {  (yyval.expr_) = new Stella::LessThanOrEqual((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3749 "Parser.C"
     break;
 
-  case 76: /* Expr2: Expr3 _GT Expr3  */
-#line 350 "Stella.y"
-                    { (yyval.expr_) = new Stella::GreaterThan((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2044 "Parser.C"
+  case 76: /* Expr2: Expr3 STELLA__SYMB_17 Expr3  */
+#line 1990 "Stella.y"
+                                {  (yyval.expr_) = new Stella::GreaterThan((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3755 "Parser.C"
     break;
 
-  case 77: /* Expr2: Expr3 _GTEQ Expr3  */
-#line 351 "Stella.y"
-                      { (yyval.expr_) = new Stella::GreaterThanOrEqual((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2050 "Parser.C"
+  case 77: /* Expr2: Expr3 STELLA__SYMB_18 Expr3  */
+#line 1991 "Stella.y"
+                                {  (yyval.expr_) = new Stella::GreaterThanOrEqual((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3761 "Parser.C"
     break;
 
-  case 78: /* Expr2: Expr3 _DEQ Expr3  */
-#line 352 "Stella.y"
-                     { (yyval.expr_) = new Stella::Equal((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2056 "Parser.C"
+  case 78: /* Expr2: Expr3 STELLA__SYMB_19 Expr3  */
+#line 1992 "Stella.y"
+                                {  (yyval.expr_) = new Stella::Equal((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3767 "Parser.C"
     break;
 
-  case 79: /* Expr2: Expr3 _BANGEQ Expr3  */
-#line 353 "Stella.y"
-                        { (yyval.expr_) = new Stella::NotEqual((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2062 "Parser.C"
+  case 79: /* Expr2: Expr3 STELLA__SYMB_20 Expr3  */
+#line 1993 "Stella.y"
+                                {  (yyval.expr_) = new Stella::NotEqual((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3773 "Parser.C"
     break;
 
   case 80: /* Expr2: Expr3  */
-#line 354 "Stella.y"
-          { (yyval.expr_) = (yyvsp[0].expr_); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2068 "Parser.C"
+#line 1994 "Stella.y"
+          {  (yyval.expr_) = (yyvsp[0].expr_); Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3779 "Parser.C"
     break;
 
-  case 81: /* Expr3: Expr3 _KW_as Type2  */
-#line 359 "Stella.y"
-                           { (yyval.expr_) = new Stella::TypeAsc((yyvsp[-2].expr_), (yyvsp[0].type_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2074 "Parser.C"
+  case 81: /* Expr3: Expr3 STELLA__SYMB_36 Type2  */
+#line 1999 "Stella.y"
+                                    {  (yyval.expr_) = new Stella::TypeAsc((yyvsp[-2].expr_), (yyvsp[0].type_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3785 "Parser.C"
     break;
 
-  case 82: /* Expr3: _KW_fn _LPAREN ListParamDecl _RPAREN _LBRACE _KW_return Expr _RBRACE  */
-#line 360 "Stella.y"
-                                                                         { std::reverse((yyvsp[-5].listparamdecl_)->begin(),(yyvsp[-5].listparamdecl_)->end()) ;(yyval.expr_) = new Stella::Abstraction((yyvsp[-5].listparamdecl_), (yyvsp[-1].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2080 "Parser.C"
+  case 82: /* Expr3: STELLA__SYMB_43 STELLA__SYMB_2 ListParamDecl STELLA__SYMB_3 STELLA__SYMB_4 STELLA__SYMB_56 Expr STELLA__SYMB_5  */
+#line 2000 "Stella.y"
+                                                                                                                   {  std::reverse((yyvsp[-5].listparamdecl_)->begin(),(yyvsp[-5].listparamdecl_)->end()) ;(yyval.expr_) = new Stella::Abstraction((yyvsp[-5].listparamdecl_), (yyvsp[-1].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3791 "Parser.C"
     break;
 
-  case 83: /* Expr3: _SYMB_11 T_StellaIdent ExprData _SYMB_12  */
-#line 361 "Stella.y"
-                                             { (yyval.expr_) = new Stella::Variant((yyvsp[-2]._string), (yyvsp[-1].exprdata_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2086 "Parser.C"
+  case 83: /* Expr3: STELLA__SYMB_11 STELLA__SYMB_66 ExprData STELLA__SYMB_12  */
+#line 2001 "Stella.y"
+                                                             {  (yyval.expr_) = new Stella::Variant((yyvsp[-2].string_), (yyvsp[-1].exprdata_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3797 "Parser.C"
     break;
 
-  case 84: /* Expr3: _KW_match Expr2 _LBRACE ListMatchCase _RBRACE  */
-#line 362 "Stella.y"
-                                                  { std::reverse((yyvsp[-1].listmatchcase_)->begin(),(yyvsp[-1].listmatchcase_)->end()) ;(yyval.expr_) = new Stella::Match((yyvsp[-3].expr_), (yyvsp[-1].listmatchcase_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2092 "Parser.C"
+  case 84: /* Expr3: STELLA__SYMB_53 Expr2 STELLA__SYMB_4 ListMatchCase STELLA__SYMB_5  */
+#line 2002 "Stella.y"
+                                                                      {  std::reverse((yyvsp[-1].listmatchcase_)->begin(),(yyvsp[-1].listmatchcase_)->end()) ;(yyval.expr_) = new Stella::Match((yyvsp[-3].expr_), (yyvsp[-1].listmatchcase_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3803 "Parser.C"
     break;
 
-  case 85: /* Expr3: _LBRACK ListExpr _RBRACK  */
-#line 363 "Stella.y"
-                             { std::reverse((yyvsp[-1].listexpr_)->begin(),(yyvsp[-1].listexpr_)->end()) ;(yyval.expr_) = new Stella::List((yyvsp[-1].listexpr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2098 "Parser.C"
+  case 85: /* Expr3: STELLA__SYMB_13 ListExpr STELLA__SYMB_14  */
+#line 2003 "Stella.y"
+                                             {  std::reverse((yyvsp[-1].listexpr_)->begin(),(yyvsp[-1].listexpr_)->end()) ;(yyval.expr_) = new Stella::List((yyvsp[-1].listexpr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3809 "Parser.C"
     break;
 
-  case 86: /* Expr3: Expr3 _PLUS Expr4  */
-#line 364 "Stella.y"
-                      { (yyval.expr_) = new Stella::Add((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2104 "Parser.C"
+  case 86: /* Expr3: Expr3 STELLA__SYMB_21 Expr4  */
+#line 2004 "Stella.y"
+                                {  (yyval.expr_) = new Stella::Add((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3815 "Parser.C"
     break;
 
-  case 87: /* Expr3: Expr3 _MINUS Expr4  */
-#line 365 "Stella.y"
-                       { (yyval.expr_) = new Stella::Subtract((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2110 "Parser.C"
+  case 87: /* Expr3: Expr3 STELLA__SYMB_22 Expr4  */
+#line 2005 "Stella.y"
+                                {  (yyval.expr_) = new Stella::Subtract((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3821 "Parser.C"
     break;
 
-  case 88: /* Expr3: Expr3 _KW_or Expr4  */
-#line 366 "Stella.y"
-                       { (yyval.expr_) = new Stella::LogicOr((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2116 "Parser.C"
+  case 88: /* Expr3: Expr3 STELLA__SYMB_55 Expr4  */
+#line 2006 "Stella.y"
+                                {  (yyval.expr_) = new Stella::LogicOr((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3827 "Parser.C"
     break;
 
   case 89: /* Expr3: Expr4  */
-#line 367 "Stella.y"
-          { (yyval.expr_) = (yyvsp[0].expr_); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2122 "Parser.C"
+#line 2007 "Stella.y"
+          {  (yyval.expr_) = (yyvsp[0].expr_); Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3833 "Parser.C"
     break;
 
-  case 90: /* Expr4: Expr4 _STAR Expr5  */
-#line 369 "Stella.y"
-                          { (yyval.expr_) = new Stella::Multiply((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2128 "Parser.C"
+  case 90: /* Expr4: Expr4 STELLA__SYMB_23 Expr5  */
+#line 2009 "Stella.y"
+                                    {  (yyval.expr_) = new Stella::Multiply((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3839 "Parser.C"
     break;
 
-  case 91: /* Expr4: Expr4 _SLASH Expr5  */
-#line 370 "Stella.y"
-                       { (yyval.expr_) = new Stella::Divide((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2134 "Parser.C"
+  case 91: /* Expr4: Expr4 STELLA__SYMB_24 Expr5  */
+#line 2010 "Stella.y"
+                                {  (yyval.expr_) = new Stella::Divide((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3845 "Parser.C"
     break;
 
-  case 92: /* Expr4: Expr4 _KW_and Expr5  */
-#line 371 "Stella.y"
-                        { (yyval.expr_) = new Stella::LogicAnd((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2140 "Parser.C"
+  case 92: /* Expr4: Expr4 STELLA__SYMB_35 Expr5  */
+#line 2011 "Stella.y"
+                                {  (yyval.expr_) = new Stella::LogicAnd((yyvsp[-2].expr_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3851 "Parser.C"
     break;
 
   case 93: /* Expr4: Expr5  */
-#line 372 "Stella.y"
-          { (yyval.expr_) = (yyvsp[0].expr_); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2146 "Parser.C"
+#line 2012 "Stella.y"
+          {  (yyval.expr_) = (yyvsp[0].expr_); Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3857 "Parser.C"
     break;
 
-  case 94: /* Expr6: Expr6 _LPAREN ListExpr _RPAREN  */
-#line 374 "Stella.y"
-                                       { std::reverse((yyvsp[-1].listexpr_)->begin(),(yyvsp[-1].listexpr_)->end()) ;(yyval.expr_) = new Stella::Application((yyvsp[-3].expr_), (yyvsp[-1].listexpr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2152 "Parser.C"
+  case 94: /* Expr6: Expr6 STELLA__SYMB_2 ListExpr STELLA__SYMB_3  */
+#line 2014 "Stella.y"
+                                                     {  std::reverse((yyvsp[-1].listexpr_)->begin(),(yyvsp[-1].listexpr_)->end()) ;(yyval.expr_) = new Stella::Application((yyvsp[-3].expr_), (yyvsp[-1].listexpr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3863 "Parser.C"
     break;
 
-  case 95: /* Expr6: Expr6 _DOT T_StellaIdent  */
-#line 375 "Stella.y"
-                             { (yyval.expr_) = new Stella::DotRecord((yyvsp[-2].expr_), (yyvsp[0]._string)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2158 "Parser.C"
+  case 95: /* Expr6: Expr6 STELLA__SYMB_25 STELLA__SYMB_66  */
+#line 2015 "Stella.y"
+                                          {  (yyval.expr_) = new Stella::DotRecord((yyvsp[-2].expr_), (yyvsp[0].string_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3869 "Parser.C"
     break;
 
-  case 96: /* Expr6: Expr6 _DOT _INTEGER_  */
-#line 376 "Stella.y"
-                         { (yyval.expr_) = new Stella::DotTuple((yyvsp[-2].expr_), (yyvsp[0]._int)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2164 "Parser.C"
+  case 96: /* Expr6: Expr6 STELLA__SYMB_25 _INTEGER_  */
+#line 2016 "Stella.y"
+                                    {  (yyval.expr_) = new Stella::DotTuple((yyvsp[-2].expr_), (yyvsp[0].int_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3875 "Parser.C"
     break;
 
-  case 97: /* Expr6: _LBRACE ListExpr _RBRACE  */
-#line 377 "Stella.y"
-                             { std::reverse((yyvsp[-1].listexpr_)->begin(),(yyvsp[-1].listexpr_)->end()) ;(yyval.expr_) = new Stella::Tuple((yyvsp[-1].listexpr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2170 "Parser.C"
+  case 97: /* Expr6: STELLA__SYMB_4 ListExpr STELLA__SYMB_5  */
+#line 2017 "Stella.y"
+                                           {  std::reverse((yyvsp[-1].listexpr_)->begin(),(yyvsp[-1].listexpr_)->end()) ;(yyval.expr_) = new Stella::Tuple((yyvsp[-1].listexpr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3881 "Parser.C"
     break;
 
-  case 98: /* Expr6: _LBRACE ListBinding _RBRACE  */
-#line 378 "Stella.y"
-                                { std::reverse((yyvsp[-1].listbinding_)->begin(),(yyvsp[-1].listbinding_)->end()) ;(yyval.expr_) = new Stella::Record((yyvsp[-1].listbinding_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2176 "Parser.C"
+  case 98: /* Expr6: STELLA__SYMB_4 ListBinding STELLA__SYMB_5  */
+#line 2018 "Stella.y"
+                                              {  std::reverse((yyvsp[-1].listbinding_)->begin(),(yyvsp[-1].listbinding_)->end()) ;(yyval.expr_) = new Stella::Record((yyvsp[-1].listbinding_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3887 "Parser.C"
     break;
 
-  case 99: /* Expr6: _KW_cons _LPAREN Expr _COMMA Expr _RPAREN  */
-#line 379 "Stella.y"
-                                              { (yyval.expr_) = new Stella::ConsList((yyvsp[-3].expr_), (yyvsp[-1].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2182 "Parser.C"
+  case 99: /* Expr6: STELLA__SYMB_37 STELLA__SYMB_2 Expr STELLA__SYMB_0 Expr STELLA__SYMB_3  */
+#line 2019 "Stella.y"
+                                                                           {  (yyval.expr_) = new Stella::ConsList((yyvsp[-3].expr_), (yyvsp[-1].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3893 "Parser.C"
     break;
 
-  case 100: /* Expr6: _SYMB_26 _LPAREN Expr _RPAREN  */
-#line 380 "Stella.y"
-                                  { (yyval.expr_) = new Stella::Head((yyvsp[-1].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2188 "Parser.C"
+  case 100: /* Expr6: STELLA__SYMB_26 STELLA__SYMB_2 Expr STELLA__SYMB_3  */
+#line 2020 "Stella.y"
+                                                       {  (yyval.expr_) = new Stella::Head((yyvsp[-1].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3899 "Parser.C"
     break;
 
-  case 101: /* Expr6: _SYMB_27 _LPAREN Expr _RPAREN  */
-#line 381 "Stella.y"
-                                  { (yyval.expr_) = new Stella::IsEmpty((yyvsp[-1].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2194 "Parser.C"
+  case 101: /* Expr6: STELLA__SYMB_27 STELLA__SYMB_2 Expr STELLA__SYMB_3  */
+#line 2021 "Stella.y"
+                                                       {  (yyval.expr_) = new Stella::IsEmpty((yyvsp[-1].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3905 "Parser.C"
     break;
 
-  case 102: /* Expr6: _SYMB_28 _LPAREN Expr _RPAREN  */
-#line 382 "Stella.y"
-                                  { (yyval.expr_) = new Stella::Tail((yyvsp[-1].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2200 "Parser.C"
+  case 102: /* Expr6: STELLA__SYMB_28 STELLA__SYMB_2 Expr STELLA__SYMB_3  */
+#line 2022 "Stella.y"
+                                                       {  (yyval.expr_) = new Stella::Tail((yyvsp[-1].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3911 "Parser.C"
     break;
 
-  case 103: /* Expr6: _KW_inl _LPAREN Expr _RPAREN  */
-#line 383 "Stella.y"
-                                 { (yyval.expr_) = new Stella::Inl((yyvsp[-1].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2206 "Parser.C"
+  case 103: /* Expr6: STELLA__SYMB_47 STELLA__SYMB_2 Expr STELLA__SYMB_3  */
+#line 2023 "Stella.y"
+                                                       {  (yyval.expr_) = new Stella::Inl((yyvsp[-1].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3917 "Parser.C"
     break;
 
-  case 104: /* Expr6: _KW_inr _LPAREN Expr _RPAREN  */
-#line 384 "Stella.y"
-                                 { (yyval.expr_) = new Stella::Inr((yyvsp[-1].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2212 "Parser.C"
+  case 104: /* Expr6: STELLA__SYMB_49 STELLA__SYMB_2 Expr STELLA__SYMB_3  */
+#line 2024 "Stella.y"
+                                                       {  (yyval.expr_) = new Stella::Inr((yyvsp[-1].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3923 "Parser.C"
     break;
 
-  case 105: /* Expr6: _KW_succ _LPAREN Expr _RPAREN  */
-#line 385 "Stella.y"
-                                  { (yyval.expr_) = new Stella::Succ((yyvsp[-1].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2218 "Parser.C"
+  case 105: /* Expr6: STELLA__SYMB_57 STELLA__SYMB_2 Expr STELLA__SYMB_3  */
+#line 2025 "Stella.y"
+                                                       {  (yyval.expr_) = new Stella::Succ((yyvsp[-1].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3929 "Parser.C"
     break;
 
-  case 106: /* Expr6: _KW_not _LPAREN Expr _RPAREN  */
-#line 386 "Stella.y"
-                                 { (yyval.expr_) = new Stella::LogicNot((yyvsp[-1].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2224 "Parser.C"
+  case 106: /* Expr6: STELLA__SYMB_54 STELLA__SYMB_2 Expr STELLA__SYMB_3  */
+#line 2026 "Stella.y"
+                                                       {  (yyval.expr_) = new Stella::LogicNot((yyvsp[-1].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3935 "Parser.C"
     break;
 
-  case 107: /* Expr6: _SYMB_29 _LPAREN Expr _RPAREN  */
-#line 387 "Stella.y"
-                                  { (yyval.expr_) = new Stella::Pred((yyvsp[-1].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2230 "Parser.C"
+  case 107: /* Expr6: STELLA__SYMB_29 STELLA__SYMB_2 Expr STELLA__SYMB_3  */
+#line 2027 "Stella.y"
+                                                       {  (yyval.expr_) = new Stella::Pred((yyvsp[-1].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3941 "Parser.C"
     break;
 
-  case 108: /* Expr6: _SYMB_30 _LPAREN Expr _RPAREN  */
-#line 388 "Stella.y"
-                                  { (yyval.expr_) = new Stella::IsZero((yyvsp[-1].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2236 "Parser.C"
+  case 108: /* Expr6: STELLA__SYMB_30 STELLA__SYMB_2 Expr STELLA__SYMB_3  */
+#line 2028 "Stella.y"
+                                                       {  (yyval.expr_) = new Stella::IsZero((yyvsp[-1].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3947 "Parser.C"
     break;
 
-  case 109: /* Expr6: _KW_fix _LPAREN Expr _RPAREN  */
-#line 389 "Stella.y"
-                                 { (yyval.expr_) = new Stella::Fix((yyvsp[-1].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2242 "Parser.C"
+  case 109: /* Expr6: STELLA__SYMB_42 STELLA__SYMB_2 Expr STELLA__SYMB_3  */
+#line 2029 "Stella.y"
+                                                       {  (yyval.expr_) = new Stella::Fix((yyvsp[-1].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3953 "Parser.C"
     break;
 
-  case 110: /* Expr6: _SYMB_31 _LPAREN Expr _COMMA Expr _COMMA Expr _RPAREN  */
-#line 390 "Stella.y"
-                                                          { (yyval.expr_) = new Stella::NatRec((yyvsp[-5].expr_), (yyvsp[-3].expr_), (yyvsp[-1].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2248 "Parser.C"
+  case 110: /* Expr6: STELLA__SYMB_31 STELLA__SYMB_2 Expr STELLA__SYMB_0 Expr STELLA__SYMB_0 Expr STELLA__SYMB_3  */
+#line 2030 "Stella.y"
+                                                                                               {  (yyval.expr_) = new Stella::NatRec((yyvsp[-5].expr_), (yyvsp[-3].expr_), (yyvsp[-1].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3959 "Parser.C"
     break;
 
-  case 111: /* Expr6: _KW_fold _LBRACK Type _RBRACK Expr7  */
-#line 391 "Stella.y"
-                                        { (yyval.expr_) = new Stella::Fold((yyvsp[-2].type_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2254 "Parser.C"
+  case 111: /* Expr6: STELLA__SYMB_44 STELLA__SYMB_13 Type STELLA__SYMB_14 Expr7  */
+#line 2031 "Stella.y"
+                                                               {  (yyval.expr_) = new Stella::Fold((yyvsp[-2].type_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3965 "Parser.C"
     break;
 
-  case 112: /* Expr6: _KW_unfold _LBRACK Type _RBRACK Expr7  */
-#line 392 "Stella.y"
-                                          { (yyval.expr_) = new Stella::Unfold((yyvsp[-2].type_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2260 "Parser.C"
+  case 112: /* Expr6: STELLA__SYMB_62 STELLA__SYMB_13 Type STELLA__SYMB_14 Expr7  */
+#line 2032 "Stella.y"
+                                                               {  (yyval.expr_) = new Stella::Unfold((yyvsp[-2].type_), (yyvsp[0].expr_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3971 "Parser.C"
     break;
 
   case 113: /* Expr6: Expr7  */
-#line 393 "Stella.y"
-          { (yyval.expr_) = (yyvsp[0].expr_); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2266 "Parser.C"
+#line 2033 "Stella.y"
+          {  (yyval.expr_) = (yyvsp[0].expr_); Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3977 "Parser.C"
     break;
 
-  case 114: /* Expr7: _KW_true  */
-#line 395 "Stella.y"
-                 { (yyval.expr_) = new Stella::ConstTrue(); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2272 "Parser.C"
+  case 114: /* Expr7: STELLA__SYMB_60  */
+#line 2035 "Stella.y"
+                        {  (yyval.expr_) = new Stella::ConstTrue(); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3983 "Parser.C"
     break;
 
-  case 115: /* Expr7: _KW_false  */
-#line 396 "Stella.y"
-              { (yyval.expr_) = new Stella::ConstFalse(); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2278 "Parser.C"
+  case 115: /* Expr7: STELLA__SYMB_41  */
+#line 2036 "Stella.y"
+                    {  (yyval.expr_) = new Stella::ConstFalse(); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3989 "Parser.C"
     break;
 
-  case 116: /* Expr7: _KW_unit  */
-#line 397 "Stella.y"
-             { (yyval.expr_) = new Stella::ConstUnit(); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2284 "Parser.C"
+  case 116: /* Expr7: STELLA__SYMB_63  */
+#line 2037 "Stella.y"
+                    {  (yyval.expr_) = new Stella::ConstUnit(); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 3995 "Parser.C"
     break;
 
   case 117: /* Expr7: _INTEGER_  */
-#line 398 "Stella.y"
-              { (yyval.expr_) = new Stella::ConstInt((yyvsp[0]._int)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2290 "Parser.C"
+#line 2038 "Stella.y"
+              {  (yyval.expr_) = new Stella::ConstInt((yyvsp[0].int_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 4001 "Parser.C"
     break;
 
-  case 118: /* Expr7: T_StellaIdent  */
-#line 399 "Stella.y"
-                  { (yyval.expr_) = new Stella::Var((yyvsp[0]._string)); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2296 "Parser.C"
+  case 118: /* Expr7: STELLA__SYMB_66  */
+#line 2039 "Stella.y"
+                    {  (yyval.expr_) = new Stella::Var((yyvsp[0].string_)); (yyval.expr_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 4007 "Parser.C"
     break;
 
-  case 119: /* Expr7: _LPAREN Expr _RPAREN  */
-#line 400 "Stella.y"
-                         { (yyval.expr_) = (yyvsp[-1].expr_); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2302 "Parser.C"
+  case 119: /* Expr7: STELLA__SYMB_2 Expr STELLA__SYMB_3  */
+#line 2040 "Stella.y"
+                                       {  (yyval.expr_) = (yyvsp[-1].expr_); Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 4013 "Parser.C"
     break;
 
-  case 120: /* Type: _KW_fn _LPAREN ListType _RPAREN _RARROW Type  */
-#line 402 "Stella.y"
-                                                    { std::reverse((yyvsp[-3].listtype_)->begin(),(yyvsp[-3].listtype_)->end()) ;(yyval.type_) = new Stella::TypeFun((yyvsp[-3].listtype_), (yyvsp[0].type_)); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2308 "Parser.C"
+  case 120: /* Type: STELLA__SYMB_43 STELLA__SYMB_2 ListType STELLA__SYMB_3 STELLA__SYMB_8 Type  */
+#line 2042 "Stella.y"
+                                                                                  {  std::reverse((yyvsp[-3].listtype_)->begin(),(yyvsp[-3].listtype_)->end()) ;(yyval.type_) = new Stella::TypeFun((yyvsp[-3].listtype_), (yyvsp[0].type_)); (yyval.type_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4019 "Parser.C"
     break;
 
-  case 121: /* Type: _KW_65 T_StellaIdent _DOT Type  */
-#line 403 "Stella.y"
-                                   { (yyval.type_) = new Stella::TypeRec((yyvsp[-2]._string), (yyvsp[0].type_)); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2314 "Parser.C"
+  case 121: /* Type: STELLA__SYMB_65 STELLA__SYMB_66 STELLA__SYMB_25 Type  */
+#line 2043 "Stella.y"
+                                                         {  (yyval.type_) = new Stella::TypeRec((yyvsp[-2].string_), (yyvsp[0].type_)); (yyval.type_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4025 "Parser.C"
     break;
 
   case 122: /* Type: Type1  */
-#line 404 "Stella.y"
-          { (yyval.type_) = (yyvsp[0].type_); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2320 "Parser.C"
+#line 2044 "Stella.y"
+          {  (yyval.type_) = (yyvsp[0].type_); Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4031 "Parser.C"
     break;
 
-  case 123: /* Type1: Type2 _PLUS Type2  */
-#line 406 "Stella.y"
-                          { (yyval.type_) = new Stella::TypeSum((yyvsp[-2].type_), (yyvsp[0].type_)); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2326 "Parser.C"
+  case 123: /* Type1: Type2 STELLA__SYMB_21 Type2  */
+#line 2046 "Stella.y"
+                                    {  (yyval.type_) = new Stella::TypeSum((yyvsp[-2].type_), (yyvsp[0].type_)); (yyval.type_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4037 "Parser.C"
     break;
 
   case 124: /* Type1: Type2  */
-#line 407 "Stella.y"
-          { (yyval.type_) = (yyvsp[0].type_); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2332 "Parser.C"
+#line 2047 "Stella.y"
+          {  (yyval.type_) = (yyvsp[0].type_); Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4043 "Parser.C"
     break;
 
-  case 125: /* Type2: _LBRACE ListType _RBRACE  */
-#line 409 "Stella.y"
-                                 { std::reverse((yyvsp[-1].listtype_)->begin(),(yyvsp[-1].listtype_)->end()) ;(yyval.type_) = new Stella::TypeTuple((yyvsp[-1].listtype_)); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2338 "Parser.C"
+  case 125: /* Type2: STELLA__SYMB_4 ListType STELLA__SYMB_5  */
+#line 2049 "Stella.y"
+                                               {  std::reverse((yyvsp[-1].listtype_)->begin(),(yyvsp[-1].listtype_)->end()) ;(yyval.type_) = new Stella::TypeTuple((yyvsp[-1].listtype_)); (yyval.type_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4049 "Parser.C"
     break;
 
-  case 126: /* Type2: _LBRACE ListRecordFieldType _RBRACE  */
-#line 410 "Stella.y"
-                                        { std::reverse((yyvsp[-1].listrecordfieldtype_)->begin(),(yyvsp[-1].listrecordfieldtype_)->end()) ;(yyval.type_) = new Stella::TypeRecord((yyvsp[-1].listrecordfieldtype_)); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2344 "Parser.C"
+  case 126: /* Type2: STELLA__SYMB_4 ListRecordFieldType STELLA__SYMB_5  */
+#line 2050 "Stella.y"
+                                                      {  std::reverse((yyvsp[-1].listrecordfieldtype_)->begin(),(yyvsp[-1].listrecordfieldtype_)->end()) ;(yyval.type_) = new Stella::TypeRecord((yyvsp[-1].listrecordfieldtype_)); (yyval.type_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4055 "Parser.C"
     break;
 
-  case 127: /* Type2: _SYMB_11 ListVariantFieldType _SYMB_12  */
-#line 411 "Stella.y"
-                                           { std::reverse((yyvsp[-1].listvariantfieldtype_)->begin(),(yyvsp[-1].listvariantfieldtype_)->end()) ;(yyval.type_) = new Stella::TypeVariant((yyvsp[-1].listvariantfieldtype_)); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2350 "Parser.C"
+  case 127: /* Type2: STELLA__SYMB_11 ListVariantFieldType STELLA__SYMB_12  */
+#line 2051 "Stella.y"
+                                                         {  std::reverse((yyvsp[-1].listvariantfieldtype_)->begin(),(yyvsp[-1].listvariantfieldtype_)->end()) ;(yyval.type_) = new Stella::TypeVariant((yyvsp[-1].listvariantfieldtype_)); (yyval.type_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4061 "Parser.C"
     break;
 
-  case 128: /* Type2: _LBRACK Type _RBRACK  */
-#line 412 "Stella.y"
-                         { (yyval.type_) = new Stella::TypeList((yyvsp[-1].type_)); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2356 "Parser.C"
+  case 128: /* Type2: STELLA__SYMB_13 Type STELLA__SYMB_14  */
+#line 2052 "Stella.y"
+                                         {  (yyval.type_) = new Stella::TypeList((yyvsp[-1].type_)); (yyval.type_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4067 "Parser.C"
     break;
 
   case 129: /* Type2: Type3  */
-#line 413 "Stella.y"
-          { (yyval.type_) = (yyvsp[0].type_); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2362 "Parser.C"
+#line 2053 "Stella.y"
+          {  (yyval.type_) = (yyvsp[0].type_); Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4073 "Parser.C"
     break;
 
-  case 130: /* Type3: _KW_Bool  */
-#line 415 "Stella.y"
-                 { (yyval.type_) = new Stella::TypeBool(); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2368 "Parser.C"
+  case 130: /* Type3: STELLA__SYMB_32  */
+#line 2055 "Stella.y"
+                        {  (yyval.type_) = new Stella::TypeBool(); (yyval.type_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4079 "Parser.C"
     break;
 
-  case 131: /* Type3: _KW_Nat  */
-#line 416 "Stella.y"
-            { (yyval.type_) = new Stella::TypeNat(); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2374 "Parser.C"
+  case 131: /* Type3: STELLA__SYMB_33  */
+#line 2056 "Stella.y"
+                    {  (yyval.type_) = new Stella::TypeNat(); (yyval.type_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4085 "Parser.C"
     break;
 
-  case 132: /* Type3: _KW_Unit  */
-#line 417 "Stella.y"
-             { (yyval.type_) = new Stella::TypeUnit(); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2380 "Parser.C"
+  case 132: /* Type3: STELLA__SYMB_34  */
+#line 2057 "Stella.y"
+                    {  (yyval.type_) = new Stella::TypeUnit(); (yyval.type_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4091 "Parser.C"
     break;
 
-  case 133: /* Type3: T_StellaIdent  */
-#line 418 "Stella.y"
-                  { (yyval.type_) = new Stella::TypeVar((yyvsp[0]._string)); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2386 "Parser.C"
+  case 133: /* Type3: STELLA__SYMB_66  */
+#line 2058 "Stella.y"
+                    {  (yyval.type_) = new Stella::TypeVar((yyvsp[0].string_)); (yyval.type_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4097 "Parser.C"
     break;
 
-  case 134: /* Type3: _LPAREN Type _RPAREN  */
-#line 419 "Stella.y"
-                         { (yyval.type_) = (yyvsp[-1].type_); (yyval.type_)->line_number = (yyloc).first_line; (yyval.type_)->char_number = (yyloc).first_column; result->type_ = (yyval.type_); }
-#line 2392 "Parser.C"
+  case 134: /* Type3: STELLA__SYMB_2 Type STELLA__SYMB_3  */
+#line 2059 "Stella.y"
+                                       {  (yyval.type_) = (yyvsp[-1].type_); Stella::YY_RESULT_Type_= (yyval.type_); }
+#line 4103 "Parser.C"
     break;
 
   case 135: /* ListType: %empty  */
-#line 421 "Stella.y"
-                       { (yyval.listtype_) = new Stella::ListType(); result->listtype_ = (yyval.listtype_); }
-#line 2398 "Parser.C"
+#line 2061 "Stella.y"
+                       {  (yyval.listtype_) = new Stella::ListType(); Stella::YY_RESULT_ListType_= (yyval.listtype_); }
+#line 4109 "Parser.C"
     break;
 
   case 136: /* ListType: Type  */
-#line 422 "Stella.y"
-         { (yyval.listtype_) = new Stella::ListType(); (yyval.listtype_)->push_back((yyvsp[0].type_)); result->listtype_ = (yyval.listtype_); }
-#line 2404 "Parser.C"
+#line 2062 "Stella.y"
+         {  (yyval.listtype_) = new Stella::ListType() ; (yyval.listtype_)->push_back((yyvsp[0].type_)); Stella::YY_RESULT_ListType_= (yyval.listtype_); }
+#line 4115 "Parser.C"
     break;
 
-  case 137: /* ListType: Type _COMMA ListType  */
-#line 423 "Stella.y"
-                         { (yyvsp[0].listtype_)->push_back((yyvsp[-2].type_)); (yyval.listtype_) = (yyvsp[0].listtype_); result->listtype_ = (yyval.listtype_); }
-#line 2410 "Parser.C"
+  case 137: /* ListType: Type STELLA__SYMB_0 ListType  */
+#line 2063 "Stella.y"
+                                 {  (yyvsp[0].listtype_)->push_back((yyvsp[-2].type_)) ; (yyval.listtype_) = (yyvsp[0].listtype_) ; Stella::YY_RESULT_ListType_= (yyval.listtype_); }
+#line 4121 "Parser.C"
     break;
 
   case 138: /* Expr5: Expr6  */
-#line 425 "Stella.y"
-              { (yyval.expr_) = (yyvsp[0].expr_); (yyval.expr_)->line_number = (yyloc).first_line; (yyval.expr_)->char_number = (yyloc).first_column; result->expr_ = (yyval.expr_); }
-#line 2416 "Parser.C"
+#line 2065 "Stella.y"
+              {  (yyval.expr_) = (yyvsp[0].expr_); Stella::YY_RESULT_Expr_= (yyval.expr_); }
+#line 4127 "Parser.C"
     break;
 
-  case 139: /* VariantFieldType: T_StellaIdent OptionalTyping  */
-#line 427 "Stella.y"
-                                                { (yyval.variantfieldtype_) = new Stella::AVariantFieldType((yyvsp[-1]._string), (yyvsp[0].optionaltyping_)); (yyval.variantfieldtype_)->line_number = (yyloc).first_line; (yyval.variantfieldtype_)->char_number = (yyloc).first_column; result->variantfieldtype_ = (yyval.variantfieldtype_); }
-#line 2422 "Parser.C"
+  case 139: /* VariantFieldType: STELLA__SYMB_66 OptionalTyping  */
+#line 2067 "Stella.y"
+                                                  {  (yyval.variantfieldtype_) = new Stella::AVariantFieldType((yyvsp[-1].string_), (yyvsp[0].optionaltyping_)); (yyval.variantfieldtype_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_VariantFieldType_= (yyval.variantfieldtype_); }
+#line 4133 "Parser.C"
     break;
 
   case 140: /* ListVariantFieldType: %empty  */
-#line 429 "Stella.y"
-                                   { (yyval.listvariantfieldtype_) = new Stella::ListVariantFieldType(); result->listvariantfieldtype_ = (yyval.listvariantfieldtype_); }
-#line 2428 "Parser.C"
+#line 2069 "Stella.y"
+                                   {  (yyval.listvariantfieldtype_) = new Stella::ListVariantFieldType(); Stella::YY_RESULT_ListVariantFieldType_= (yyval.listvariantfieldtype_); }
+#line 4139 "Parser.C"
     break;
 
   case 141: /* ListVariantFieldType: VariantFieldType  */
-#line 430 "Stella.y"
-                     { (yyval.listvariantfieldtype_) = new Stella::ListVariantFieldType(); (yyval.listvariantfieldtype_)->push_back((yyvsp[0].variantfieldtype_)); result->listvariantfieldtype_ = (yyval.listvariantfieldtype_); }
-#line 2434 "Parser.C"
+#line 2070 "Stella.y"
+                     {  (yyval.listvariantfieldtype_) = new Stella::ListVariantFieldType() ; (yyval.listvariantfieldtype_)->push_back((yyvsp[0].variantfieldtype_)); Stella::YY_RESULT_ListVariantFieldType_= (yyval.listvariantfieldtype_); }
+#line 4145 "Parser.C"
     break;
 
-  case 142: /* ListVariantFieldType: VariantFieldType _COMMA ListVariantFieldType  */
-#line 431 "Stella.y"
-                                                 { (yyvsp[0].listvariantfieldtype_)->push_back((yyvsp[-2].variantfieldtype_)); (yyval.listvariantfieldtype_) = (yyvsp[0].listvariantfieldtype_); result->listvariantfieldtype_ = (yyval.listvariantfieldtype_); }
-#line 2440 "Parser.C"
+  case 142: /* ListVariantFieldType: VariantFieldType STELLA__SYMB_0 ListVariantFieldType  */
+#line 2071 "Stella.y"
+                                                         {  (yyvsp[0].listvariantfieldtype_)->push_back((yyvsp[-2].variantfieldtype_)) ; (yyval.listvariantfieldtype_) = (yyvsp[0].listvariantfieldtype_) ; Stella::YY_RESULT_ListVariantFieldType_= (yyval.listvariantfieldtype_); }
+#line 4151 "Parser.C"
     break;
 
-  case 143: /* RecordFieldType: T_StellaIdent _COLON Type  */
-#line 433 "Stella.y"
-                                            { (yyval.recordfieldtype_) = new Stella::ARecordFieldType((yyvsp[-2]._string), (yyvsp[0].type_)); (yyval.recordfieldtype_)->line_number = (yyloc).first_line; (yyval.recordfieldtype_)->char_number = (yyloc).first_column; result->recordfieldtype_ = (yyval.recordfieldtype_); }
-#line 2446 "Parser.C"
+  case 143: /* RecordFieldType: STELLA__SYMB_66 STELLA__SYMB_7 Type  */
+#line 2073 "Stella.y"
+                                                      {  (yyval.recordfieldtype_) = new Stella::ARecordFieldType((yyvsp[-2].string_), (yyvsp[0].type_)); (yyval.recordfieldtype_)->line_number = Stellayy_mylinenumber; Stella::YY_RESULT_RecordFieldType_= (yyval.recordfieldtype_); }
+#line 4157 "Parser.C"
     break;
 
   case 144: /* ListRecordFieldType: RecordFieldType  */
-#line 435 "Stella.y"
-                                      { (yyval.listrecordfieldtype_) = new Stella::ListRecordFieldType(); (yyval.listrecordfieldtype_)->push_back((yyvsp[0].recordfieldtype_)); result->listrecordfieldtype_ = (yyval.listrecordfieldtype_); }
-#line 2452 "Parser.C"
+#line 2075 "Stella.y"
+                                      {  (yyval.listrecordfieldtype_) = new Stella::ListRecordFieldType() ; (yyval.listrecordfieldtype_)->push_back((yyvsp[0].recordfieldtype_)); Stella::YY_RESULT_ListRecordFieldType_= (yyval.listrecordfieldtype_); }
+#line 4163 "Parser.C"
     break;
 
-  case 145: /* ListRecordFieldType: RecordFieldType _COMMA ListRecordFieldType  */
-#line 436 "Stella.y"
-                                               { (yyvsp[0].listrecordfieldtype_)->push_back((yyvsp[-2].recordfieldtype_)); (yyval.listrecordfieldtype_) = (yyvsp[0].listrecordfieldtype_); result->listrecordfieldtype_ = (yyval.listrecordfieldtype_); }
-#line 2458 "Parser.C"
+  case 145: /* ListRecordFieldType: RecordFieldType STELLA__SYMB_0 ListRecordFieldType  */
+#line 2076 "Stella.y"
+                                                       {  (yyvsp[0].listrecordfieldtype_)->push_back((yyvsp[-2].recordfieldtype_)) ; (yyval.listrecordfieldtype_) = (yyvsp[0].listrecordfieldtype_) ; Stella::YY_RESULT_ListRecordFieldType_= (yyval.listrecordfieldtype_); }
+#line 4169 "Parser.C"
     break;
 
 
-#line 2462 "Parser.C"
+#line 4173 "Parser.C"
 
       default: break;
     }
@@ -2479,7 +4190,6 @@ yyreduce:
   yylen = 0;
 
   *++yyvsp = yyval;
-  *++yylsp = yyloc;
 
   /* Now 'shift' the result of the reduction.  Determine what state
      that goes to, based on the state we popped back to and the rule
@@ -2501,31 +4211,30 @@ yyreduce:
 yyerrlab:
   /* Make sure we have latest lookahead translation.  See comments at
      user semantic actions for why this is necessary.  */
-  yytoken = yychar == YYEMPTY ? YYSYMBOL_YYEMPTY : YYTRANSLATE (yychar);
+  yytoken = yychar == STELLAYYEMPTY ? YYSYMBOL_YYEMPTY : YYTRANSLATE (yychar);
   /* If not already recovering from an error, report this error.  */
   if (!yyerrstatus)
     {
       ++yynerrs;
-      yyerror (&yylloc, scanner, result, YY_("syntax error"));
+      yyerror (YY_("syntax error"));
     }
 
-  yyerror_range[1] = yylloc;
   if (yyerrstatus == 3)
     {
       /* If just tried and failed to reuse lookahead token after an
          error, discard it.  */
 
-      if (yychar <= YYEOF)
+      if (yychar <= STELLAYYEOF)
         {
           /* Return failure if at end of input.  */
-          if (yychar == YYEOF)
+          if (yychar == STELLAYYEOF)
             YYABORT;
         }
       else
         {
           yydestruct ("Error: discarding",
-                      yytoken, &yylval, &yylloc, scanner, result);
-          yychar = YYEMPTY;
+                      yytoken, &yylval);
+          yychar = STELLAYYEMPTY;
         }
     }
 
@@ -2578,9 +4287,9 @@ yyerrlab1:
       if (yyssp == yyss)
         YYABORT;
 
-      yyerror_range[1] = *yylsp;
+
       yydestruct ("Error: popping",
-                  YY_ACCESSING_SYMBOL (yystate), yyvsp, yylsp, scanner, result);
+                  YY_ACCESSING_SYMBOL (yystate), yyvsp);
       YYPOPSTACK (1);
       yystate = *yyssp;
       YY_STACK_PRINT (yyss, yyssp);
@@ -2590,9 +4299,6 @@ yyerrlab1:
   *++yyvsp = yylval;
   YY_IGNORE_MAYBE_UNINITIALIZED_END
 
-  yyerror_range[2] = yylloc;
-  ++yylsp;
-  YYLLOC_DEFAULT (*yylsp, yyerror_range, 2);
 
   /* Shift the error token.  */
   YY_SYMBOL_PRINT ("Shifting", YY_ACCESSING_SYMBOL (yyn), yyvsp, yylsp);
@@ -2621,7 +4327,7 @@ yyabortlab:
 | yyexhaustedlab -- YYNOMEM (memory exhaustion) comes here.  |
 `-----------------------------------------------------------*/
 yyexhaustedlab:
-  yyerror (&yylloc, scanner, result, YY_("memory exhausted"));
+  yyerror (YY_("memory exhausted"));
   yyresult = 2;
   goto yyreturnlab;
 
@@ -2630,13 +4336,13 @@ yyexhaustedlab:
 | yyreturnlab -- parsing is finished, clean up and return.  |
 `----------------------------------------------------------*/
 yyreturnlab:
-  if (yychar != YYEMPTY)
+  if (yychar != STELLAYYEMPTY)
     {
       /* Make sure we have latest lookahead translation.  See comments at
          user semantic actions for why this is necessary.  */
       yytoken = YYTRANSLATE (yychar);
       yydestruct ("Cleanup: discarding lookahead",
-                  yytoken, &yylval, &yylloc, scanner, result);
+                  yytoken, &yylval);
     }
   /* Do not reclaim the symbols of the rule whose action triggered
      this YYABORT or YYACCEPT.  */
@@ -2645,7 +4351,7 @@ yyreturnlab:
   while (yyssp != yyss)
     {
       yydestruct ("Cleanup: popping",
-                  YY_ACCESSING_SYMBOL (+*yyssp), yyvsp, yylsp, scanner, result);
+                  YY_ACCESSING_SYMBOL (+*yyssp), yyvsp);
       YYPOPSTACK (1);
     }
 #ifndef yyoverflow
@@ -2656,2282 +4362,3 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 441 "Stella.y"
-
-
-namespace Stella
-{
-/* Entrypoint: parse Program* from file. */
-Program* pProgram(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.program_;
-  }
-}
-
-/* Entrypoint: parse Program* from string. */
-Program* psProgram(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.program_;
-  }
-}
-
-/* Entrypoint: parse ListStellaIdent* from file. */
-ListStellaIdent* pListStellaIdent(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.liststellaident_->begin(), result.liststellaident_->end());
-    return result.liststellaident_;
-  }
-}
-
-/* Entrypoint: parse ListStellaIdent* from string. */
-ListStellaIdent* psListStellaIdent(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.liststellaident_->begin(), result.liststellaident_->end());
-    return result.liststellaident_;
-  }
-}
-
-/* Entrypoint: parse LanguageDecl* from file. */
-LanguageDecl* pLanguageDecl(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.languagedecl_;
-  }
-}
-
-/* Entrypoint: parse LanguageDecl* from string. */
-LanguageDecl* psLanguageDecl(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.languagedecl_;
-  }
-}
-
-/* Entrypoint: parse Extension* from file. */
-Extension* pExtension(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.extension_;
-  }
-}
-
-/* Entrypoint: parse Extension* from string. */
-Extension* psExtension(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.extension_;
-  }
-}
-
-/* Entrypoint: parse ListExtensionName* from file. */
-ListExtensionName* pListExtensionName(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listextensionname_->begin(), result.listextensionname_->end());
-    return result.listextensionname_;
-  }
-}
-
-/* Entrypoint: parse ListExtensionName* from string. */
-ListExtensionName* psListExtensionName(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listextensionname_->begin(), result.listextensionname_->end());
-    return result.listextensionname_;
-  }
-}
-
-/* Entrypoint: parse ListExtension* from file. */
-ListExtension* pListExtension(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.listextension_;
-  }
-}
-
-/* Entrypoint: parse ListExtension* from string. */
-ListExtension* psListExtension(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.listextension_;
-  }
-}
-
-/* Entrypoint: parse Decl* from file. */
-Decl* pDecl(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.decl_;
-  }
-}
-
-/* Entrypoint: parse Decl* from string. */
-Decl* psDecl(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.decl_;
-  }
-}
-
-/* Entrypoint: parse ListDecl* from file. */
-ListDecl* pListDecl(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.listdecl_;
-  }
-}
-
-/* Entrypoint: parse ListDecl* from string. */
-ListDecl* psListDecl(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.listdecl_;
-  }
-}
-
-/* Entrypoint: parse LocalDecl* from file. */
-LocalDecl* pLocalDecl(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.localdecl_;
-  }
-}
-
-/* Entrypoint: parse LocalDecl* from string. */
-LocalDecl* psLocalDecl(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.localdecl_;
-  }
-}
-
-/* Entrypoint: parse ListLocalDecl* from file. */
-ListLocalDecl* pListLocalDecl(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.listlocaldecl_;
-  }
-}
-
-/* Entrypoint: parse ListLocalDecl* from string. */
-ListLocalDecl* psListLocalDecl(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.listlocaldecl_;
-  }
-}
-
-/* Entrypoint: parse Annotation* from file. */
-Annotation* pAnnotation(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.annotation_;
-  }
-}
-
-/* Entrypoint: parse Annotation* from string. */
-Annotation* psAnnotation(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.annotation_;
-  }
-}
-
-/* Entrypoint: parse ListAnnotation* from file. */
-ListAnnotation* pListAnnotation(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.listannotation_;
-  }
-}
-
-/* Entrypoint: parse ListAnnotation* from string. */
-ListAnnotation* psListAnnotation(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.listannotation_;
-  }
-}
-
-/* Entrypoint: parse ParamDecl* from file. */
-ParamDecl* pParamDecl(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.paramdecl_;
-  }
-}
-
-/* Entrypoint: parse ParamDecl* from string. */
-ParamDecl* psParamDecl(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.paramdecl_;
-  }
-}
-
-/* Entrypoint: parse ListParamDecl* from file. */
-ListParamDecl* pListParamDecl(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listparamdecl_->begin(), result.listparamdecl_->end());
-    return result.listparamdecl_;
-  }
-}
-
-/* Entrypoint: parse ListParamDecl* from string. */
-ListParamDecl* psListParamDecl(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listparamdecl_->begin(), result.listparamdecl_->end());
-    return result.listparamdecl_;
-  }
-}
-
-/* Entrypoint: parse ReturnType* from file. */
-ReturnType* pReturnType(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.returntype_;
-  }
-}
-
-/* Entrypoint: parse ReturnType* from string. */
-ReturnType* psReturnType(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.returntype_;
-  }
-}
-
-/* Entrypoint: parse ThrowType* from file. */
-ThrowType* pThrowType(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.throwtype_;
-  }
-}
-
-/* Entrypoint: parse ThrowType* from string. */
-ThrowType* psThrowType(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.throwtype_;
-  }
-}
-
-/* Entrypoint: parse Type* from file. */
-Type* pType9(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.type_;
-  }
-}
-
-/* Entrypoint: parse Type* from string. */
-Type* psType9(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.type_;
-  }
-}
-
-/* Entrypoint: parse ListType* from file. */
-ListType* pListType9(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listtype_->begin(), result.listtype_->end());
-    return result.listtype_;
-  }
-}
-
-/* Entrypoint: parse ListType* from string. */
-ListType* psListType9(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listtype_->begin(), result.listtype_->end());
-    return result.listtype_;
-  }
-}
-
-/* Entrypoint: parse MatchCase* from file. */
-MatchCase* pMatchCase(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.matchcase_;
-  }
-}
-
-/* Entrypoint: parse MatchCase* from string. */
-MatchCase* psMatchCase(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.matchcase_;
-  }
-}
-
-/* Entrypoint: parse ListMatchCase* from file. */
-ListMatchCase* pListMatchCase(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listmatchcase_->begin(), result.listmatchcase_->end());
-    return result.listmatchcase_;
-  }
-}
-
-/* Entrypoint: parse ListMatchCase* from string. */
-ListMatchCase* psListMatchCase(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listmatchcase_->begin(), result.listmatchcase_->end());
-    return result.listmatchcase_;
-  }
-}
-
-/* Entrypoint: parse OptionalTyping* from file. */
-OptionalTyping* pOptionalTyping(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.optionaltyping_;
-  }
-}
-
-/* Entrypoint: parse OptionalTyping* from string. */
-OptionalTyping* psOptionalTyping(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.optionaltyping_;
-  }
-}
-
-/* Entrypoint: parse PatternData* from file. */
-PatternData* pPatternData(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.patterndata_;
-  }
-}
-
-/* Entrypoint: parse PatternData* from string. */
-PatternData* psPatternData(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.patterndata_;
-  }
-}
-
-/* Entrypoint: parse ExprData* from file. */
-ExprData* pExprData(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.exprdata_;
-  }
-}
-
-/* Entrypoint: parse ExprData* from string. */
-ExprData* psExprData(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.exprdata_;
-  }
-}
-
-/* Entrypoint: parse Pattern* from file. */
-Pattern* pPattern(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.pattern_;
-  }
-}
-
-/* Entrypoint: parse Pattern* from string. */
-Pattern* psPattern(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.pattern_;
-  }
-}
-
-/* Entrypoint: parse ListPattern* from file. */
-ListPattern* pListPattern(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listpattern_->begin(), result.listpattern_->end());
-    return result.listpattern_;
-  }
-}
-
-/* Entrypoint: parse ListPattern* from string. */
-ListPattern* psListPattern(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listpattern_->begin(), result.listpattern_->end());
-    return result.listpattern_;
-  }
-}
-
-/* Entrypoint: parse LabelledPattern* from file. */
-LabelledPattern* pLabelledPattern(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.labelledpattern_;
-  }
-}
-
-/* Entrypoint: parse LabelledPattern* from string. */
-LabelledPattern* psLabelledPattern(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.labelledpattern_;
-  }
-}
-
-/* Entrypoint: parse ListLabelledPattern* from file. */
-ListLabelledPattern* pListLabelledPattern(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listlabelledpattern_->begin(), result.listlabelledpattern_->end());
-    return result.listlabelledpattern_;
-  }
-}
-
-/* Entrypoint: parse ListLabelledPattern* from string. */
-ListLabelledPattern* psListLabelledPattern(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listlabelledpattern_->begin(), result.listlabelledpattern_->end());
-    return result.listlabelledpattern_;
-  }
-}
-
-/* Entrypoint: parse Binding* from file. */
-Binding* pBinding(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.binding_;
-  }
-}
-
-/* Entrypoint: parse Binding* from string. */
-Binding* psBinding(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.binding_;
-  }
-}
-
-/* Entrypoint: parse ListBinding* from file. */
-ListBinding* pListBinding(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listbinding_->begin(), result.listbinding_->end());
-    return result.listbinding_;
-  }
-}
-
-/* Entrypoint: parse ListBinding* from string. */
-ListBinding* psListBinding(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listbinding_->begin(), result.listbinding_->end());
-    return result.listbinding_;
-  }
-}
-
-/* Entrypoint: parse Expr* from file. */
-Expr* pExpr(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse Expr* from string. */
-Expr* psExpr(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse ListExpr* from file. */
-ListExpr* pListExpr(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listexpr_->begin(), result.listexpr_->end());
-    return result.listexpr_;
-  }
-}
-
-/* Entrypoint: parse ListExpr* from string. */
-ListExpr* psListExpr(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listexpr_->begin(), result.listexpr_->end());
-    return result.listexpr_;
-  }
-}
-
-/* Entrypoint: parse Expr* from file. */
-Expr* pExpr1(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse Expr* from string. */
-Expr* psExpr1(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse PatternBinding* from file. */
-PatternBinding* pPatternBinding(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.patternbinding_;
-  }
-}
-
-/* Entrypoint: parse PatternBinding* from string. */
-PatternBinding* psPatternBinding(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.patternbinding_;
-  }
-}
-
-/* Entrypoint: parse ListPatternBinding* from file. */
-ListPatternBinding* pListPatternBinding(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listpatternbinding_->begin(), result.listpatternbinding_->end());
-    return result.listpatternbinding_;
-  }
-}
-
-/* Entrypoint: parse ListPatternBinding* from string. */
-ListPatternBinding* psListPatternBinding(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listpatternbinding_->begin(), result.listpatternbinding_->end());
-    return result.listpatternbinding_;
-  }
-}
-
-/* Entrypoint: parse Expr* from file. */
-Expr* pExpr2(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse Expr* from string. */
-Expr* psExpr2(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse ListExpr* from file. */
-ListExpr* pListExpr2(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listexpr_->begin(), result.listexpr_->end());
-    return result.listexpr_;
-  }
-}
-
-/* Entrypoint: parse ListExpr* from string. */
-ListExpr* psListExpr2(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listexpr_->begin(), result.listexpr_->end());
-    return result.listexpr_;
-  }
-}
-
-/* Entrypoint: parse Expr* from file. */
-Expr* pExpr3(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse Expr* from string. */
-Expr* psExpr3(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse Expr* from file. */
-Expr* pExpr4(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse Expr* from string. */
-Expr* psExpr4(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse Expr* from file. */
-Expr* pExpr6(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse Expr* from string. */
-Expr* psExpr6(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse Expr* from file. */
-Expr* pExpr7(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse Expr* from string. */
-Expr* psExpr7(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse Type* from file. */
-Type* pType(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.type_;
-  }
-}
-
-/* Entrypoint: parse Type* from string. */
-Type* psType(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.type_;
-  }
-}
-
-/* Entrypoint: parse Type* from file. */
-Type* pType1(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.type_;
-  }
-}
-
-/* Entrypoint: parse Type* from string. */
-Type* psType1(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.type_;
-  }
-}
-
-/* Entrypoint: parse Type* from file. */
-Type* pType2(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.type_;
-  }
-}
-
-/* Entrypoint: parse Type* from string. */
-Type* psType2(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.type_;
-  }
-}
-
-/* Entrypoint: parse Type* from file. */
-Type* pType3(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.type_;
-  }
-}
-
-/* Entrypoint: parse Type* from string. */
-Type* psType3(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.type_;
-  }
-}
-
-/* Entrypoint: parse ListType* from file. */
-ListType* pListType(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listtype_->begin(), result.listtype_->end());
-    return result.listtype_;
-  }
-}
-
-/* Entrypoint: parse ListType* from string. */
-ListType* psListType(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listtype_->begin(), result.listtype_->end());
-    return result.listtype_;
-  }
-}
-
-/* Entrypoint: parse Expr* from file. */
-Expr* pExpr5(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse Expr* from string. */
-Expr* psExpr5(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.expr_;
-  }
-}
-
-/* Entrypoint: parse VariantFieldType* from file. */
-VariantFieldType* pVariantFieldType(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.variantfieldtype_;
-  }
-}
-
-/* Entrypoint: parse VariantFieldType* from string. */
-VariantFieldType* psVariantFieldType(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.variantfieldtype_;
-  }
-}
-
-/* Entrypoint: parse ListVariantFieldType* from file. */
-ListVariantFieldType* pListVariantFieldType(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listvariantfieldtype_->begin(), result.listvariantfieldtype_->end());
-    return result.listvariantfieldtype_;
-  }
-}
-
-/* Entrypoint: parse ListVariantFieldType* from string. */
-ListVariantFieldType* psListVariantFieldType(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listvariantfieldtype_->begin(), result.listvariantfieldtype_->end());
-    return result.listvariantfieldtype_;
-  }
-}
-
-/* Entrypoint: parse RecordFieldType* from file. */
-RecordFieldType* pRecordFieldType(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.recordfieldtype_;
-  }
-}
-
-/* Entrypoint: parse RecordFieldType* from string. */
-RecordFieldType* psRecordFieldType(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.recordfieldtype_;
-  }
-}
-
-/* Entrypoint: parse ListRecordFieldType* from file. */
-ListRecordFieldType* pListRecordFieldType(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listrecordfieldtype_->begin(), result.listrecordfieldtype_->end());
-    return result.listrecordfieldtype_;
-  }
-}
-
-/* Entrypoint: parse ListRecordFieldType* from string. */
-ListRecordFieldType* psListRecordFieldType(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-std::reverse(result.listrecordfieldtype_->begin(), result.listrecordfieldtype_->end());
-    return result.listrecordfieldtype_;
-  }
-}
-
-/* Entrypoint: parse Typing* from file. */
-Typing* pTyping(FILE *inp)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(inp);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  int error = yyparse(scanner, &result);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.typing_;
-  }
-}
-
-/* Entrypoint: parse Typing* from string. */
-Typing* psTyping(const char *str)
-{
-  YYSTYPE result;
-  yyscan_t scanner = Stella_initialize_lexer(0);
-  if (!scanner) {
-    fprintf(stderr, "Failed to initialize lexer.\n");
-    return 0;
-  }
-  YY_BUFFER_STATE buf = Stella_scan_string(str, scanner);
-  int error = yyparse(scanner, &result);
-  Stella_delete_buffer(buf, scanner);
-  Stellalex_destroy(scanner);
-  if (error)
-  { /* Failure */
-    return 0;
-  }
-  else
-  { /* Success */
-    return result.typing_;
-  }
-}
-
-
-}

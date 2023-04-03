@@ -51,24 +51,57 @@ namespace Stella
       an_extension->listextensionname_->accept(this);
   }
 
-  void VisitTypeCheck::visitDeclFun(DeclFun *decl_fun)
-  {
-    /* Code For DeclFun Goes Here */
+    void VisitTypeCheck::visitDeclFun(DeclFun *decl_fun)
+    {
+        /* Code For DeclFun Goes Here */
+        std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+                     "\nVisiting function declaration for " << decl_fun->stellaident_ << "\n";
 
-    if (decl_fun->listannotation_)
-      decl_fun->listannotation_->accept(this);
-    visitStellaIdent(decl_fun->stellaident_);
-    if (decl_fun->listparamdecl_)
-      decl_fun->listparamdecl_->accept(this);
-    if (decl_fun->returntype_)
-      decl_fun->returntype_->accept(this);
-    if (decl_fun->throwtype_)
-      decl_fun->throwtype_->accept(this);
-    if (decl_fun->listdecl_)
-      decl_fun->listdecl_->accept(this);
-    if (decl_fun->expr_)
-      decl_fun->expr_->accept(this);
-  }
+        if (decl_fun->listannotation_)
+            decl_fun->listannotation_->accept(this);
+        visitStellaIdent(decl_fun->stellaident_);
+        if (decl_fun->listparamdecl_)
+            decl_fun->listparamdecl_->accept(this);
+        if (decl_fun->returntype_)
+            decl_fun->returntype_->accept(this);
+        if (decl_fun->throwtype_)
+            decl_fun->throwtype_->accept(this);
+        if (decl_fun->listdecl_)
+            decl_fun->listdecl_->accept(this);
+        if (decl_fun->expr_)
+            decl_fun->expr_->accept(this);
+
+        auto returnType = dynamic_cast<SomeReturnType* >(decl_fun->returntype_)->type_;
+        auto paramDecl = dynamic_cast<AParamDecl *>((*decl_fun->listparamdecl_)[0]);
+        auto paramType = paramDecl->type_;
+
+        std::cout << "Function name: " << decl_fun->stellaident_ << ", function return type: "
+                  << printer.print(returnType) << ", function param type: " << printer.print(paramType) << std::endl;
+
+        std::pair<std::string, Type*> decl_fun_pair;
+
+        // Add identifier in the pair
+        decl_fun_pair.first = decl_fun->stellaident_;
+
+        ListType *args = new ListType();
+        args->push_back(paramType);
+        TypeFun *typeFun = new TypeFun(args, returnType);
+
+        // Add type of the function in the pair
+        decl_fun_pair.second = typeFun;
+
+        //Insert into context id and type of function
+        context.insert(decl_fun_pair);
+
+        std::string param = printer.print(decl_fun->listparamdecl_);
+        // Get parameter id out of listparamdecl_
+        std::string word = param.substr(0, param.find(" "));
+
+        // Remove parameters of function from context
+        context.erase(word);
+        for (auto& p : context)
+            std::cout << "Currently in context: "<< p.first << " with type " << printer.print(p.second) << std::endl;
+    }
 
   void VisitTypeCheck::visitDeclTypeAlias(DeclTypeAlias *decl_type_alias)
   {
@@ -94,11 +127,19 @@ namespace Stella
 
   void VisitTypeCheck::visitAParamDecl(AParamDecl *a_param_decl)
   {
-    /* Code For AParamDecl Goes Here */
+      /* Code For AParamDecl Goes Here */
+      std::cout << "Visiting parameter declaration: " << a_param_decl->stellaident_ << " of type " << printer.print(a_param_decl->type_) << std::endl;
 
-    visitStellaIdent(a_param_decl->stellaident_);
-    if (a_param_decl->type_)
-      a_param_decl->type_->accept(this);
+      std::pair<std::string, Type*> param_pair;
+      param_pair.first = a_param_decl->stellaident_;
+      param_pair.second = a_param_decl->type_;
+
+      // Insert parameter id and its type into context
+      context.insert(param_pair);
+
+      visitStellaIdent(a_param_decl->stellaident_);
+      if (a_param_decl->type_)
+          a_param_decl->type_->accept(this);
   }
 
   void VisitTypeCheck::visitNoReturnType(NoReturnType *no_return_type)
@@ -108,11 +149,16 @@ namespace Stella
 
   void VisitTypeCheck::visitSomeReturnType(SomeReturnType *some_return_type)
   {
-    /* Code For SomeReturnType Goes Here */
+      /* Code For SomeReturnType Goes Here */
 
-    if (some_return_type->type_)
-      some_return_type->type_->accept(this);
-  }
+      std::cout << "Visiting return type: " << printer.print(some_return_type->type_) << std::endl;
+
+      // Add into expected type return type of function
+      expectedType = some_return_type->type_;
+
+      if (some_return_type->type_)
+          some_return_type->type_->accept(this);
+    }
 
   void VisitTypeCheck::visitNoThrowType(NoThrowType *no_throw_type)
   {
@@ -383,17 +429,56 @@ namespace Stella
       sequence->expr_2->accept(this);
   }
 
-  void VisitTypeCheck::visitIf(If *if_)
-  {
-    /* Code For If Goes Here */
+  void VisitTypeCheck::visitIf(If *if_) {
+      /* Code For If Goes Here */
 
-    if (if_->expr_1)
-      if_->expr_1->accept(this);
-    if (if_->expr_2)
-      if_->expr_2->accept(this);
-    if (if_->expr_3)
-      if_->expr_3->accept(this);
-  }
+      std::cout << "\nVisiting if: expr1: " << printer.print(if_->expr_1)
+                  << ", expr2: " << printer.print(if_->expr_2) << ", expr3: " << printer.print(if_->expr_3) << std::endl;
+
+      for (auto &p: context)
+          std::cout << "Currently in context: " << p.first << " of type " << printer.print(p.second) << std::endl;
+
+      std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
+
+      std::string expr1 = printer.print(if_->expr_1);
+
+      // Remove extra space sign from expr1 for proper matching expr1 and elements from context
+      expr1 = expr1.substr(0, expr1.find(" "));
+
+      if (expr1 != "true" && expr1 != "false") {
+          // Looking for expr1 in the context
+          if (auto search = context.find(expr1); search != context.end()){
+              std::string type = printer.print(search->second);
+              std::cout << "Type of found var: " << type << std::endl;
+
+              if (type != "Bool ") {
+                  if (auto type_fun = dynamic_cast<TypeFun* >(search->second)){
+                      auto type_bool = dynamic_cast<Type* >(type_fun->type_);
+                      std::string bool_str = printer.print(type_bool);
+                      std::cout << "Return type of function: " << search->first << " is " << bool_str << std::endl;
+                      if (bool_str != "Bool ") {
+                          std::cout << "ERROR\tExpected Bool at line: " << if_->line_number << '\n';
+                          exit(1);
+                      }
+                  } else {
+                      std::cout << "ERROR\tExpected Bool at line: " << if_->line_number << '\n';
+                      exit(1);
+                  }
+              }
+          }
+          else {
+              std::cout << "ERROR\tExpected Bool at line: " << if_->line_number << '\n';
+              exit(1);
+          }
+      }
+
+      if (if_->expr_1)
+          if_->expr_1->accept(this);
+      if (if_->expr_2)
+          if_->expr_2->accept(this);
+      if (if_->expr_3)
+          if_->expr_3->accept(this);
+    }
 
   void VisitTypeCheck::visitLet(Let *let)
   {
@@ -487,12 +572,39 @@ namespace Stella
 
   void VisitTypeCheck::visitAbstraction(Abstraction *abstraction)
   {
-    /* Code For Abstraction Goes Here */
+      /* Code For Abstraction Goes Here */
 
-    if (abstraction->listparamdecl_)
-      abstraction->listparamdecl_->accept(this);
-    if (abstraction->expr_)
-      abstraction->expr_->accept(this);
+      std::cout << "\nVisiting abstract function: fn" << std::endl;
+      std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
+      // Save expectedType in the variable
+      auto expType = expectedType;
+      if (auto typeAbst = dynamic_cast<TypeFun* >(expectedType)) {
+          std::cout << "Type of abstract function: " << printer.print(typeAbst) << std::endl;
+          std::cout << "Return type for abstract function: " << printer.print(typeAbst->type_) << std::endl;
+          expectedType = dynamic_cast<Type* >(typeAbst->type_);
+          std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
+          //Creating lastVisitedType
+          lastVisitedType = dynamic_cast<Type* >(typeAbst);
+      }
+      else {
+          std::cout << "ERROR\tExpected abstract at line: " << abstraction->line_number << '\n';
+          exit(1);
+      }
+
+      if (abstraction->listparamdecl_)
+          abstraction->listparamdecl_->accept(this);
+      if (abstraction->expr_)
+          abstraction->expr_->accept(this);
+
+      //Restore expectedType from variable
+      expectedType = expType;
+      std::cout << "Parameters of function: " << printer.print(abstraction->listparamdecl_) << std::endl;
+
+      std::string param = printer.print(abstraction->listparamdecl_);
+      std::string word = param.substr(0, param.find(" "));
+
+      //Remove parameters from function
+      context.erase(word);
   }
 
   void VisitTypeCheck::visitVariant(Variant *variant)
@@ -584,12 +696,45 @@ namespace Stella
 
   void VisitTypeCheck::visitApplication(Application *application)
   {
-    /* Code For Application Goes Here */
+      /* Code For Application Goes Here */
+      std::cout << "\nVisiting application: " << printer.print(application) << std::endl;
+      std::cout << "Application list expression: " << printer.print(application->listexpr_) << std::endl;
+      std::cout << "Application expression: " << printer.print(application->expr_) << std::endl;
+      for (auto& p : context)
+          std::cout << "Currently in context : " << p.first << " of type " << printer.print(p.second) << std::endl;
 
-    if (application->expr_)
-      application->expr_->accept(this);
-    if (application->listexpr_)
-      application->listexpr_->accept(this);
+      std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
+
+      // Save expectedType in the variable
+      auto expType = expectedType;
+
+      std::string expression = printer.print(application->expr_);
+      std::string word = expression.substr(0, expression.find(" "));
+
+      if (auto search = context.find(word); search != context.end()){
+          auto var = search->first;
+          auto var_type = search->second;
+          std::cout << "Variable " << var << " of type " << printer.print(var_type) << " was found in context" << std::endl;
+          if (auto varFuncType = dynamic_cast<TypeFun*>(var_type)){
+              std::cout << "Variable " << var << " casted to function type: " << printer.print(varFuncType) << std::endl;
+              std::cout << "List type:  " << printer.print(varFuncType->listtype_) << std::endl;
+              std::cout << "Type:  " << printer.print(varFuncType->type_) << std::endl;
+          } else {
+              std::cout << "ERROR\tExpected application at line: " << application->line_number << '\n';
+              exit(1);
+          }
+      } else {
+          std::cout << "ERROR\tUndefined var " << printer.print(application->expr_) << " at line: " << application->line_number << '\n';
+          exit(1);
+      }
+
+      if (application->expr_)
+          application->expr_->accept(this);
+      if (application->listexpr_)
+          application->listexpr_->accept(this);
+
+      // Make expected type as it was before falling into function
+      expectedType = expType;
   }
 
   void VisitTypeCheck::visitDotRecord(DotRecord *dot_record)
@@ -678,10 +823,25 @@ namespace Stella
 
   void VisitTypeCheck::visitSucc(Succ *succ)
   {
-    /* Code For Succ Goes Here */
+      /* Code For Succ Goes Here */
+      std::cout << "Visiting succ: " << printer.print(succ) << std::endl;
 
-    if (succ->expr_)
-      succ->expr_->accept(this);
+      for (auto& p : context)
+          std::cout << "Currently in context: "<< p.first << std::endl;
+
+      std::string expType = printer.print(expectedType);
+      std::cout << "Expected type: " << expType << std::endl;
+
+      if (expType != "Nat "){
+          std::cout << "ERROR\tExpected Nat at line: " << succ->line_number << '\n';
+          exit(1);
+      }
+
+      // Making lastVisitedType
+      lastVisitedType = expectedType;
+
+      if (succ->expr_)
+          succ->expr_->accept(this);
   }
 
   void VisitTypeCheck::visitLogicNot(LogicNot *logic_not)
@@ -718,14 +878,41 @@ namespace Stella
 
   void VisitTypeCheck::visitNatRec(NatRec *nat_rec)
   {
-    /* Code For NatRec Goes Here */
+      /* Code For NatRec Goes Here */
+      std::cout << "\nVisiting: Nat::rec" << std::endl;
+      std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
 
-    if (nat_rec->expr_1)
-      nat_rec->expr_1->accept(this);
-    if (nat_rec->expr_2)
-      nat_rec->expr_2->accept(this);
-    if (nat_rec->expr_3)
-      nat_rec->expr_3->accept(this);
+      //Save expectedType into temporary variable
+      auto expType = expectedType;
+
+      std::cout << "Expr1: " << printer.print(nat_rec->expr_1) << std::endl;
+      std::cout << "Expr2: " << printer.print(nat_rec->expr_2) << std::endl;
+      std::cout << "Expr3: " << printer.print(nat_rec->expr_3) << std::endl;
+
+      if (nat_rec->expr_1)
+          nat_rec->expr_1->accept(this);
+      if (nat_rec->expr_2)
+          nat_rec->expr_2->accept(this);
+
+      // Creating type of exp3 based on type of expr2
+      Type *typeT = lastVisitedType;    // T
+      ListType *args1 = new ListType();
+      args1->push_back(typeT);
+      Type *fun1 = new TypeFun(args1, typeT); // fn(T) -> T
+
+      TypeNat *type_Nat = new TypeNat();   // Nat
+      ListType *args2 = new ListType();
+      args2->push_back(type_Nat);
+      Type *fun2 = new TypeFun(args2, fun1);   // fn(Nat) -> (fn(T) -> T)
+
+      std::cout << "Generated function: " << printer.print(fun2) << std::endl;
+
+      expectedType = fun2;
+      if (nat_rec->expr_3)
+          nat_rec->expr_3->accept(this);
+
+      //Restore expectedType from variable
+      expectedType = expType;
   }
 
   void VisitTypeCheck::visitFold(Fold *fold)
@@ -750,31 +937,107 @@ namespace Stella
 
   void VisitTypeCheck::visitConstTrue(ConstTrue *const_true)
   {
-    /* Code For ConstTrue Goes Here */
+      /* Code For ConstTrue Goes Here */
+      std::cout << "\nVisiting const true: " << printer.print(const_true) << std::endl;
+
+      for (auto& p : context)
+          std::cout << "Currently in context : " << p.first << std::endl;
+
+      std::string expType = printer.print(expectedType);
+
+      std::cout << "Expected type: " << expType << std::endl;
+
+      if (expType != "Bool "){
+          std::cout << "ERROR\tBool not expected at line:" << const_true->line_number << '\n';
+          exit(1);
+      }
+
+      // Making lastVisitedType
+      lastVisitedType = expectedType;
   }
 
-  void VisitTypeCheck::visitConstFalse(ConstFalse *const_false)
-  {
-    /* Code For ConstFalse Goes Here */
+  void VisitTypeCheck::visitConstFalse(ConstFalse *const_false) {
+      /* Code For ConstFalse Goes Here */
+      std::cout << "\nVisiting const false: " << printer.print(const_false) << std::endl;
+      for (auto &p: context)
+            std::cout << "Currently in context : " << p.first << std::endl;
+
+      std::string expType = printer.print(expectedType);
+
+      std::cout << "Expected type: " << expType << std::endl;
+      if (expType != "Bool ") {
+          std::cout << "ERROR\tBool not expected at line:" << const_false->line_number << '\n';
+          exit(1);
+      }
+
+      // Making lastVisitedType
+      lastVisitedType = expectedType;
   }
 
   void VisitTypeCheck::visitConstUnit(ConstUnit *const_unit)
   {
     /* Code For ConstUnit Goes Here */
+      std::cout << "\nVisiting const unit: " << printer.print(const_unit) << std::endl;
+      for (auto &p: context)
+          std::cout << "Currently in context : " << p.first << std::endl;
+
+      std::string expType = printer.print(expectedType);
+
+      std::cout << "Expected type: " << expType << std::endl;
+      if (expType != "Unit ") {
+          std::cout << "ERROR\tUnit not expected at line:" << const_unit->line_number << '\n';
+          exit(1);
+      }
+
+      // Making lastVisitedType
+      lastVisitedType = expectedType;
   }
 
   void VisitTypeCheck::visitConstInt(ConstInt *const_int)
   {
-    /* Code For ConstInt Goes Here */
+      /* Code For ConstInt Goes Here */
+      std::cout << "\nVisiting const int: " << const_int->integer_ << std::endl;
 
-    visitInteger(const_int->integer_);
+      for (auto& p : context)
+          std::cout << "Currently in context : " << p.first << std::endl;
+
+      std::string expType = printer.print(expectedType);
+      std::cout << "Expected type: " << expType << std::endl;
+
+      if (expType != "Nat "){
+          std::cout << "ERROR\tExpected Nat at line:" << const_int->line_number << '\n';
+          exit(1);
+      }
+
+      // Making lastVisitedType
+      lastVisitedType = expectedType;
+
+      visitInteger(const_int->integer_);
   }
 
   void VisitTypeCheck::visitVar(Var *var)
   {
-    /* Code For Var Goes Here */
+      /* Code For Var Goes Here */
+      std::cout << "\nVisiting var: " << var->stellaident_ << std::endl;
 
-    visitStellaIdent(var->stellaident_);
+      for (auto& p : context)
+          std::cout << "Currently in context : " << p.first << std::endl;
+
+      std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
+
+      // Looking for var in context
+      if (auto search = context.find(var->stellaident_); search != context.end()){
+          auto var_type = search->second;
+
+          // Making lastVisitedType
+          lastVisitedType = dynamic_cast<Type* >(var_type);
+      }
+      else {
+          std::cout << "ERROR\tUndefined var " << printer.print(var) << "at line:" << var->line_number << '\n';
+          exit(1);
+      }
+
+      visitStellaIdent(var->stellaident_);
   }
 
   void VisitTypeCheck::visitAPatternBinding(APatternBinding *a_pattern_binding)
