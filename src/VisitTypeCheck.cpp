@@ -789,11 +789,10 @@ namespace Stella
 
     auto expType = expectedType;
 
+
     if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
 
-        int pos = dot_tuple->integer_ - 1;
-
-        if (auto dotType = dynamic_cast<Type *>((*tupleType->listtype_)[pos])){
+        if (auto dotType = dynamic_cast<Type *>((*tupleType->listtype_)[tuplePos])){
             expectedType = dotType;
         } else {
             std::cout << "ERROR\tDot tuple is out of range at line: " << dot_tuple->line_number << '\n';
@@ -807,12 +806,15 @@ namespace Stella
 
     // Making lastVisitedType
     lastVisitedType = expectedType;
+    std::cout << "Expected type: " << strExpType << std::endl;
 
-    if (dot_tuple->expr_)
+
+      if (dot_tuple->expr_)
       dot_tuple->expr_->accept(this);
     visitInteger(dot_tuple->integer_);
 
     expectedType = expType;
+    tuplePos += 1;
   }
 
   void VisitTypeCheck::visitTuple(Tuple *tuple)
@@ -827,9 +829,23 @@ namespace Stella
     auto expType = expectedType;
     std::cout << "Expected type: " << printer.print(expType) << std::endl;
 
+    tuplePos = 0;
+
     if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
         std::cout << "List type: " << printer.print(tupleType->listtype_) << std::endl;
-//        expectedType = dynamic_cast<Type* >(tupleType->listtype_);
+
+        auto arrayOfExpectTypes = *tupleType->listtype_;
+        int sizeOfExpectArray = arrayOfExpectTypes.size();
+        std::cout << "Size of expected array: " << sizeOfExpectArray << std::endl;
+
+        auto arrayOfExpr = *tuple->listexpr_;
+        int sizeOfRealArray = arrayOfExpr.size();
+        std::cout << "Size of real array: " << sizeOfRealArray << std::endl;
+
+        if (sizeOfExpectArray != sizeOfRealArray){
+            std::cout << "ERROR\tSize mismatch of tuple at line: " << tuple->line_number << '\n';
+            exit(1);
+        }
     } else {
         std::cout << "ERROR\tExpected Tuple at line: " << tuple->line_number << '\n';
         exit(1);
@@ -938,19 +954,25 @@ namespace Stella
       std::string expType = printer.print(expectedType);
       std::cout << "Expected type: " << expType << std::endl;
 
-//      if (expType != "Nat "){
-//          if (lastVisitedType != TypeTuple){
-//              std::cout << "ERROR\tExpected Nat at line: " << succ->line_number << '\n';
-//              exit(1);
-//          } else {
-//              auto tupleType = dynamic_cast<TypeTuple* >(lastVisitedType);
-//              tupleType->listtype_;
-//          }
-//      }
-
       if (expType != "Nat "){
-          std::cout << "ERROR\tExpected Nat at line: " << succ->line_number << '\n';
-          exit(1);
+          if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
+              if (auto type = dynamic_cast<Type *>((*tupleType->listtype_)[tuplePos])){
+                  std::string strType = printer.print(type);
+                  std::cout << "Type: " << strType << std::endl;
+
+                  if (strType != "Nat "){
+                      std::cout << "ERROR\tExpected Nat at line: " << succ->line_number << '\n';
+                      exit(1);
+                  }
+              } else {
+                  std::cout << "ERROR\tSucc tuple is out of range at line: " << succ->line_number << '\n';
+                  exit(1);
+              }
+
+          } else {
+              std::cout << "ERROR\tExpected Nat at line: " << succ->line_number << '\n';
+              exit(1);
+          }
       }
 
       // Making lastVisitedType
@@ -1060,17 +1082,34 @@ namespace Stella
       for (auto& p : context)
           std::cout << "Currently in context : " << p.first << std::endl;
 
-      std::string expType = printer.print(expectedType);
+      std::string strExpType = printer.print(expectedType);
+      std::cout << "Expected type: " << strExpType << std::endl;
 
-      std::cout << "Expected type: " << expType << std::endl;
+      if (strExpType != "Bool "){
+          if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
+              if (auto type = dynamic_cast<Type *>((*tupleType->listtype_)[tuplePos])){
+                  std::string strType = printer.print(type);
+                  std::cout << "Type: " << strType << std::endl;
 
-      if (expType != "Bool "){
-          std::cout << "ERROR\tBool not expected at line:" << const_true->line_number << '\n';
-          exit(1);
+                  if (strType != "Bool "){
+                      std::cout << "ERROR\tExpected Unit at line: " << const_true->line_number << '\n';
+                      exit(1);
+                  }
+              } else {
+                  std::cout << "ERROR\tBool tuple is out of range at line: " << const_true->line_number << '\n';
+                  exit(1);
+              }
+
+          } else {
+              std::cout << "ERROR\tExpected Bool at line: " << const_true->line_number << '\n';
+              exit(1);
+          }
       }
 
       // Making lastVisitedType
       lastVisitedType = expectedType;
+
+      tuplePos += 1;
   }
 
   void VisitTypeCheck::visitConstFalse(ConstFalse *const_false) {
@@ -1079,16 +1118,34 @@ namespace Stella
       for (auto &p: context)
             std::cout << "Currently in context : " << p.first << std::endl;
 
-      std::string expType = printer.print(expectedType);
+      std::string strExpType = printer.print(expectedType);
+      std::cout << "Expected type: " << strExpType << std::endl;
 
-      std::cout << "Expected type: " << expType << std::endl;
-      if (expType != "Bool ") {
-          std::cout << "ERROR\tBool not expected at line:" << const_false->line_number << '\n';
-          exit(1);
+      if (strExpType != "Bool "){
+          if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
+              if (auto type = dynamic_cast<Type *>((*tupleType->listtype_)[tuplePos])){
+                  std::string strType = printer.print(type);
+                  std::cout << "Type: " << strType << std::endl;
+
+                  if (strType != "Bool "){
+                      std::cout << "ERROR\tExpected Unit at line: " << const_false->line_number << '\n';
+                      exit(1);
+                  }
+              } else {
+                  std::cout << "ERROR\tBool tuple is out of range at line: " << const_false->line_number << '\n';
+                  exit(1);
+              }
+
+          } else {
+              std::cout << "ERROR\tExpected Bool at line: " << const_false->line_number << '\n';
+              exit(1);
+          }
       }
 
       // Making lastVisitedType
       lastVisitedType = expectedType;
+
+      tuplePos += 1;
   }
 
   void VisitTypeCheck::visitConstUnit(ConstUnit *const_unit)
@@ -1098,16 +1155,34 @@ namespace Stella
       for (auto &p: context)
           std::cout << "Currently in context : " << p.first << std::endl;
 
-      std::string expType = printer.print(expectedType);
+      std::string strExpType = printer.print(expectedType);
+      std::cout << "Expected type: " << strExpType << std::endl;
 
-      std::cout << "Expected type: " << expType << std::endl;
-      if (expType != "Unit ") {
-          std::cout << "ERROR\tUnit not expected at line:" << const_unit->line_number << '\n';
-          exit(1);
+      if (strExpType != "Unit "){
+          if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
+              if (auto type = dynamic_cast<Type *>((*tupleType->listtype_)[tuplePos])){
+                  std::string strType = printer.print(type);
+                  std::cout << "Type: " << strType << std::endl;
+
+                  if (strType != "Unit "){
+                      std::cout << "ERROR\tExpected Unit at line: " << const_unit->line_number << '\n';
+                      exit(1);
+                  }
+              } else {
+                  std::cout << "ERROR\tUnit tuple is out of range at line: " << const_unit->line_number << '\n';
+                  exit(1);
+              }
+
+          } else {
+              std::cout << "ERROR\tExpected Unit at line: " << const_unit->line_number << '\n';
+              exit(1);
+          }
       }
 
       // Making lastVisitedType
       lastVisitedType = expectedType;
+
+      tuplePos += 1;
   }
 
   void VisitTypeCheck::visitConstInt(ConstInt *const_int)
@@ -1118,18 +1193,36 @@ namespace Stella
       for (auto& p : context)
           std::cout << "Currently in context : " << p.first << std::endl;
 
-      std::string expType = printer.print(expectedType);
-      std::cout << "Expected type: " << expType << std::endl;
+      std::string strExpType = printer.print(expectedType);
+      std::cout << "Expected type: " << strExpType << std::endl;
 
-      if (expType != "Nat "){
-          std::cout << "ERROR\tExpected Nat at line:" << const_int->line_number << '\n';
-          exit(1);
+      if (strExpType != "Nat "){
+          if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
+              if (auto type = dynamic_cast<Type *>((*tupleType->listtype_)[tuplePos])){
+                  std::string strType = printer.print(type);
+                  std::cout << "Type: " << strType << std::endl;
+
+                  if (strType != "Nat "){
+                      std::cout << "ERROR\tExpected Nat at line: " << const_int->line_number << '\n';
+                      exit(1);
+                  }
+              } else {
+                  std::cout << "ERROR\tSucc tuple is out of range at line: " << const_int->line_number << '\n';
+                  exit(1);
+              }
+
+          } else {
+              std::cout << "ERROR\tExpected Nat at line: " << const_int->line_number << '\n';
+              exit(1);
+          }
       }
 
       // Making lastVisitedType
       lastVisitedType = expectedType;
 
       visitInteger(const_int->integer_);
+
+      tuplePos += 1;
   }
 
   void VisitTypeCheck::visitVar(Var *var)

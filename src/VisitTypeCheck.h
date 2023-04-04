@@ -16,6 +16,7 @@ namespace Stella
       std::unordered_map<std::string, Type*> context;
       Type* expectedType;
       Type* lastVisitedType;
+      int tuplePos;
       PrintAbsyn printer;
   public:
     void visitProgram(Program *p);
