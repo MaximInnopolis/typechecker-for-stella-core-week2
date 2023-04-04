@@ -34,22 +34,36 @@ include(CPack)
 
 include(CTest)
 
-add_test(NAME applying-non-function-1 COMMAND stella-interpreter typecheck ../tests/ill-typed/applying-non-function-1.stella)
-add_test(NAME applying-non-function-2 COMMAND stella-interpreter typecheck ../tests/ill-typed/applying-non-function-2.stella)
-add_test(NAME applying-non-function-3 COMMAND stella-interpreter typecheck ../tests/ill-typed/applying-non-function-3.stella)
-add_test(NAME argument-type-mismatch-1 COMMAND stella-interpreter typecheck ../tests/ill-typed/argument-type-mismatch-1.stella)
-add_test(NAME argument-type-mismatch-2 COMMAND stella-interpreter typecheck ../tests/ill-typed/argument-type-mismatch-2.stella)
-add_test(NAME argument-type-mismatch-3 COMMAND stella-interpreter typecheck ../tests/ill-typed/argument-type-mismatch-3.stella)
-add_test(NAME bad-if-1 COMMAND stella-interpreter typecheck ../tests/ill-typed/bad-if-1.stella)
-add_test(NAME bad-if-2 COMMAND stella-interpreter typecheck ../tests/ill-typed/bad-if-2.stella)
-add_test(NAME bad-succ-1 COMMAND stella-interpreter typecheck ../tests/ill-typed/bad-succ-1.stella)
-add_test(NAME bad-succ-2 COMMAND stella-interpreter typecheck ../tests/ill-typed/bad-succ-2.stella)
-add_test(NAME bad-succ-3 COMMAND stella-interpreter typecheck ../tests/ill-typed/bad-succ-3.stella)
-add_test(NAME shadowed-variable-1 COMMAND stella-interpreter typecheck ../tests/ill-typed/shadowed-variable-1.stella)
-add_test(NAME undefined-variable-1 COMMAND stella-interpreter typecheck ../tests/ill-typed/undefined-variable-1.stella)
-add_test(NAME undefined-variable-2 COMMAND stella-interpreter typecheck ../tests/ill-typed/undefined-variable-2.stella)
-add_test(NAME bad-squares-1 COMMAND stella-interpreter typecheck ../tests/ill-typed/bad-squares-1.stella)
-add_test(NAME bad-squares-2 COMMAND stella-interpreter typecheck ../tests/ill-typed/bad-squares-2.stella)
+add_test(NAME applying-non-function-1 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/applying-non-function-1.stella)
+add_test(NAME applying-non-function-2 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/applying-non-function-2.stella)
+add_test(NAME applying-non-function-3 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/applying-non-function-3.stella)
+add_test(NAME argument-type-mismatch-1 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/argument-type-mismatch-1.stella)
+add_test(NAME argument-type-mismatch-2 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/argument-type-mismatch-2.stella)
+add_test(NAME argument-type-mismatch-3 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/argument-type-mismatch-3.stella)
+add_test(NAME bad-if-1 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/bad-if-1.stella)
+add_test(NAME bad-if-2 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/bad-if-2.stella)
+add_test(NAME bad-succ-1 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/bad-succ-1.stella)
+add_test(NAME bad-succ-2 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/bad-succ-2.stella)
+add_test(NAME bad-succ-3 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/bad-succ-3.stella)
+add_test(NAME shadowed-variable-1 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/shadowed-variable-1.stella)
+add_test(NAME undefined-variable-1 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/undefined-variable-1.stella)
+add_test(NAME undefined-variable-2 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/undefined-variable-2.stella)
+add_test(NAME bad-squares-1 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/bad-squares-1.stella)
+add_test(NAME bad-squares-2 COMMAND stella-interpreter typecheck ../tests/core/ill-typed/bad-squares-2.stella)
+
+add_test(NAME lists-bad-variants-1 COMMAND stella-interpreter typecheck ../tests/lists/ill-typed/bad-variants-1.stella)
+
+add_test(NAME bad-pairs-1 COMMAND stella-interpreter typecheck ../tests/pairs/ill-typed/bad-pairs-1.stella)
+
+add_test(NAME bad-records-1 COMMAND stella-interpreter typecheck ../tests/records/ill-typed/bad-records-1.stella)
+
+add_test(NAME bad-sum-types-1 COMMAND stella-interpreter typecheck ../tests/sum-types/ill-typed/bad-sum-types-1.stella)
+
+add_test(NAME bad-tuples-1 COMMAND stella-interpreter typecheck ../tests/tuples/ill-typed/bad-tuples-1.stella)
+
+add_test(NAME bad-variants-1 COMMAND stella-interpreter typecheck ../tests/variants/ill-typed/bad-variants-1.stella)
+
+
 set_tests_properties(
   bad-squares-1
   bad-squares-2
@@ -67,10 +81,30 @@ set_tests_properties(
   shadowed-variable-1
   undefined-variable-1
   undefined-variable-2
+        bad-variants-1
+        bad-pairs-1
+        bad-records-1
+        bad-sum-types-1
+        bad-tuples-1
+        bad-variants-1
   PROPERTIES WILL_FAIL TRUE)
 
-add_test(NAME factorial COMMAND stella-interpreter typecheck ../tests/well-typed/factorial.stella)
-add_test(NAME increment_twice COMMAND stella-interpreter typecheck ../tests/well-typed/increment_twice.stella)
-add_test(NAME higher-order-1 COMMAND stella-interpreter typecheck ../tests/well-typed/higher-order-1.stella)
-add_test(NAME logical-operators COMMAND stella-interpreter typecheck ../tests/well-typed/logical-operators.stella)
-add_test(NAME squares COMMAND stella-interpreter typecheck ../tests/well-typed/squares.stella)
+add_test(NAME factorial COMMAND stella-interpreter typecheck ../tests/core/well-typed/factorial.stella)
+add_test(NAME increment_twice COMMAND stella-interpreter typecheck ../tests/core/well-typed/increment_twice.stella)
+add_test(NAME higher-order-1 COMMAND stella-interpreter typecheck ../tests/core/well-typed/higher-order-1.stella)
+add_test(NAME logical-operators COMMAND stella-interpreter typecheck ../tests/core/well-typed/logical-operators.stella)
+add_test(NAME squares COMMAND stella-interpreter typecheck ../tests/core/well-typed/squares.stella)
+
+add_test(NAME lists-1 COMMAND stella-interpreter typecheck ../tests/lists/well-typed/lists-1.stella)
+
+add_test(NAME pairs-1 COMMAND stella-interpreter typecheck ../tests/pairs/well-typed/pairs-1.stella)
+
+add_test(NAME records-1 COMMAND stella-interpreter typecheck ../tests/records/well-typed/records-1.stella)
+
+add_test(NAME sum-types-1 COMMAND stella-interpreter typecheck ../tests/sum-types/well-typed/sum-types-1.stella)
+add_test(NAME sum-types-2 COMMAND stella-interpreter typecheck ../tests/sum-types/well-typed/sum-types-2.stella)
+
+add_test(NAME tuples-1 COMMAND stella-interpreter typecheck ../tests/tuples/well-typed/tuples-1.stella)
+
+add_test(NAME variants-1 COMMAND stella-interpreter typecheck ../tests/variants/well-typed/variants-1.stella)
+add_test(NAME variants-2 COMMAND stella-interpreter typecheck ../tests/variants/well-typed/variants-2.stella)
