@@ -780,7 +780,7 @@ namespace Stella
   void VisitTypeCheck::visitDotTuple(DotTuple *dot_tuple)
   {
     /* Code For DotTuple Goes Here */
-    std::cout << "Visiting dot tuple: " << printer.print(dot_tuple) << std::endl;
+    std::cout << "Visiting dot: " << printer.print(dot_tuple) << std::endl;
 
     for (auto& p : context)
         std::cout << "Currently in context: " << p.first << " of type: " << printer.print(p.second) << std::endl;
@@ -798,13 +798,13 @@ namespace Stella
         if (auto dotType = dynamic_cast<Type *>((*tupleType->listtype_)[pos])){
             expectedType = dotType;
         } else {
-            std::cout << "ERROR\tDot tuple is out of range at line: " << dot_tuple->line_number << '\n';
+            std::cout << "ERROR\tDot pos is out of range at line: " << dot_tuple->line_number << '\n';
             exit(1);
         }
 
     } else if (auto type = dynamic_cast<Type* >(expectedType)){}
     else {
-        std::cout << "ERROR\tExpected Tuple at line: " << dot_tuple->line_number << '\n';
+        std::cout << "ERROR\tExpected dot at line: " << dot_tuple->line_number << '\n';
         exit(1);
     }
 
@@ -875,8 +875,35 @@ namespace Stella
     auto expType = expectedType;
     std::cout << "Expected type: " << printer.print(expType) << std::endl;
 
+    tuplePos = 0;
+
+    if (auto recordType = dynamic_cast<TypeRecord* >(expectedType)){
+        std::cout << "List record field type: " << printer.print(recordType->listrecordfieldtype_) << std::endl;
+
+        auto arrayOfExpectBindings = *recordType->listrecordfieldtype_;
+        int sizeOfExpectArray = arrayOfExpectBindings.size();
+        std::cout << "Size of expected array: " << sizeOfExpectArray << std::endl;
+
+        auto arrayOfBindings = *record->listbinding_;
+        int sizeOfRealArray = arrayOfBindings.size();
+        std::cout << "Size of real array: " << sizeOfRealArray << std::endl;
+
+        if (sizeOfExpectArray != sizeOfRealArray){
+            std::cout << "ERROR\tSize mismatch of record at line: " << record->line_number << '\n';
+            exit(1);
+        }
+    } else {
+        std::cout << "ERROR\tExpected Record at line: " << record->line_number << '\n';
+        exit(1);
+    }
+
+    // Making lastVisitedType
+    lastVisitedType = expectedType;
+
     if (record->listbinding_)
       record->listbinding_->accept(this);
+
+    expectedType = expType;
   }
 
   void VisitTypeCheck::visitConsList(ConsList *cons_list)
@@ -971,7 +998,28 @@ namespace Stella
                   exit(1);
               }
 
-          } else {
+          }else if (auto recordType = dynamic_cast<TypeRecord* >(expectedType)){
+
+              std::cout << "Tuple pos: " << tuplePos << std::endl;
+
+              if (auto recordFieldType = dynamic_cast<RecordFieldType *>((*recordType->listrecordfieldtype_)[tuplePos])){
+                  std::string strRecordFieldType = printer.print(recordFieldType);
+                  std::cout << "RecordFieldType: " << strRecordFieldType << std::endl;
+
+                  std::string type = strRecordFieldType.substr(strRecordFieldType.find_last_of(" ") - 3, strRecordFieldType.find_last_of(" "));
+
+                  std::cout << "Type: " << type << std::endl;
+
+                  if (type != "Nat "){
+                      std::cout << "ERROR\tExpected Nat at line: " << succ->line_number << '\n';
+                      exit(1);
+                  }
+              } else {
+                  std::cout << "ERROR\tSucc record is out of range at line: " << succ->line_number << '\n';
+                  exit(1);
+              }
+
+          }else {
               std::cout << "ERROR\tExpected Nat at line: " << succ->line_number << '\n';
               exit(1);
           }
@@ -1264,6 +1312,7 @@ namespace Stella
       visitStellaIdent(var->stellaident_);
 
       expectedType = expType;
+      tuplePos += 1;
   }
 
   void VisitTypeCheck::visitAPatternBinding(APatternBinding *a_pattern_binding)
