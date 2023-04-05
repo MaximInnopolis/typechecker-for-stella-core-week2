@@ -749,6 +749,7 @@ namespace Stella
               std::cout << "Variable " << var << " casted to function type: " << printer.print(varFuncType) << std::endl;
               std::cout << "List type:  " << printer.print(varFuncType->listtype_) << std::endl;
               std::cout << "Type:  " << printer.print(varFuncType->type_) << std::endl;
+              expectedType = varFuncType->type_;
           } else {
               std::cout << "ERROR\tExpected application at line: " << application->line_number << '\n';
               exit(1);
@@ -822,7 +823,7 @@ namespace Stella
   {
     /* Code For Tuple Goes Here */
 
-    std::cout << "Visiting tuple: " << printer.print(tuple) << std::endl;
+    std::cout << "\nVisiting tuple: " << printer.print(tuple) << std::endl;
 
     for (auto& p : context)
         std::cout << "Currently in context: " << p.first << " of type: " << printer.print(p.second) << std::endl;
@@ -1236,10 +1237,19 @@ namespace Stella
 
       std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
 
+      auto expType = expectedType;
+
       // Looking for var in context
       if (auto search = context.find(var->stellaident_); search != context.end()){
           auto var_type = search->second;
 
+          std::cout << "Var type: " << printer.print(var_type) << std::endl;
+
+//          if (auto varFuncType = dynamic_cast<TypeFun* >(var_type)){
+//              expectedType = varFuncType->type_;
+//          } else {
+//              expectedType = var_type;
+//          }
           // Making lastVisitedType
           lastVisitedType = dynamic_cast<Type* >(var_type);
       }
@@ -1248,7 +1258,12 @@ namespace Stella
           exit(1);
       }
 
+      std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
+
+
       visitStellaIdent(var->stellaident_);
+
+      expectedType = expType;
   }
 
   void VisitTypeCheck::visitAPatternBinding(APatternBinding *a_pattern_binding)
