@@ -782,7 +782,7 @@ namespace Stella
     std::cout << "Visiting dot tuple: " << printer.print(dot_tuple) << std::endl;
 
     for (auto& p : context)
-        std::cout << "Currently in context: "<< p.first << std::endl;
+        std::cout << "Currently in context: " << p.first << " of type: " << printer.print(p.second) << std::endl;
 
     std::string strExpType = printer.print(expectedType);
     std::cout << "Expected type: " << strExpType << std::endl;
@@ -792,22 +792,23 @@ namespace Stella
 
     if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
 
-        if (auto dotType = dynamic_cast<Type *>((*tupleType->listtype_)[tuplePos])){
+        int pos = dot_tuple->integer_ - 1;
+
+        if (auto dotType = dynamic_cast<Type *>((*tupleType->listtype_)[pos])){
             expectedType = dotType;
         } else {
             std::cout << "ERROR\tDot tuple is out of range at line: " << dot_tuple->line_number << '\n';
             exit(1);
         }
 
-    } else {
+    } else if (auto type = dynamic_cast<Type* >(expectedType)){}
+    else {
         std::cout << "ERROR\tExpected Tuple at line: " << dot_tuple->line_number << '\n';
         exit(1);
     }
 
     // Making lastVisitedType
     lastVisitedType = expectedType;
-    std::cout << "Expected type: " << strExpType << std::endl;
-
 
       if (dot_tuple->expr_)
       dot_tuple->expr_->accept(this);
@@ -824,7 +825,7 @@ namespace Stella
     std::cout << "Visiting tuple: " << printer.print(tuple) << std::endl;
 
     for (auto& p : context)
-        std::cout << "Currently in context: "<< p.first << std::endl;
+        std::cout << "Currently in context: " << p.first << " of type: " << printer.print(p.second) << std::endl;
 
     auto expType = expectedType;
     std::cout << "Expected type: " << printer.print(expType) << std::endl;
