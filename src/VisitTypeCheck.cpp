@@ -828,7 +828,21 @@ namespace Stella
 
     if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)) {
 
-        if (auto dotType = dynamic_cast<Type* >((*tupleType->listtype_)[pos])) {} else {
+        auto arrayOfTupleType = *tupleType->listtype_;
+
+        if (arrayOfTupleType.size() >= pos + 1) {
+
+            auto dotType = (*tupleType->listtype_)[pos];
+
+            std::string strDotType = printer.print(dotType);
+            std::string strExpType = printer.print(expType);
+
+            if (strDotType != strExpType){
+                std::cout << "ERROR\tType mismatch in dot Tuple at line: " << dot_tuple->line_number << '\n';
+                exit(1);
+            }
+        }
+        else {
             std::cout << "ERROR\tDot pos is out of range at line: " << dot_tuple->line_number << '\n';
             exit(1);
         }
