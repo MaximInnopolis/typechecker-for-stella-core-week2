@@ -835,7 +835,6 @@ namespace Stella
             auto dotType = (*tupleType->listtype_)[pos];
 
             std::string strDotType = printer.print(dotType);
-            std::string strExpType = printer.print(expType);
 
             if (strDotType != strExpType){
                 std::cout << "ERROR\tType mismatch in dot Tuple at line: " << dot_tuple->line_number << '\n';
