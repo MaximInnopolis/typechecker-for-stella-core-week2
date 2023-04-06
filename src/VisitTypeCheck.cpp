@@ -828,9 +828,7 @@ namespace Stella
 
     if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)) {
 
-        if (auto dotType = dynamic_cast<Type* >((*tupleType->listtype_)[pos])) {
-            expectedType = dotType;
-        } else {
+        if (auto dotType = dynamic_cast<Type* >((*tupleType->listtype_)[pos])) {} else {
             std::cout << "ERROR\tDot pos is out of range at line: " << dot_tuple->line_number << '\n';
             exit(1);
         }
@@ -886,7 +884,7 @@ namespace Stella
     expectedType = expType;
     std::cout << "Expected type: " << printer.print(expType) << std::endl;
     // Making lastVisitedType
-    lastVisitedType = expectedType;
+    lastVisitedType = expType;
   }
 
   void VisitTypeCheck::visitRecord(Record *record)
