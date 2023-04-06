@@ -261,8 +261,8 @@ namespace Stella
     /* Code For AMatchCase Goes Here */
 
     std::cout << "\nVisiting match case: " << printer.print(a_match_case) << std::endl;
-    std::cout << "Pattern: " << printer.print(a_match_case->pattern_) << std::endl;
-    std::cout << "Expr: " << printer.print(a_match_case->expr_) << std::endl;
+    std::cout << "Match case pattern: " << printer.print(a_match_case->pattern_) << std::endl;
+    std::cout << "Match case expr: " << printer.print(a_match_case->expr_) << std::endl;
 
     for (auto& p : context)
         std::cout << "Currently in context: "<< p.first << std::endl;
@@ -328,6 +328,15 @@ namespace Stella
   {
     /* Code For PatternInl Goes Here */
 
+    std::cout << "\nVisiting Pattern inl: " << printer.print(pattern_inl) << std::endl;
+    std::cout << "Pattern: " << printer.print(pattern_inl->pattern_) << std::endl;
+
+    for (auto& p : context)
+        std::cout << "Currently in context: "<< p.first << std::endl;
+
+    auto expType = expectedType;
+    std::cout << "Expected type: " << printer.print(expType) << std::endl;
+
     if (pattern_inl->pattern_)
       pattern_inl->pattern_->accept(this);
   }
@@ -335,6 +344,15 @@ namespace Stella
   void VisitTypeCheck::visitPatternInr(PatternInr *pattern_inr)
   {
     /* Code For PatternInr Goes Here */
+
+    std::cout << "\nVisiting Pattern inr: " << printer.print(pattern_inr) << std::endl;
+    std::cout << "Pattern: " << printer.print(pattern_inr->pattern_) << std::endl;
+
+    for (auto& p : context)
+        std::cout << "Currently in context: "<< p.first << std::endl;
+
+    auto expType = expectedType;
+    std::cout << "Expected type: " << printer.print(expType) << std::endl;
 
     if (pattern_inr->pattern_)
       pattern_inr->pattern_->accept(this);
@@ -407,6 +425,15 @@ namespace Stella
   void VisitTypeCheck::visitPatternVar(PatternVar *pattern_var)
   {
     /* Code For PatternVar Goes Here */
+
+    std::cout << "\nVisiting Pattern var: " << printer.print(pattern_var) << std::endl;
+    std::cout << "Identifier: " << pattern_var->stellaident_ << std::endl;
+
+    for (auto& p : context)
+        std::cout << "Currently in context: "<< p.first << std::endl;
+
+    auto expType = expectedType;
+    std::cout << "Expected type: " << printer.print(expType) << std::endl;
 
     visitStellaIdent(pattern_var->stellaident_);
   }
@@ -642,7 +669,7 @@ namespace Stella
 
     std::cout << "\nVisiting match: " << printer.print(match) << std::endl;
     std::cout << "List match case: " << printer.print(match->listmatchcase_) << std::endl;
-    std::cout << "Expr: " << printer.print(match->expr_) << std::endl;
+    std::cout << "Match expr: " << printer.print(match->expr_) << std::endl;
 
     for (auto& p : context)
         std::cout << "Currently in context: "<< p.first << std::endl;
@@ -780,7 +807,7 @@ namespace Stella
   void VisitTypeCheck::visitDotTuple(DotTuple *dot_tuple)
   {
     /* Code For DotTuple Goes Here */
-    std::cout << "Visiting dot: " << printer.print(dot_tuple) << std::endl;
+    std::cout << "\nVisiting dot: " << printer.print(dot_tuple) << std::endl;
 
     for (auto& p : context)
         std::cout << "Currently in context: " << p.first << " of type: " << printer.print(p.second) << std::endl;
@@ -790,33 +817,31 @@ namespace Stella
 
     auto expType = expectedType;
 
+    if (dot_tuple->expr_)
+        dot_tuple->expr_->accept(this);
 
-    if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
+    expectedType = lastVisitedType;
+    visitInteger(dot_tuple->integer_);
+    std::cout << "Expected type: " << strExpType << std::endl;
 
-        int pos = dot_tuple->integer_ - 1;
+    int pos = dot_tuple->integer_ - 1;
 
-        if (auto dotType = dynamic_cast<Type *>((*tupleType->listtype_)[pos])){
+    if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)) {
+
+        if (auto dotType = dynamic_cast<Type* >((*tupleType->listtype_)[pos])) {
             expectedType = dotType;
         } else {
             std::cout << "ERROR\tDot pos is out of range at line: " << dot_tuple->line_number << '\n';
             exit(1);
         }
-
-    } else if (auto type = dynamic_cast<Type* >(expectedType)){}
-    else {
-        std::cout << "ERROR\tExpected dot at line: " << dot_tuple->line_number << '\n';
+    } else {
+        std::cout <<"ERROR\tCannot cast expected type to tuple type" << std::endl;
         exit(1);
     }
 
     // Making lastVisitedType
-    lastVisitedType = expectedType;
-
-      if (dot_tuple->expr_)
-      dot_tuple->expr_->accept(this);
-    visitInteger(dot_tuple->integer_);
-
+    lastVisitedType = expType;
     expectedType = expType;
-    tuplePos += 1;
   }
 
   void VisitTypeCheck::visitTuple(Tuple *tuple)
@@ -830,8 +855,6 @@ namespace Stella
 
     auto expType = expectedType;
     std::cout << "Expected type: " << printer.print(expType) << std::endl;
-
-    tuplePos = 0;
 
     if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
         std::cout << "List type: " << printer.print(tupleType->listtype_) << std::endl;
@@ -848,18 +871,22 @@ namespace Stella
             std::cout << "ERROR\tSize mismatch of tuple at line: " << tuple->line_number << '\n';
             exit(1);
         }
+
+        for (int ind = 0; ind < sizeOfRealArray; ind++){
+            std::cout << "\nVisiting element of array of expr" << std::endl;
+            expectedType = arrayOfExpectTypes[ind];
+            arrayOfExpr[ind]->accept(this);
+        }
     } else {
         std::cout << "ERROR\tExpected Tuple at line: " << tuple->line_number << '\n';
         exit(1);
     }
 
-    // Making lastVisitedType
-    lastVisitedType = expectedType;
-
-    if (tuple->listexpr_)
-      tuple->listexpr_->accept(this);
 
     expectedType = expType;
+    std::cout << "Expected type: " << printer.print(expType) << std::endl;
+    // Making lastVisitedType
+    lastVisitedType = expectedType;
   }
 
   void VisitTypeCheck::visitRecord(Record *record)
@@ -874,8 +901,6 @@ namespace Stella
 
     auto expType = expectedType;
     std::cout << "Expected type: " << printer.print(expType) << std::endl;
-
-    tuplePos = 0;
 
     if (auto recordType = dynamic_cast<TypeRecord* >(expectedType)){
         std::cout << "List record field type: " << printer.print(recordType->listrecordfieldtype_) << std::endl;
@@ -892,6 +917,11 @@ namespace Stella
             std::cout << "ERROR\tSize mismatch of record at line: " << record->line_number << '\n';
             exit(1);
         }
+//        for (int ind = 0; ind < arrayOfBindings.size() - 1; ind++){
+//            expectedType = arrayOfExpectBindings[ind];
+//            arrayOfBindings[ind]->accept(this);
+//            std::cout << "\nVisiting next element of array of bindings" << std::endl;
+//        }
     } else {
         std::cout << "ERROR\tExpected Record at line: " << record->line_number << '\n';
         exit(1);
@@ -944,7 +974,8 @@ namespace Stella
   {
     /* Code For Inl Goes Here */
 
-    std::cout << "Visiting inl: " << printer.print(inl) << std::endl;
+    std::cout << "\nVisiting inl: " << printer.print(inl) << std::endl;
+    std::cout << "Inl expr: " << printer.print(inl->expr_) << std::endl;
 
     for (auto& p : context)
         std::cout << "Currently in context: "<< p.first << std::endl;
@@ -960,9 +991,10 @@ namespace Stella
   {
     /* Code For Inr Goes Here */
 
-    std::cout << "Visiting inr: " << printer.print(inr) << std::endl;
+    std::cout << "\nVisiting inr: " << printer.print(inr) << std::endl;
+      std::cout << "Inr expr: " << printer.print(inr->expr_) << std::endl;
 
-    for (auto& p : context)
+      for (auto& p : context)
         std::cout << "Currently in context: "<< p.first << std::endl;
 
     auto expType = expectedType;
@@ -984,45 +1016,8 @@ namespace Stella
       std::cout << "Expected type: " << expType << std::endl;
 
       if (expType != "Nat "){
-          if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
-              if (auto type = dynamic_cast<Type *>((*tupleType->listtype_)[tuplePos])){
-                  std::string strType = printer.print(type);
-                  std::cout << "Type: " << strType << std::endl;
-
-                  if (strType != "Nat "){
-                      std::cout << "ERROR\tExpected Nat at line: " << succ->line_number << '\n';
-                      exit(1);
-                  }
-              } else {
-                  std::cout << "ERROR\tSucc tuple is out of range at line: " << succ->line_number << '\n';
-                  exit(1);
-              }
-
-          }else if (auto recordType = dynamic_cast<TypeRecord* >(expectedType)){
-
-              std::cout << "Tuple pos: " << tuplePos << std::endl;
-
-              if (auto recordFieldType = dynamic_cast<RecordFieldType *>((*recordType->listrecordfieldtype_)[tuplePos])){
-                  std::string strRecordFieldType = printer.print(recordFieldType);
-                  std::cout << "RecordFieldType: " << strRecordFieldType << std::endl;
-
-                  std::string type = strRecordFieldType.substr(strRecordFieldType.find_last_of(" ") - 3, strRecordFieldType.find_last_of(" "));
-
-                  std::cout << "Type: " << type << std::endl;
-
-                  if (type != "Nat "){
-                      std::cout << "ERROR\tExpected Nat at line: " << succ->line_number << '\n';
-                      exit(1);
-                  }
-              } else {
-                  std::cout << "ERROR\tSucc record is out of range at line: " << succ->line_number << '\n';
-                  exit(1);
-              }
-
-          }else {
-              std::cout << "ERROR\tExpected Nat at line: " << succ->line_number << '\n';
-              exit(1);
-          }
+          std::cout << "ERROR\tExpected Nat at line: " << succ->line_number << '\n';
+          exit(1);
       }
 
       // Making lastVisitedType
@@ -1136,30 +1131,12 @@ namespace Stella
       std::cout << "Expected type: " << strExpType << std::endl;
 
       if (strExpType != "Bool "){
-          if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
-              if (auto type = dynamic_cast<Type *>((*tupleType->listtype_)[tuplePos])){
-                  std::string strType = printer.print(type);
-                  std::cout << "Type: " << strType << std::endl;
-
-                  if (strType != "Bool "){
-                      std::cout << "ERROR\tExpected Unit at line: " << const_true->line_number << '\n';
-                      exit(1);
-                  }
-              } else {
-                  std::cout << "ERROR\tBool tuple is out of range at line: " << const_true->line_number << '\n';
-                  exit(1);
-              }
-
-          } else {
-              std::cout << "ERROR\tExpected Bool at line: " << const_true->line_number << '\n';
-              exit(1);
-          }
+          std::cout << "ERROR\tExpected Bool at line: " << const_true->line_number << '\n';
+          exit(1);
       }
 
       // Making lastVisitedType
       lastVisitedType = expectedType;
-
-      tuplePos += 1;
   }
 
   void VisitTypeCheck::visitConstFalse(ConstFalse *const_false) {
@@ -1172,30 +1149,12 @@ namespace Stella
       std::cout << "Expected type: " << strExpType << std::endl;
 
       if (strExpType != "Bool "){
-          if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
-              if (auto type = dynamic_cast<Type *>((*tupleType->listtype_)[tuplePos])){
-                  std::string strType = printer.print(type);
-                  std::cout << "Type: " << strType << std::endl;
-
-                  if (strType != "Bool "){
-                      std::cout << "ERROR\tExpected Unit at line: " << const_false->line_number << '\n';
-                      exit(1);
-                  }
-              } else {
-                  std::cout << "ERROR\tBool tuple is out of range at line: " << const_false->line_number << '\n';
-                  exit(1);
-              }
-
-          } else {
-              std::cout << "ERROR\tExpected Bool at line: " << const_false->line_number << '\n';
-              exit(1);
-          }
+          std::cout << "ERROR\tExpected Bool at line: " << const_false->line_number << '\n';
+          exit(1);
       }
 
       // Making lastVisitedType
       lastVisitedType = expectedType;
-
-      tuplePos += 1;
   }
 
   void VisitTypeCheck::visitConstUnit(ConstUnit *const_unit)
@@ -1209,30 +1168,12 @@ namespace Stella
       std::cout << "Expected type: " << strExpType << std::endl;
 
       if (strExpType != "Unit "){
-          if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
-              if (auto type = dynamic_cast<Type *>((*tupleType->listtype_)[tuplePos])){
-                  std::string strType = printer.print(type);
-                  std::cout << "Type: " << strType << std::endl;
-
-                  if (strType != "Unit "){
-                      std::cout << "ERROR\tExpected Unit at line: " << const_unit->line_number << '\n';
-                      exit(1);
-                  }
-              } else {
-                  std::cout << "ERROR\tUnit tuple is out of range at line: " << const_unit->line_number << '\n';
-                  exit(1);
-              }
-
-          } else {
-              std::cout << "ERROR\tExpected Unit at line: " << const_unit->line_number << '\n';
-              exit(1);
-          }
+          std::cout << "ERROR\tExpected Unit at line: " << const_unit->line_number << '\n';
+          exit(1);
       }
 
       // Making lastVisitedType
       lastVisitedType = expectedType;
-
-      tuplePos += 1;
   }
 
   void VisitTypeCheck::visitConstInt(ConstInt *const_int)
@@ -1247,32 +1188,14 @@ namespace Stella
       std::cout << "Expected type: " << strExpType << std::endl;
 
       if (strExpType != "Nat "){
-          if (auto tupleType = dynamic_cast<TypeTuple* >(expectedType)){
-              if (auto type = dynamic_cast<Type *>((*tupleType->listtype_)[tuplePos])){
-                  std::string strType = printer.print(type);
-                  std::cout << "Type: " << strType << std::endl;
-
-                  if (strType != "Nat "){
-                      std::cout << "ERROR\tExpected Nat at line: " << const_int->line_number << '\n';
-                      exit(1);
-                  }
-              } else {
-                  std::cout << "ERROR\tSucc tuple is out of range at line: " << const_int->line_number << '\n';
-                  exit(1);
-              }
-
-          } else {
-              std::cout << "ERROR\tExpected Nat at line: " << const_int->line_number << '\n';
-              exit(1);
-          }
+          std::cout << "ERROR\tExpected Nat at line: " << const_int->line_number << '\n';
+          exit(1);
       }
 
       // Making lastVisitedType
       lastVisitedType = expectedType;
 
       visitInteger(const_int->integer_);
-
-      tuplePos += 1;
   }
 
   void VisitTypeCheck::visitVar(Var *var)
@@ -1299,20 +1222,18 @@ namespace Stella
 //              expectedType = var_type;
 //          }
           // Making lastVisitedType
-          lastVisitedType = dynamic_cast<Type* >(var_type);
+          lastVisitedType = var_type;
       }
       else {
           std::cout << "ERROR\tUndefined var " << printer.print(var) << "at line:" << var->line_number << '\n';
           exit(1);
       }
 
-      std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
-
 
       visitStellaIdent(var->stellaident_);
 
       expectedType = expType;
-      tuplePos += 1;
+      std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
   }
 
   void VisitTypeCheck::visitAPatternBinding(APatternBinding *a_pattern_binding)
