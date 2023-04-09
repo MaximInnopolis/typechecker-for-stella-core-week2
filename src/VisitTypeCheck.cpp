@@ -75,7 +75,7 @@ namespace Stella
       auto paramDecl = dynamic_cast<AParamDecl *>((*decl_fun->listparamdecl_)[0]);
       auto paramType = paramDecl->type_;
 
-      std::cout << "Function name: " << decl_fun->stellaident_ << ", function return type: "
+      std::cout << "\nFunction name: " << decl_fun->stellaident_ << ", function return type: "
       << printer.print(returnType) << ", function param type: " << printer.print(paramType) << std::endl;
 
       std::pair<std::string, Type*> decl_fun_pair;
@@ -330,15 +330,19 @@ namespace Stella
 
     std::cout << "\nVisiting Pattern inl: " << printer.print(pattern_inl) << std::endl;
     std::cout << "Pattern: " << printer.print(pattern_inl->pattern_) << std::endl;
-
-    for (auto& p : context)
-        std::cout << "Currently in context: "<< p.first << std::endl;
+    std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
 
     auto expType = expectedType;
-    std::cout << "Expected type: " << printer.print(expType) << std::endl;
 
-    if (pattern_inl->pattern_)
-      pattern_inl->pattern_->accept(this);
+    if (auto typeSum = dynamic_cast<TypeSum* >(expectedType)){
+        std::cout << "Successful casting into typeSum: " << printer.print(typeSum) << std::endl;
+        expectedType = typeSum->type_1;
+        if (pattern_inl->pattern_)
+            pattern_inl->pattern_->accept(this);
+    } else {
+        std::cout << "ERROR\tCannot cast into typeSum: " << pattern_inl->line_number << '\n';
+        exit(1);
+    }
   }
 
   void VisitTypeCheck::visitPatternInr(PatternInr *pattern_inr)
@@ -347,15 +351,19 @@ namespace Stella
 
     std::cout << "\nVisiting Pattern inr: " << printer.print(pattern_inr) << std::endl;
     std::cout << "Pattern: " << printer.print(pattern_inr->pattern_) << std::endl;
-
-    for (auto& p : context)
-        std::cout << "Currently in context: "<< p.first << std::endl;
+    std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
 
     auto expType = expectedType;
-    std::cout << "Expected type: " << printer.print(expType) << std::endl;
 
-    if (pattern_inr->pattern_)
-      pattern_inr->pattern_->accept(this);
+    if (auto typeSum = dynamic_cast<TypeSum* >(expectedType))
+        {std::cout << "Successful casting into typeSum: " << printer.print(typeSum) << std::endl;
+        expectedType = typeSum->type_2;
+        if (pattern_inr->pattern_)
+            pattern_inr->pattern_->accept(this);
+    } else {
+        std::cout << "ERROR\tCannot cast into typeSum: " << pattern_inr->line_number << '\n';
+        exit(1);
+    }
   }
 
   void VisitTypeCheck::visitPatternTuple(PatternTuple *pattern_tuple)
@@ -428,12 +436,15 @@ namespace Stella
 
     std::cout << "\nVisiting Pattern var: " << printer.print(pattern_var) << std::endl;
     std::cout << "Identifier: " << pattern_var->stellaident_ << std::endl;
+    std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
 
-    for (auto& p : context)
-        std::cout << "Currently in context: "<< p.first << std::endl;
+    std::pair<std::string, Type* > var_pair;
+    var_pair.first = pattern_var->stellaident_;
+    var_pair.second = expectedType;
+    context.insert(var_pair);
 
-    auto expType = expectedType;
-    std::cout << "Expected type: " << printer.print(expType) << std::endl;
+    for (auto &p: context)
+        std::cout << "Currently in context: " << p.first << " of type " << printer.print(p.second) << std::endl;
 
     visitStellaIdent(pattern_var->stellaident_);
   }
@@ -476,6 +487,7 @@ namespace Stella
           std::cout << "Currently in context: " << p.first << " of type " << printer.print(p.second) << std::endl;
 
       std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
+      auto expType = expectedType;
 
       std::string expr1 = printer.print(if_->expr_1);
 
@@ -508,14 +520,12 @@ namespace Stella
               exit(1);
           }
       }
-
-      if (if_->expr_1)
-          if_->expr_1->accept(this);
       if (if_->expr_2)
           if_->expr_2->accept(this);
       if (if_->expr_3)
           if_->expr_3->accept(this);
-    }
+      expectedType = expType;
+  }
 
   void VisitTypeCheck::visitLet(Let *let)
   {
@@ -675,12 +685,51 @@ namespace Stella
         std::cout << "Currently in context: "<< p.first << std::endl;
 
     auto expType = expectedType;
-    std::cout << "Expected type: " << printer.print(expType) << std::endl;
 
     if (match->expr_)
-      match->expr_->accept(this);
-    if (match->listmatchcase_)
-      match->listmatchcase_->accept(this);
+        match->expr_->accept(this);
+
+    expectedType = lastVisitedType;
+
+    auto lisMatchcaseExpectedType = expectedType;
+    std::cout << "\nExpected type for listMatchCase: " << printer.print(lisMatchcaseExpectedType) << std::endl;
+
+    auto listMatchCase = *match->listmatchcase_;
+
+    for (int i = 0; i < listMatchCase.size(); i++){
+        std::cout << "\nExpected type for MatchCase: " << printer.print(expectedType) << std::endl;
+        std::cout << "\nMatchCase: " << printer.print(listMatchCase[i]) << std::endl;
+
+        if (auto matchCase = dynamic_cast<AMatchCase* >(listMatchCase[i])) {
+            auto matchCaseExpr = matchCase->expr_;
+            auto matchCasePattern = matchCase->pattern_;
+
+            std::cout << "MatchCase Expr: " << printer.print(matchCaseExpr) << std::endl;
+            std::cout << "MatchCase Pattern: " << printer.print(matchCasePattern) << std::endl;
+
+            if (auto patternInl = dynamic_cast<PatternInl* >(matchCasePattern)){
+                std::cout << "PatternInl: " << printer.print(patternInl) << std::endl;
+                patternInl->accept(this);
+                matchCaseExpr->accept(this);
+                expectedType = lisMatchcaseExpectedType;
+            }
+            else if (auto patternInr = dynamic_cast<PatternInr* >(matchCasePattern)){
+                std::cout << "PatternInr: " << printer.print(patternInr) << std::endl;
+                patternInr->accept(this);
+                matchCaseExpr->accept(this);
+                expectedType = lisMatchcaseExpectedType;
+            }
+            else {
+                std::cout << "ERROR\tUndefined pattern: " << match->line_number << '\n';
+                exit(1);
+            }
+        } else{
+            std::cout << "ERROR\tCasting from matchCase to AmatchCase gone wrong: " << match->line_number << '\n';
+            exit(1);
+        }
+    }
+
+    expectedType = expType;
   }
 
   void VisitTypeCheck::visitList(List *list)
@@ -1003,9 +1052,9 @@ namespace Stella
     /* Code For Inr Goes Here */
 
     std::cout << "\nVisiting inr: " << printer.print(inr) << std::endl;
-      std::cout << "Inr expr: " << printer.print(inr->expr_) << std::endl;
+    std::cout << "Inr expr: " << printer.print(inr->expr_) << std::endl;
 
-      for (auto& p : context)
+    for (auto& p : context)
         std::cout << "Currently in context: "<< p.first << std::endl;
 
     auto expType = expectedType;
@@ -1018,7 +1067,7 @@ namespace Stella
   void VisitTypeCheck::visitSucc(Succ *succ)
   {
       /* Code For Succ Goes Here */
-      std::cout << "Visiting succ: " << printer.print(succ) << std::endl;
+      std::cout << "\nVisiting succ: " << printer.print(succ) << std::endl;
 
       for (auto& p : context)
           std::cout << "Currently in context: "<< p.first << std::endl;
@@ -1026,7 +1075,7 @@ namespace Stella
       std::string expType = printer.print(expectedType);
       std::cout << "Expected type: " << expType << std::endl;
 
-      if (expType != "Nat "){
+      if (expType != "Nat " && expectedType != NULL){
           std::cout << "ERROR\tExpected Nat at line: " << succ->line_number << '\n';
           exit(1);
       }
@@ -1215,9 +1264,10 @@ namespace Stella
       std::cout << "\nVisiting var: " << var->stellaident_ << std::endl;
 
       for (auto& p : context)
-          std::cout << "Currently in context : " << p.first << std::endl;
+          std::cout << "Currently in context : " << p.first << " of type " << printer.print(p.second) << std::endl;
 
-      std::cout << "Expected type: " << printer.print(expectedType) << std::endl;
+      std::string strExpectedType = printer.print(expectedType);
+      std::cout << "Expected type: " << strExpectedType << std::endl;
 
       auto expType = expectedType;
 
@@ -1225,13 +1275,9 @@ namespace Stella
       if (auto search = context.find(var->stellaident_); search != context.end()){
           auto var_type = search->second;
 
-          std::cout << "Var type: " << printer.print(var_type) << std::endl;
+          std::string strVar_type = printer.print(var_type);
+          std::cout << "Var type: " << strVar_type << std::endl;
 
-//          if (auto varFuncType = dynamic_cast<TypeFun* >(var_type)){
-//              expectedType = varFuncType->type_;
-//          } else {
-//              expectedType = var_type;
-//          }
           // Making lastVisitedType
           lastVisitedType = var_type;
       }
