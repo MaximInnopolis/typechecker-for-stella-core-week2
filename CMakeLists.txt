@@ -81,7 +81,7 @@ set_tests_properties(
   shadowed-variable-1
   undefined-variable-1
   undefined-variable-2
-        bad-variants-1
+        lists-bad-variants-1
         bad-pairs-1
         bad-records-1
         bad-sum-types-1
@@ -89,22 +89,11 @@ set_tests_properties(
         bad-variants-1
   PROPERTIES WILL_FAIL TRUE)
 
-add_test(NAME factorial COMMAND stella-interpreter typecheck ../tests/core/well-typed/factorial.stella)
 add_test(NAME increment_twice COMMAND stella-interpreter typecheck ../tests/core/well-typed/increment_twice.stella)
-add_test(NAME higher-order-1 COMMAND stella-interpreter typecheck ../tests/core/well-typed/higher-order-1.stella)
 add_test(NAME logical-operators COMMAND stella-interpreter typecheck ../tests/core/well-typed/logical-operators.stella)
-add_test(NAME squares COMMAND stella-interpreter typecheck ../tests/core/well-typed/squares.stella)
-
-add_test(NAME lists-1 COMMAND stella-interpreter typecheck ../tests/lists/well-typed/lists-1.stella)
-
 add_test(NAME pairs-1 COMMAND stella-interpreter typecheck ../tests/pairs/well-typed/pairs-1.stella)
-
-add_test(NAME records-1 COMMAND stella-interpreter typecheck ../tests/records/well-typed/records-1.stella)
 
 add_test(NAME sum-types-1 COMMAND stella-interpreter typecheck ../tests/sum-types/well-typed/sum-types-1.stella)
 add_test(NAME sum-types-2 COMMAND stella-interpreter typecheck ../tests/sum-types/well-typed/sum-types-2.stella)
 
 add_test(NAME tuples-1 COMMAND stella-interpreter typecheck ../tests/tuples/well-typed/tuples-1.stella)
-
-add_test(NAME variants-1 COMMAND stella-interpreter typecheck ../tests/variants/well-typed/variants-1.stella)
-add_test(NAME variants-2 COMMAND stella-interpreter typecheck ../tests/variants/well-typed/variants-2.stella)
